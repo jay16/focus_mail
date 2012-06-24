@@ -41,9 +41,7 @@ Go to `http://localhost:3000/resque/` to see Resque status.
 
    删除 socket: /tmp/mysql.sock 
    添加 host: localhost
-* rails server启动
-   rails s
+
 * redis启动
+* 
   redis-server /etc/redis.conf
-* 启动队列执行work
-  COUNT=4 QUEUE=* VERBOSE=1 rake resque:workers
