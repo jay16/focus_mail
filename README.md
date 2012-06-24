@@ -43,5 +43,5 @@ Go to `http://localhost:3000/resque/` to see Resque status.
    添加 host: localhost
 
 * redis启动
-* 
+
   redis-server /etc/redis.conf
