@@ -36,14 +36,13 @@ Go to `http://localhost:3000/resque/` to see Resque status.
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-#jay_li note:
-1. 修改config/database.yml文件
+##jay_li note:
+* 修改config/database.yml文件
    删除 socket: /tmp/mysql.sock 
    添加 host: localhost
-2. rails server启动
+* rails server启动
    rails s
-3. redis启动
+* redis启动
   redis-server /etc/redis.conf
-4. 启动队列执行work
+* 启动队列执行work
   COUNT=4 QUEUE=* VERBOSE=1 rake resque:workers
-
