@@ -1,0 +1,12 @@
+<tr id="<%= dom_id entry %>" >
+  <td><%= entry.name %></td>
+  <% if File.exist?("#{entry.default_value}") %>
+  <td><%= image_tag("#{entry.default_value}".gsub("#{Rails.root.join('public')}",""), :size => "120x150") %></td>
+  <% else %>
+  <td><%= entry.default_value %></td>
+  <% end %>
+  <td>
+    <%= link_to 'Edit', edit_template_entry_url(entry.template, entry), :class => 'btn btn-mini', remote: true %>
+    <%= link_to 'Destroy', [entry.template, entry], :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger', remote: true %>
+  </td>
+</tr>

@@ -1,0 +1,16 @@
+<div id="campaign_id_value" style="display:none"><%= template && template.id || 0 %></div>
+<% if template && template.entries %>
+  <% template.entries.each do |entry| %>
+    <div class="control-group">
+      <%= label_tag "campaign[entry][#{entry.id}]", entry.name, :class => 'control-label' %>
+      <div class="controls">
+        <% entry_default_value = "#{entry.default_value}".gsub("#{Rails.root.join('public')}","") %>
+        <% if File.file?(entry.default_value) %>
+        <%= image_tag(entry_default_value, :size => "120x150") %>
+        <% else %>
+        <%= text_field_tag "campaign[entry][#{entry.id}]", entry_default_value, :disabled => true, :class => 'text_field' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

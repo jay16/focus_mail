@@ -1,0 +1,27 @@
+<%- model_class = Campaign.new.class -%>
+<h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+<table class="table table-striped" id="campaigns">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>From name</th>
+      <th>From email</th>
+      <th>Subject</th>
+      <th>Template</th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @campaigns.each do |campaign| %>
+      <%= render campaign %>
+    <% end %>
+  </tbody>
+</table>
+
+<hr />
+
+<div id="form">
+  <%= render :partial => "form" %>
+</div>
+

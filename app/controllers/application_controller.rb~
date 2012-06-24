@@ -1,0 +1,11 @@
+class ApplicationController < ActionController::Base
+  protect_from_forgery
+  
+  def is_img_entry(entry)
+    entry.default_value.present?&&File.file?("#{entry.default_value}")
+  end
+  
+  def img_path(entry)
+    "#{entry.default_value}".gsub("#{Rails.root.join('public')}","")
+  end
+end

@@ -1,0 +1,114 @@
+<%= form_for @campaign, :html => { :class => 'form-horizontal' }, remote: true do |f| %>
+
+  <%= render :partial => "common/form_error", :locals => { model: @campaign} %>
+
+
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab">1:基本信息</a></li>
+      <li><a href="#tab2" data-toggle="tab">2:收信人</a></li>
+      <li><a href="#tab3" data-toggle="tab">3:模板</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1">
+        <div class="control-group">
+          <%= f.label :name, :class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :name, :class => 'text_field' %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= f.label :from_name, :class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :from_name, :class => 'text_field' %>
+          </div>
+        </div>
+
+
+        <div class="control-group">
+          <%= f.label :from_email, :class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :from_email, :class => 'text_field' %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= f.label :subject, :class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :subject, :class => 'text_field' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="tab2">
+        <div class="control-group">
+          <%= f.label :list_id, :class => 'control-label' %>
+          <div class="controls">
+            <% List.all.each do |list| %>
+              <%= check_box_tag :list_ids, list.id, @campaign.lists.include?(list), :name => 'campaign[list_ids][]' -%>
+              <%= label_tag :list_ids, :style => "display:inline" do %>
+                <%= link_to list.name, list_path(list) %>
+              <% end %>
+              <br />
+              <br />
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="tab3">
+        <div class="control-group">
+          <%= f.label :template_id, :class => 'control-label' %>
+          <div class="controls">
+            <%= f.select :template_id, ActiveRecord::Base::Template.all.map{|t| [t.name, t.id]}, { :include_blank => true}, {:class => "chzn-select", "data-placeholder" => "Choose a Template"} %>
+          </div>
+        </div>
+
+        <div id="template_entries">
+          <div id="campaign_id_value" style="display:none"><%= @campaign && @campaign.id || 0 %></div>
+          <% if @campaign && @campaign.template %>
+            <% @campaign.template.entries.each do |entry| %>
+              <div class="control-group">
+                <%= label_tag "campaign[entry][#{entry.id}]", entry.name, :class => 'control-label' %>
+                <div class="controls">
+                  <%= text_field_tag "campaign[entry][#{entry.id}]", @campaign.value_of_entry(entry) || entry.default_value, :class => 'text_field' %>
+                </div>
+                  <% if File.exist?("#{Rails.root.join("public")}#{entry_default_value}") %>
+                  <%= image_tag(entry_default_value, :size => "120x150") %>
+                  <% end %>
+                  <%= "hello world" %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <a onclick="$('#<%= dom_id @campaign, action_name %>').parent().html('');return false;", class='btn'>Cancel</a>
+  </div>
+<% end %>
+
+<script>
+  window.onload = function(){
+    var display_campaign_entries;
+
+    $(function() {
+      return $('form #campaign_template_id').chosen().change(function() {
+        return display_campaign_entries($("#campaign_id_value").html(), $("form #campaign_template_id").val());
+      });
+    });
+
+    display_campaign_entries = function(campaign_id, template_id) {
+      return $.ajax({
+        url: 'campaigns/template_entries/' + campaign_id + "/" + template_id,
+        type: 'GET',
+        dateType: 'script'
+      });
+    };
+  };
+</script>

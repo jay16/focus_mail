@@ -1,0 +1,42 @@
+<div id="<%= dom_id template %>" class="box" >
+  <div class="template_info">
+    <h3 style="display:inline"><%= template.name %> - <h5 style="display:inline"><%= template.file_name %></h5></h3>
+    <div style="float:right" class="title">
+    <div class="btn-group">
+      <a onclick="$('#<%= dom_id template %> .source').toggleClass('hidden');return false;", class='btn btn-mini'>Source</a>
+      
+     <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
+      Add a Entry <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+      <li><%= link_to 'link', new_template_entry_path(template.id), :class => 'btn btn-mini', remote: true %></li>
+      <li><%= link_to 'image', new_image_template_entries_path(template.id), :class => 'btn', remote: true %></li>
+      </ul>
+      
+      <%= link_to 'Edit', edit_template_path(template), :class => 'btn btn-mini', remote: true %>      
+      <%= link_to 'Destroy', template_path(template), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger', remote: true %>
+    </div>
+  </div>
+  </div>
+  <div class="entries_info">
+    <% has_entries = template.entries && template.entries.present? %>
+    <table class="table table-striped entries" style="display:<%= has_entries ? 'table' : 'none' %>">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Content</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render template.entries if has_entries %>
+      </tbody>
+    </table>
+  </div>
+  <div class="source hidden">
+    <pre>
+      <%= IO.readlines(Rails.root.join('lib/emails', "#{template.file_name}.html.erb")).join("").strip %>
+    </pre>
+  </div>
+  <div class="template_form">
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<h3>导出Members</h3>
+<%= link_to "导出Excel", members_export_path(:list_id => @list_id, :format => 'xls'), :class => "btn btn-primary" %>
+<%= link_to "导出CSV", members_export_path(:list_id => @list_id, :format => 'csv'), :class => "btn btn-primary" %>
+<br />
+<br />
+<h3>下载导入模板</h3>
+<br />
+<%= link_to "下载Excel模板", members_import_template_path(:format => 'xls'), :class => "btn btn-primary" %>
+<%= link_to "下载CSV模板",   members_import_template_path(:format => 'csv'), :class => "btn btn-primary" %>
+<br />
+<br />
+<h3>导入Members</h3>
+<%=form_tag('/members/import', :multipart => true) %>
+<%= hidden_field_tag(:list_id, @list_id) %>
+<%= hidden_field_tag(:type, 'xls') %>
+<p>
+导入Excel
+<%= file_field_tag 'file' %>
+<%= submit_tag "上传", :class => 'btn btn-mini btn-primary' %>
+</p>
+</form>
+<%=form_tag('/members/import', :multipart => true) %>
+<%= hidden_field_tag(:list_id, @list_id) %>
+<%= hidden_field_tag(:type, 'csv') %>
+<p>
+导入CSV
+<%= file_field_tag 'file' %>
+<%= submit_tag "上传", :class => 'btn btn-mini btn-primary' %>
+</p>
+</form>
+

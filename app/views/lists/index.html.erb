@@ -1,0 +1,23 @@
+<%- model_class = List.new.class -%>
+<h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+<table class="table table-striped" id="lists">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Member Num</th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lists.each do |list| %>
+      <%= render list %>
+    <% end %>
+  </tbody>
+</table>
+
+<hr />
+
+<div id="form">
+  <%= render :partial => "form" %>
+</div>
