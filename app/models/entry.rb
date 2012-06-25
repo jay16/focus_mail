@@ -3,4 +3,7 @@ class Entry < ActiveRecord::Base
   belongs_to :template
   has_many :campaign_entries
     
+  def image=(file_field)
+   render "entries/preview.js.erb"
+  end
 end

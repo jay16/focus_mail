@@ -8,8 +8,8 @@
      <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
       Add a Entry <span class="caret"></span></a>
       <ul class="dropdown-menu">
-      <li><%= link_to 'link', new_template_entry_path(template.id), :class => 'btn btn-mini', remote: true %></li>
-      <li><%= link_to 'image', new_image_template_entries_path(template.id), :class => 'btn', remote: true %></li>
+      <li><%= link_to 'link', new_template_entry_path(template.id), remote: true %></li>
+      <li><%= link_to 'image', new_image_template_entries_path(template.id), remote: true %></li>
       </ul>
       
       <%= link_to 'Edit', edit_template_path(template), :class => 'btn btn-mini', remote: true %>      
@@ -23,7 +23,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Default Value</th>
+          <th>Content</th>
           <th>Actions</th>
         </tr>
       </thead>

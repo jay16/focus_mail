@@ -12,16 +12,22 @@
 
     <div class="control-group">
     <% if params[:entry_type]=="entry_image" || @is_image %>
+    
         <% if @is_image %>
 				      <div class="controls">
 				      <%= image_tag(@img_path, :size => "120x150") %>
 				      </div>
         <% end %>
+        
         <%= label_tag :image, "Image", :class => 'control-label' %>
-        <div id="image_entry_preview"></div>
         <div class="controls">
-        <%= file_field_tag :image, :accept => 'image/png,image/gif,image/jpeg,image/jpg', :class => 'text_field' %>
+        <img id="blah" src="#" /><br>
+        </div>
+        <div class="controls">
+        <%= file_field_tag :image, :onchange => "readURL(this)", :accept => 'image/png,image/gif,image/jpeg,image/jpg', :class => 'text_field' %>
+        
      <% else %>
+     
         <%= f.label :default_value, :class => 'control-label' %>
         <div class="controls">
         <%= f.text_field :default_value, :class => 'text_field' %>
@@ -35,3 +41,16 @@
     </div>
   </fieldset>
 <% end %>
+
+<script type="text/javascript">
+function readURL(input) {
+  if (input.files && input.files[0]) {
+     var reader = new FileReader();
+     reader.onload = function (e) {                     
+      $('#blah').attr('src', e.target.result);
+      $('#blah').attr('width', "150");                 
+      } 
+    reader.readAsDataURL(input.files[0]);             
+   } 
+  }    
+</script> 

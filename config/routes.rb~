@@ -15,7 +15,11 @@ FocusMail::Application.routes.draw do
   resources :templates do
     resources :entries do
       collection do
-      get 'new_image'
+        get 'new_image'
+        get 'image_entry_preview'
+      end
+      member do
+        get 'image_entry_preview'
       end
     end
   end

@@ -10,6 +10,8 @@ gem 'resque', :require => "resque/server"
 gem 'resque_mailer'
 gem 'spreadsheet'
 gem 'carrierwave'
+gem 'remotipart', '~> 1.0'
+gem 'respond_to_parent'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

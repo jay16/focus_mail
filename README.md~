@@ -38,7 +38,6 @@ Go to `http://localhost:3000/resque/` to see Resque status.
 
 ##jay_li note:
 * 修改config/database.yml文件
-
    删除 socket: /tmp/mysql.sock 
    添加 host: localhost
 * rails server启动

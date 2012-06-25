@@ -82,6 +82,12 @@ class EntriesController < ApplicationController
     end
   end
   
+  def image_entry_preview
+    respond_to |format|
+      format.js
+    end
+  end
+  
   def is_img_entry(entry)
     entry.default_value.present?&&File.file?("#{entry.default_value}")
   end
@@ -92,7 +98,6 @@ class EntriesController < ApplicationController
   
   def deal_with_image_entry(template,entry,image,create_or_update)
     is_create = false; is_update = false;
-    create_or_update?? is_create = true : is_update = true
     if create_or_update 
       is_create = true
     else
