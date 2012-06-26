@@ -10,16 +10,16 @@ FocusMail::Application.routes.draw do
   resources :tracks
   resources :clicks
   resources :links
-  resources :campaigns
+  resources :campaigns do
+    collection do
+      get 'new_campaign'
+    end
+  end
   resources :campaign_members
   resources :templates do
     resources :entries do
       collection do
         get 'new_image'
-        get 'image_entry_preview'
-      end
-      member do
-        get 'image_entry_preview'
       end
     end
   end

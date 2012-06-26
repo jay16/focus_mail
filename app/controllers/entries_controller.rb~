@@ -83,7 +83,7 @@ class EntriesController < ApplicationController
   end
   
   def image_entry_preview
-    respond_to |format|
+    respond_to do |format|
       format.js
     end
   end
@@ -124,6 +124,5 @@ class EntriesController < ApplicationController
       return false
     end
   end
-
   
 end

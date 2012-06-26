@@ -82,12 +82,6 @@ class EntriesController < ApplicationController
     end
   end
   
-  def image_entry_preview
-    respond_to do |format|
-      format.js
-    end
-  end
-  
   def is_img_entry(entry)
     entry.default_value.present?&&File.file?("#{entry.default_value}")
   end
@@ -124,6 +118,5 @@ class EntriesController < ApplicationController
       return false
     end
   end
-
   
 end

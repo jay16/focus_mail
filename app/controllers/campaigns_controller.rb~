@@ -96,5 +96,8 @@ class CampaignsController < ApplicationController
       format.js
     end
   end
- 
+  
+  def new_campaign
+    render "campaigns/new_campaign.js.erb"
+  end
 end

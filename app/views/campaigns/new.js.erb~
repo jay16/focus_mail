@@ -1,4 +1,4 @@
-$("#form").html("<%= j render "form" %>").hide().fadeIn();
+$("#form").html("<%= j render "form" %>");
 //$("#form > form").replaceWith("<%= j render "form" %>");
 
 var display_campaign_entries;
