@@ -150,8 +150,10 @@ class EntriesController < ApplicationController
   end
   def auto_check_template_img_dir
     Dir.foreach(Rails.root.join("public/images")) do |dir|
-       if dir!="." and dir!=".." and Template.find_by_id(dir.to_i).nil? or is_dir_empty(dir)
-         Dir.rmdir(Rails.root.join("public/images","#{dir}"))
+       if dir!="." and dir!=".." and Template.find_by_id(dir.to_i).nil? 
+         if dir.present? and is_dir_empty(dir)
+         Dir.rmdir("#{Rails.root.join("public/images")}/#{dir}") if File.exists?("#{Rails.root.join("public/images")}/#{dir}")
+         end
        end
     end
   end
