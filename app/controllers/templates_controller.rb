@@ -1,5 +1,5 @@
 class TemplatesController < ApplicationController
-  after_filter :check_email_file, :only => [:create, :update]
+  after_filter :check_email_file, :only => [:create, :update, :destroy]
 
   def index
     @templates = Template.all
