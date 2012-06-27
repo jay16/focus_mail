@@ -89,8 +89,7 @@ class TemplatesController < ApplicationController
   def check_email_file
 				Dir.foreach(Rails.root.join("lib/emails")) do |d|
 				  if d!="." and d!=".." and Template.find_by_file_name(File.basename(d,".html.erb")).nil?
-				    File.delete("#{email_dir}/#{d}") if File.file?("#{email_dir}/#{d}")
-				  end
+				    File.delete(Rails.root.join("lib/emails","#{d}")) if File.file?(Rails.root.join("lib/emails","#{d}"))				  end
 		  end
   end
 end
