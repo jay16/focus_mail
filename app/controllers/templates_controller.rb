@@ -1,4 +1,5 @@
 class TemplatesController < ApplicationController
+  after_filter :check_email_file, :only => [:create, :update]
 
   def index
     @templates = Template.all
@@ -73,5 +74,23 @@ class TemplatesController < ApplicationController
       format.html { redirect_to templates_url }
       format.js
     end
+  end
+  
+  def dyna_source
+    @template = Template.find(params[:id])
+    @dyna_content = IO.readlines(Rails.root.join("lib/emails", "#{@template.file_name}.html.erb")).join("").strip
+    
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+  
+  def check_email_file
+				Dir.foreach(Rails.root.join("lib/emails")) do |d|
+				  if d!="." and d!=".." and Template.find_by_file_name(File.basename(d,".html.erb")).nil?
+				    File.delete("#{email_dir}/#{d}") if File.file?("#{email_dir}/#{d}")
+				  end
+		  end
   end
 end

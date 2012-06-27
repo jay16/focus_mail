@@ -1,7 +1,10 @@
 class EntriesController < ApplicationController
+  before_filter :create_template, :only =>[:new, :new_image, :edit, :create, :update,
+                                           :destroy, :auto_create_email_template] 
+  after_filter :auto_create_email_template, :only => [:create, :edit, :update, :destroy]
+  after_filter :auto_check_template_img_dir, :only => [:destroy]
   
   def new
-    @template = Template.find(params[:template_id])
     @entry = @template.entries.build
     params[:entry_type] = "entry_link"
 
@@ -11,7 +14,6 @@ class EntriesController < ApplicationController
   end
   
   def new_image
-    @template = Template.find(params[:template_id])
     @entry = @template.entries.build
     params[:entry_type] = "entry_image"
 
@@ -22,7 +24,6 @@ class EntriesController < ApplicationController
   
 
   def edit
-    @template = Template.find(params[:template_id])
     @entry = @template.entries.find(params[:id])
     @is_image = is_img_entry(@entry)
     @img_path = img_path(@entry) if @is_image
@@ -33,7 +34,6 @@ class EntriesController < ApplicationController
   end
 
   def create
-    @template = Template.find(params[:template_id])
     @entry = @template.entries.create(params[:entry])   
     
      if deal_with_image_entry(@template,@entry,params[:image],true)
@@ -51,7 +51,6 @@ class EntriesController < ApplicationController
   end
 
   def update
-    @template = Template.find(params[:template_id])
     @entry = @template.entries.find(params[:id])
     
     deal_with_image_entry(@template,@entry,params[:image],false)
@@ -66,7 +65,6 @@ class EntriesController < ApplicationController
   end
 
   def destroy
-    @template = Template.find(params[:template_id])
     @entry = @template.entries.find(params[:id])
     
     file_path = "#{@entry.default_value}"
@@ -82,10 +80,8 @@ class EntriesController < ApplicationController
     end
   end
   
-  def image_entry_preview
-    respond_to do |format|
-      format.js
-    end
+  def create_template
+    @template = Template.find(params[:template_id])
   end
   
   def is_img_entry(entry)
@@ -122,6 +118,41 @@ class EntriesController < ApplicationController
       return true
      else
       return false
+    end
+  end
+  
+  def auto_create_email_template
+    File.open(Rails.root.join("lib/emails","#{@template.file_name}.html.erb"),"w") do |file|
+      str = "<h1>$|Title|$</h1>\n"
+      str << "Hello $|NAME|$, Your Email is $|EMAIL|$, Subject is $|SUBJECT|$\n\n\n"
+      str << "<ul>\n"
+      @template.entries.each do |entry|
+        if is_img_entry(entry)
+          str << "<li><img src='$|#{entry.default_value}|$' alt='from @Infocus' width='150' />$|#{entry.name}|$</li>\n"
+        else
+          str << "<li><a href='$|#{entry.default_value}|$' target='blank'>$|#{entry.name}|$</a></li>\n"
+        end
+      end
+      str << "</ul>\n\n\n\n\n"
+      str << "@Intfocus"
+      file.write(str)
+      file.close
+    end
+  end
+  
+  def is_dir_empty(dir)
+    Dir.foreach(Rails.root.join("public/images","#{dir}") do |d|
+      if d!="." and d!=".."
+        return false 
+      end
+    end
+    return true
+  end
+  def auto_check_template_img_dir
+    Dir.foreach(Rails.root.join("public/images")) do |dir|
+       if dir!="." and dir!=".." and Template.find_by_id(dir.to_i).nil? or is_dir_empty(dir)
+         Dir.rmdir(Rails.root.join("public/images","#{dir}"))
+       end
     end
   end
   

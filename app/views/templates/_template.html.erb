@@ -9,8 +9,8 @@
       <li><%= link_to 'link', new_template_entry_path(template.id), remote: true %></li>
       <li><%= link_to 'image', new_image_template_entries_path(template.id), remote: true %></li>
       </ul>
-      
-      <a onclick="$('#<%= dom_id template %> .source').toggleClass('hidden');return false;", class='btn btn-mini'>Source</a>
+ 
+      <%= link_to "Source", dyna_source_template_path(template.id), :remote => true, :class => 'btn btn-mini' %>
       
       <%= link_to 'Edit', edit_template_path(template), :class => 'btn btn-mini', remote: true %>      
       <%= link_to 'Destroy', template_path(template), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger', remote: true %>
@@ -33,9 +33,6 @@
     </table>
   </div>
   <div class="source hidden">
-    <pre>
-      <%= IO.readlines(Rails.root.join('lib/emails', "#{template.file_name}.html.erb")).join("").strip %>
-    </pre>
   </div>
   <div class="template_form">
   </div>
