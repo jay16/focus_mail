@@ -2,7 +2,6 @@ class EntriesController < ApplicationController
   before_filter :create_template, :only =>[:new, :new_image, :edit, :create, :update,
                                            :destroy, :auto_create_email_template] 
   after_filter :auto_create_email_template, :only => [:create, :edit, :update, :destroy]
-  after_filter :auto_check_template_img_dir, :only => [:destroy]
   
   def new
     @entry = @template.entries.build
@@ -116,44 +115,32 @@ class EntriesController < ApplicationController
       end
       @entry.default_value = "#{store_path}"
       return true
-     else
+    else
       return false
     end
   end
   
   def auto_create_email_template
     File.open(Rails.root.join("lib/emails","#{@template.file_name}.html.erb"),"w") do |file|
-      str = "<h1>$|Title|$</h1>\n"
-      str << "Hello $|NAME|$, Your Email is $|EMAIL|$, Subject is $|SUBJECT|$\n\n\n"
-      str << "<ul>\n"
-      @template.entries.each do |entry|
-        if is_img_entry(entry)
-          str << "<li><img src='$|#{entry.default_value}|$' alt='from @Infocus' width='150' />$|#{entry.name}|$</li>\n"
-        else
-          str << "<li><a href='$|#{entry.default_value}|$' target='blank'>$|#{entry.name}|$</a></li>\n"
-        end
-      end
-      str << "</ul>\n\n\n\n\n"
+      str = "<h1>$|Title|$</h1>\n\n"
+      str << "Hello $|NAME|$, Your Email is $|EMAIL|$, Subject is $|SUBJECT|$\n\n\n\n"
+      unless @template.entries.empty?
+				    str << "<ul>\n"
+				    @template.entries.each do |entry|
+				      if is_img_entry(entry)
+				        path = img_path(entry)
+				        str << %{<li><img src="#{path}" alt=#{entry.name} width="150" /></li>\n}
+				      else
+				        str << %{<li><a href="#{entry.default_value}" target="blank">#{entry.name}</a></li>\n}
+				      end
+				    end
+				    str << "</ul>\n\n\n"
+				  end
+      3.times{ str << "<br>\n" }
       str << "@Intfocus"
       file.write(str)
       file.close
     end
   end
-  
-  def is_dir_empty(dir)
-    Dir.foreach(Rails.root.join("public/images","#{dir}")) do |d|
-      if d!="." and d!=".."
-        return false 
-      end
-    end
-    return true
-  end
-  def auto_check_template_img_dir
-    Dir.foreach(Rails.root.join("public/images")) do |dir|
-       if dir!="." and dir!=".." and Template.find_by_id(dir.to_i).nil? or is_dir_empty(dir)
-         Dir.rmdir(Rails.root.join("public/images","#{dir}"))
-       end
-    end
-  end
-  
+
 end

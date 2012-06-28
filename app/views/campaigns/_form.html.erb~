@@ -57,7 +57,7 @@
         </div>
 
         <div id="template_entries">
-          <div id="campaign_id_value" style="display:none"><%= @campaign && @campaign.id || 0 %></div>
+          <div id="campaign_id_value" style="display:none"><%= "hello world" %></div>
           <% if @campaign && @campaign.template %>
             <% @campaign.template.entries.each do |entry| %>
               <div class="control-group">
@@ -68,6 +68,7 @@
 																		<%= image_tag(entry_default_value, :size => "120x150") %>
 																		<% else %>
                   <%= text_field_tag "campaign[entry][#{entry.id}]", @campaign.value_of_entry(entry) || entry.default_value, :class => 'text_field' %>
+                  <% end %>
                 </div>
 
               </div>

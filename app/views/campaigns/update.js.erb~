@@ -1,2 +1,2 @@
 $("#<%= dom_id @campaign %>").replaceWith("<%= j render @campaign %>");
-$("#form > form").replaceWith("<form/>");
+$("#form > form").replaceWith("<form/>").show().fadeOut();

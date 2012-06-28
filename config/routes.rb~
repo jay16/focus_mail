@@ -13,12 +13,10 @@ FocusMail::Application.routes.draw do
   resources :campaigns
   resources :campaign_members
   resources :templates do
+    get 'dyna_source', :on => :member
     resources :entries do
         get 'new_image', :on => :collection
     end
-  end
-  resources :templates do
-    get 'dyna_read', :on => :member
   end
   resources :lists do
     resources :members

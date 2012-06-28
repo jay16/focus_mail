@@ -1,6 +1,6 @@
 class Template < ActiveRecord::Base
   attr_accessible :file_name, :name, :source
-  has_many :entries
+  has_many :entries, :dependent => :destroy
   has_many :campaigns
 
   def source

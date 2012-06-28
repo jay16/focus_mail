@@ -1,5 +1,6 @@
 class TemplatesController < ApplicationController
-  after_filter :check_email_file, :only => [:create, :update]
+  after_filter :auto_check_email_file, :only => [:create, :update, :destroy]
+  after_filter :auto_check_template_img_dir, :only => [:destroy]
 
   def index
     @templates = Template.all
@@ -76,7 +77,7 @@ class TemplatesController < ApplicationController
     end
   end
   
-  def dyna_read
+  def dyna_source
     @template = Template.find(params[:id])
     @dyna_content = IO.readlines(Rails.root.join("lib/emails", "#{@template.file_name}.html.erb")).join("").strip
     
@@ -86,11 +87,28 @@ class TemplatesController < ApplicationController
     end
   end
   
-  def check_email_file
+  def auto_check_email_file
 				Dir.foreach(Rails.root.join("lib/emails")) do |d|
 				  if d!="." and d!=".." and Template.find_by_file_name(File.basename(d,".html.erb")).nil?
-				    File.delete("#{email_dir}/#{d}") if File.file?("#{email_dir}/#{d}")
+				    File.delete("#{Rails.root.join("lib/emails")}/#{d}") if File.file?("#{Rails.root.join("lib/emails")}/#{d}")
 				  end
 		  end
+  end
+  
+  def is_dir_empty(dir)
+    Dir.foreach(Rails.root.join("public/images","#{dir}")) do |d|
+      if d!="." and d!=".."
+        return false 
+      end
+    end
+    return true
+  end
+  def auto_check_template_img_dir
+    img_dir = Rails.root.join("public/images")
+    Dir.foreach(img_dir) do |dir|
+       if dir!="." and dir!=".." and Template.find_by_id(dir.to_i).nil?
+         FileUtils.remove_dir("#{img_dir}/#{dir}") if File.exists?("#{img_dir}/#{dir}")
+       end
+    end
   end
 end
