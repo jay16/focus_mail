@@ -17,6 +17,7 @@
     </div>
   </div>
   </div>
+
   <div class="entries_info">
     <% has_entries = template.entries && template.entries.present? %>
     <table class="table table-striped entries" style="display:<%= has_entries ? 'table' : 'none' %>">
@@ -34,5 +35,6 @@
   </div>
   <div class="source hidden">
   </div>
-
+   <div class="template_form">
+  </div>
 </div>

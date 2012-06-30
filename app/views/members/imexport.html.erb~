@@ -35,6 +35,5 @@
 		</form>
 	</td></tr></tbody>
 </table>
-
 <%= link_to_function "back","history.go(-1)", :class => 'btn btn-primary' %>
 

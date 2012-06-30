@@ -18,7 +18,8 @@
   </div>
 
   <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to 'Cancel', lists_path, :class => 'btn' %>
+    <%= f.submit nil, :id => 'member_submit', :class => 'btn btn-primary' %>
+    <a onclick="$('#addmember > form').replaceWith('<form/>').fadeIn();window.scrollTo(0,0);return false;", class='btn'>Cancel</a>
+    
   </div>
 <% end %>

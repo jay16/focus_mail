@@ -10,7 +10,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <a onclick="$('#<%= dom_id @list, action_name %>').parent().html('');return false;", class='btn'>Cancela</a>
+    <%= f.submit nil, :id => 'list_submit', :class => 'btn btn-primary' %>
+    <a onclick="$('#<%= dom_id @list, action_name %>').parent().html('');return false;", class='btn'>Cancel</a>
   </div>
 <% end %>

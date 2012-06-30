@@ -3,11 +3,11 @@
     <%= render :partial => "common/form_error", :locals => { model: @template } %>
 
     <div class="control-group">
-          <%= f.label :name, :class => 'control-label' %>
-                <div class="controls">
-                        <%= f.text_field :name, :class => 'text_field' %>
-                              </div>
-                                  </div>
+       <%= f.label :name, :class => 'control-label' %>
+         <div class="controls">
+           <%= f.text_field :name, :class => 'text_field' %>
+        </div>         
+     </div>
     
     <div class="control-group">
       <%= f.label :file_name, :class => 'control-label' %>
@@ -26,7 +26,7 @@
 
     <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary' %>
-      <a onclick="$('#<%= dom_id @template, action_name %>').parent().html('');return false;", class='btn'>Cancel</a>
+      <a onclick="$('#<%= dom_id @template, action_name %>').parent().html('');window.scrollTo(0,0);return false;", class='btn'>Cancel</a>
     </div>
   </fieldset>
 <% end %>

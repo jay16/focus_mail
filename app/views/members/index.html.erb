@@ -1,11 +1,12 @@
 <h1><%= @list.name %></h1>
 <br />
 
-<%= link_to 'New', new_list_member_path(@list.id), class: 'btn btn-primary' %>
+<%= link_to 'Add a Member', new_list_member_path(@list.id), :remote => true, class: 'btn btn-primary' %>
 <%= link_to 'Import', members_imexport_path(@list.id), :class => 'btn' %>
 <%= link_to 'Back', lists_path, :class => 'btn' %>
 <br />
 <br />
+
 <h3>There are <%= @list.members.size %> members</h3>
 
 <table class="table table-striped">
@@ -22,3 +23,7 @@
 </table>
 
 <%= will_paginate @members %>
+
+<form id="addmember">
+</form>
+

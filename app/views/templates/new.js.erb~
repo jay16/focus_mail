@@ -1,6 +1,4 @@
-<% if session[:select_type]=="pic" %>
-$("#templates_form").html("<%= j render :partial => 'image_entry' %>");
-<% else %>
-$("#templates_form").html("<%= j render :partial => 'form' %>");
-<% end %>
-$("#templates_form > form").addClass("box");
+$("#<%= dom_id @template %> .template_form").html("<%= j render :partial => 'form' %>");
+
+$("#new_template #template_submit").focus();
+$("#new_template #template_name").focus();

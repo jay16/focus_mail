@@ -1,5 +1,4 @@
 $("#form").html("<%= j render "form" %>").fadeIn();
 
-$("#list_submit").focus();
 $("#list_name").focus();
-
+$("#list_submit").focus();

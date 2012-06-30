@@ -24,7 +24,7 @@
         <img id="blah" src="#" /><br>
         </div>
         <div class="controls">
-        <%= file_field_tag :image, :onchange => "readURL(this)", :accept => 'image/png,image/gif,image/jpeg,image/jpg', :class => 'text_field' %>
+        <%= file_field_tag :image, :onchange => "readURL(this)", :accept => 'image/png,image/gif,image/jpeg,image/jpg', :class => 'text-field' %>
         
      <% else %>
      
@@ -36,23 +36,22 @@
     </div>
 
     <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <a onclick="$('#<%= dom_id @entry, action_name %>').html('');return false;", class='btn'>Cancel</a>
+      <%= f.submit nil, :id => 'entry_submit', :class => 'btn btn-primary' %>
+      <a onclick="$('.template_form').html('');return false;", class='btn'>Cancel</a>
     </div>
   </fieldset>
 <% end %>
 
 <script type="text/javascript">
-         function readURL(input) {
-           if (input.files && input.files[0]) {
-				          var reader = new FileReader();
-				          reader.onload = function (e) {                     
-						         $('#blah').attr('src', e.target.result);
-						         $('#blah').attr('width', "150");                 
-						         } 
-				         reader.readAsDataURL(input.files[0]);             
-            } 
-            //alert("hi");       
-           // $('#preview').html("hello"); 
-           }    
+function readURL(input) {
+  if (input.files && input.files[0]) {
+     var reader = new FileReader();
+     reader.onload = function (e) {                     
+      $('#blah').attr('src', e.target.result);
+      $('#blah').attr('width', "150");                 
+      } 
+    reader.readAsDataURL(input.files[0]);             
+   } 
+   setTimeout("$("#entry_submit").focus()",500);
+  }    
 </script> 

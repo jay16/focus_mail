@@ -1,4 +1,4 @@
-$("#<%= dom_id @template %> .template_form").html("<%= j render "image_form" %>");
+$("#<%= dom_id @template %> .template_form").html("<%= j render "form" %>");
 $("#<%= dom_id @template %> select").change(function () {
   var str = "";
   str += $(this).val();
@@ -8,3 +8,6 @@ $("#<%= dom_id @template %> select").change(function () {
     $("#<%= dom_id @template %>_collection").hide();
   }
 });
+
+$("#new_entry #entry_submit").focus();
+$("#new_entry #entry_name").focus();

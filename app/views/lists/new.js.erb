@@ -1,1 +1,4 @@
-$("#form > form").replaceWith("<%= j render "form" %>");
+$("#form").html("<%= j render "form" %>").hide().fadeIn();
+
+$("#new_list #list_submit").focus();
+$("#new_list #list_name").focus();

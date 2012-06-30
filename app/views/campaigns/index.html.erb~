@@ -6,9 +6,6 @@
   </div>
 </div>
 
-<div id="form">
-</div>
-
 <table class="table table-striped" id="campaigns">
   <thead>
     <tr>

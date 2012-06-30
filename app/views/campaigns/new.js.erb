@@ -1,5 +1,4 @@
 $("#form").html("<%= j render "form" %>").hide().fadeIn();
-//$("#form > form").replaceWith("<%= j render "form" %>");
 
 var display_campaign_entries;
 $(function() {  
@@ -17,3 +16,6 @@ display_campaign_entries = function(campaign_id, template_id) {
      });
 }; 
  
+$('#new_campaign #campaign_submit').focus();
+$('#new_campaign #campaign_name').focus();
+

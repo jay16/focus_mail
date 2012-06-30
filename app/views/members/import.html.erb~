@@ -38,4 +38,4 @@
     </tbody>
   </table>
 <% end %>
-<%= link_to_function "back", lists_path, :class => 'btn btn-primary' %>
+<%= link_to_function "back",lists_path,, :class => 'btn btn-primary' %>
