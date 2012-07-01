@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526030639) do
+ActiveRecord::Schema.define(:version => 20120701094148) do
 
   create_table "campaign_entries", :force => true do |t|
     t.integer  "campaign_id"
@@ -44,6 +44,18 @@ ActiveRecord::Schema.define(:version => 20120526030639) do
     t.integer  "link_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "dim_dates", :force => true do |t|
+    t.datetime "date_d"
+    t.string   "date_s"
+    t.integer  "date_y"
+    t.integer  "date_q"
+    t.integer  "date_m"
+    t.integer  "date_w"
+    t.integer  "date_wn"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "entries", :force => true do |t|

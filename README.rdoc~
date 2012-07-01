@@ -32,5 +32,5 @@ By IntFocus
 
 ##其他
   <%= link_to_function "back","history.go(-1)", :class => 'btn btn-primary' %>
-  <%= text_field_tag 'id', "content", :size => 34 %>
+  <%= text_field_tag 'id', "content", :size => 34, :class => "text_field" %>
 

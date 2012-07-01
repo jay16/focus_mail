@@ -18,8 +18,8 @@
   </div>
 
   <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <a onclick="$('#addmember > form').replaceWith('<form/>').fadeIn();window.scrollTo(0,0);return false;", class='btn'>Cancel</a>
+    <%= f.submit nil, :id => 'member_submit', :class => 'btn btn-primary' %>
+    <a onclick="$('#addmember > form').fadeOut().replaceWith('<form/>');window.scrollTo(0,0);return false;", class='btn'>Cancel</a>
     
   </div>
 <% end %>

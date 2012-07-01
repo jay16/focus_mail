@@ -34,3 +34,23 @@ By IntFocus
   <%= link_to_function "back","history.go(-1)", :class => 'btn btn-primary' %>
   <%= text_field_tag 'id', "content", :size => 34, :class => "text_field" %>
 
+
+    @i = Date.parse('2001-01-01')
+    @end = Date.parse('2015-12-31')
+    @week = @i.strftime("%V")
+
+    @quarter = @i.month/4 +1
+    
+    while @i <= @end do
+      date = DimDate.new
+      date.date_m = @i.month
+      date.date_wn = @i.strftime("%V")
+      date.date_y = @i.year
+      date.date_d = @i
+      date.date_q = @i.month/4 +1
+      date.date_s = @i.strftime("%Y-%m-%d")
+      date.date_w = @i.wday
+      date.save
+   
+      @i += 1
+    end

@@ -26,7 +26,7 @@
 
     <div class="form-actions">
       <%= f.submit nil, :id => 'template_submit', :class => 'btn btn-primary' %>
-      <a onclick="$('#<%= dom_id @template, action_name %>').parent().html('');window.scrollTo(0,0);return false;", class='btn'>Cancel</a>
+      <a onclick="$('#<%= dom_id @template, action_name %>').parent().fadeOut().html('');window.scrollTo(0,0);return false;", class='btn'>Cancel</a>
     </div>
   </fieldset>
 <% end %>

@@ -1,0 +1,3 @@
+class DimDate < ActiveRecord::Base
+  attr_accessible :date_M, :date_WN, :date_Y, :date_d, :date_q, :date_s, :date_w
+end

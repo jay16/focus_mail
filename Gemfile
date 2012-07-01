@@ -11,6 +11,7 @@ gem 'resque_mailer'
 gem 'spreadsheet'
 gem 'carrierwave'
 gem 'remotipart', '~> 1.0'
+gem 'lazy_high_charts', '~> 1.1.5' 
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

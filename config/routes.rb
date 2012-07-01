@@ -29,6 +29,7 @@ FocusMail::Application.routes.draw do
   get   'members/import_template'
   match 'members/imexport/:list_id' => 'members#imexport', :as => :members_imexport
   match 'members/import' => 'members#import', :via => :post
+  match ':controller(/:action(/:id(.:format)))'
 
   mount Resque::Server, :at => '/resque'
 end

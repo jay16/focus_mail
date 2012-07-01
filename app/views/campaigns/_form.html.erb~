@@ -101,5 +101,5 @@
       });
     };
   };
-  function setFocus(){ setTimeout($("#campaign_submit").focus(),500); }
+  function setFocus(){ setTimeout("$('#campaign_submit').focus()",500); }
 </script>

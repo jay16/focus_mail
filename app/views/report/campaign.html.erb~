@@ -1,0 +1,31 @@
+<div id="templates_title" style="margin-bottom: 20px">
+		<h1 style="display:inline"> <%= @campaign_name %> </h1>
+		<div style="float:right">
+				  <%= link_to "back",campaigns_path, :class => 'btn btn-primary' %>
+				</div>
+</div>
+
+
+<%= high_chart("chart_id1", @h) %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Create_at</th>
+      <th>Tracks</th>
+      <th>Clicks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @rule.first(20).each do |rule| %>
+      <tr>
+        <td><%= rule[0] %></td>
+        <td><%= rule[1] %></td>
+        <td><%= rule[2] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
