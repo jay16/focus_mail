@@ -28,7 +28,7 @@ class ReportController < ApplicationController
       f.options[:chart][:defaultSeriesType] = "column"
       f.series(:name => 'Clicks', :data=> @mydata.get_y1 )
       f.series(:name => 'Tracks', :data=> @mydata.get_y2 )
-      f.options[:title][:text] = '近30天提到次数趋势'      
+      f.options[:title][:text] = '近30天campaign分析报告'      
       f.options[:xAxis][:categories] = @mydata.get_report_xAxis
       f.options[:legend][:layout] = 'horizontal' #'vertical'
     end 
@@ -40,38 +40,9 @@ class ReportController < ApplicationController
 
 #点击分析报表
   def click
-				@id_array = Click.find(:all,:select => "DISTINCT clicks.campaign_id AS CampaignId")
-				@report_click = Array.new
-				@id_array.each { |id| @report_click.push(get_report_array(id.CampaignId)) }
-     
-    @first = Track.find(:all,
-                     :select => "min(tracks.created_at) AS FirstCreate",
-                     :conditions => ["tracks.campaign_id = ?", @campaign_id])[0].FirstCreate
-    @end = @first + 30
-    @responsed = DimDate.find(:all,
-      :select => "date_d,count(clicks.id) AS ClickNum",
-      :joins => "LEFT JOIN clicks ON date(clicks.created_at) = date(dim_dates.date_d)",
-      :conditions => ["clicks.campaign_id = ?", @id_array[0].CampaignId],            
-      :group => "date_d")
-      
-    @rule = Array.new
-    @responsed.each do |m|
-      @rule.push([m.date_d.strftime('%Y-%m-%d'),m.ClickNum])
-    end
-    
-    data_click = Array.new
-    data_x = Array.new
-    @rule.each do |rule|
-      data_x.push(rule[0])
-      data_click.push(rule[1])
-    end
-    @h = LazyHighCharts::HighChart.new('graph') do |f|
-      f.options[:chart][:defaultSeriesType] = "column"
-				    f.series(:name => 'Clicks', :data=> data_click )
-      f.options[:title][:text] = '近30天提到次数趋势'      
-      f.options[:xAxis][:categories] = data_x
-      f.options[:legend][:layout] = 'horizontal' #'vertical'
-    end 
+    @click = "Click"
+    @entry = "clicks"
+    @report_click,@h = get_analyze(@table_name,@entry)
      
 				respond_to do |format|
 				  format.js
@@ -79,39 +50,67 @@ class ReportController < ApplicationController
 		end
 		
 		def track
-				@id_array = Track.find(:all,:select => "DISTINCT tracks.campaign_id AS CampaignId")
-				@report_track = Array.new
-				@id_array.each { |id| @report_track.push(get_report_array(id.CampaignId)) }
-     
-    @responsed = DimDate.find(:all,
-      :select => "date_d,count(tracks.id) AS ClickNum",
-      :joins => "LEFT JOIN tracks ON date(tracks.created_at) = date(dim_dates.date_d)",
-      :conditions => ["tracks.campaign_id = ?", @campaign_id],            
-      :group => "date_d")
-      
-    @rule = Array.new
-    @responsed.each do |m|
-      @rule.push([m.date_d.strftime('%Y-%m-%d'),m.ClickNum])
-    end
-    
-    data_track = Array.new
-    data_x = Array.new
-    @rule.each do |rule|
-      data_x.push(rule[0])
-      data_track.push(rule[1])
-    end
-    @h = LazyHighCharts::HighChart.new('graph') do |f|
-      f.options[:chart][:defaultSeriesType] = "column"
-				    f.series(:name => 'tracks', :data=> data_track )
-      f.options[:title][:text] = '近30天提到次数趋势'      
-      f.options[:xAxis][:categories] = data_x
-      f.options[:legend][:layout] = 'horizontal' #'vertical'
-    end 
-     
+	   @track = "Track"
+				@entry = "tracks"
+				@report_track,@h = get_analyze(@track,@entry)
+				
 				respond_to do |format|
 				  format.js
 				end
 		end
+end
+
+def get_analyze(table,entry)
+
+    @id_array=case table
+    when "Click"
+      Click.find(:all,:select => "DISTINCT #{entry}.campaign_id AS CampaignId")
+    when "Track" 
+      Track.find(:all,:select => "DISTINCT #{entry}.campaign_id AS CampaignId")
+    else          
+      Click.find(:all,:select => "DISTINCT #{entry}.campaign_id AS CampaignId")
+    end
+				@report_click = Array.new
+				@data_x = Array.new
+				@data_click = Array.new
+				@id_array.each do |template_id| 
+						@report_click.push(get_report_array(template_id.CampaignId)) 
+						
+				  responsed = DimDate.find(:all,
+				    :select => "date_d,count(#{entry}.id) AS ClickNum",
+				    :joins => "LEFT JOIN #{entry} ON date(#{entry}.created_at) = date(dim_dates.date_d)",
+				    :conditions => ["#{entry}.campaign_id = ?", template_id.CampaignId],            
+				    :group => "date_d")
+
+				  rule = Array.new
+				  responsed.each do |m|
+				    rule.push([m.date_d.strftime('%Y-%m-%d'),m.ClickNum])
+				  end
+				  
+				  data_x = Array.new
+				  data_click = Array.new
+				  rule.each do |r|
+				    data_x.push(r[0])
+				    data_click.push(r[1])
+				  end
+				  @data_x.push(data_x)
+				  @data_click.push(data_click)
+			 end
+			 @datax = Array.new
+			 @data_x.each do |x|
+			   @datax |= x
+			 end
+    @h = LazyHighCharts::HighChart.new('graph') do |f|
+      f.options[:chart][:defaultSeriesType] = "column"
+      (0..@id_array.size-1).each do |i| 
+        f.series(:name => "template#{@id_array[i].CampaignId}", :data=> @data_click[i] )
+      end
+      f.options[:title][:text] = '近30天clicks分析报告'      
+      f.options[:xAxis][:categories] = @datax
+      f.options[:legend][:layout] = 'horizontal' #'vertical'
+    end 
+
+    return @report_click,@h
 end
 
 def get_report_array(id)
