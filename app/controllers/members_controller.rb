@@ -2,7 +2,7 @@ class MembersController < ApplicationController
 
   def index
     @list = List.find(params[:list_id])
-    @members = @list.members.paginate(:page => params[:page], :per_page => 20)
+    @members = @list.members.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show

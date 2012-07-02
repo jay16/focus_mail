@@ -1,0 +1,4 @@
+$("#report_clicks").html("<%= j render "click" %>");
+
+window.scrollTo(0,document.body.scrollHeight);
+$("#report_table").focus();

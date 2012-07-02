@@ -1,0 +1,25 @@
+<h1>邮件打开分析</h1>
+<%= link_to 'Report', {:controller=>'report',:action=>'track'}, :remote => true, :class => 'btn btn-mini btn-primary' %>
+<div id="report_tracks">
+</div>
+
+<table class="table table-striped" id="campaigns">
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Campaign</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tracks.each do |track| %>
+      <tr>
+        <td><%= track.member ? "#{track.member.name} <#{track.member.email}>" : "-" %></td>
+        <td><%= track.campaign ? link_to(track.campaign.name, track.campaign) : "-" %></td>
+        <td><%= track.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @tracks %>

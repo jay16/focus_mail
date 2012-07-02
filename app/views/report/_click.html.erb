@@ -1,0 +1,25 @@
+<%= high_chart("chart_id1", @h) %>
+
+<table id="report_table" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Template</th>
+      <th>Members</th>
+      <th>Tracks</th>
+      <th>Clickers</th>
+      <th>Clicks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @report_click.each do |report| %>
+      <tr>
+        <td><%= report[0] %></td>
+        <td><%= report[1] %></td>
+        <td><%= report[2] %></td>
+        <td><%= report[3] %></td>
+        <td><%= report[4] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

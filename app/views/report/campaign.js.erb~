@@ -1,0 +1,3 @@
+$("#form").html("<%= j render "campaign" %>").hide().fadeIn();
+
+$("#report_table").focus();

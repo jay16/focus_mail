@@ -1,5 +1,7 @@
 <h1>链接点击分析</h1>
 
+<%= link_to 'Report', {:controller=>'report',:action=>'click'}, :remote => true, :class => 'btn btn-mini btn-primary' %>
+
 <table class="table table-striped" id="campaigns">
   <thead>
     <tr>
@@ -21,3 +23,6 @@
 </table>
 
 <%= will_paginate @clicks %>
+
+<div id="report_clicks">
+</div>

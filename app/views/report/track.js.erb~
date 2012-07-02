@@ -1,0 +1,1 @@
+$("#report_tracks").html("<%= j render "track" %>");
