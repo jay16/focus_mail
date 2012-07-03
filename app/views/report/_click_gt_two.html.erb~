@@ -10,7 +10,7 @@
     <tr>
       <th>MemName</th>
       <th>MemEmail</th>
-      <th>Campaign_id</th>
+
       <th>LinkUrl</th>
       <th>ClickCount</th>
     </tr>

@@ -1,6 +1,6 @@
 $("#report_clicks").html("<%= j render "click" %>");
 
 window.scrollTo(0,document.body.scrollHeight);
-$("#click_gt_2").html("<%= j render "click_gt_two" %>");
+
 
 

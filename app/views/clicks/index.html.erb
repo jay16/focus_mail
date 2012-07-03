@@ -1,14 +1,9 @@
-<h1>链接点击分析</h1>
-
-<%= link_to 'Campaigns Report', {:controller=>'report',:action=>'click_gt_two'}, :remote => true, :class => 'btn btn-mini btn-primary' %>
+<h1>链接点击(clicks)分析</h1>
 
 
+<%= render "clicks_report" %>
 
-<%= render "campaign_report" %>
 
-<div id="campaign_report"></div>
-<div id="report_clicks"></div>
-<div id ="click_gt_2"></div>
-<div id ="click_list"></div>
+<div id ="click_form"></div>
 
 

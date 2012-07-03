@@ -1,1 +1,3 @@
 $("#report_tracks").html("<%= j render "track" %>");
+
+window.scrollTo(0,document.body.scrollHeight);

@@ -1,7 +1,11 @@
 <div id="report_title" style="margin-bottom: 20px">
+ <% if @isCampare %>
 		<h2 style="display:inline"> Campaigns对比分析打开(tracks)数据： </h2>
+ <% else %>
+  <h2 style="display:inline"> <%= @report_track[0][0] %>打开(tracks)数据分析： </h2>
+ <% end %>
 		<div style="float:right">
-				  <a onclick="$('#report_tracks').fadeOut().html('');" class='btn btn-primary'>back</a>
+				  <a onclick="$('#track_form').fadeOut().html('');" class='btn btn-primary'>back</a>
 				</div>
 </div>
 
