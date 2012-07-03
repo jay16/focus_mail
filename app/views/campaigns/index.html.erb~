@@ -2,7 +2,7 @@
 <div id="templates_title" style="margin-bottom: 20px">
 <h1  style="display:inline"><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
   <div style="float:right">
-    <%= link_to 'Add a Campaign', new_campaign_path, :class => 'btn', remote: true %>
+    <%= link_to 'Add a Campaign', new_campaign_path, :class => 'btn btn-primary', remote: true %>
   </div>
 </div>
 
@@ -27,6 +27,7 @@
 
 <hr />
 
+<% javascript "paignation" %>
 <div id="form">
 </div>
 

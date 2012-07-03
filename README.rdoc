@@ -34,13 +34,10 @@ By IntFocus
   <%= link_to_function "back","history.go(-1)", :class => 'btn btn-primary' %>
   <%= text_field_tag 'id', "content", :size => 34, :class => "text_field" %>
 
-
     @i = Date.parse('2001-01-01')
     @end = Date.parse('2015-12-31')
     @week = @i.strftime("%V")
-
     @quarter = @i.month/4 +1
-    
     while @i <= @end do
       date = DimDate.new
       date.date_m = @i.month
@@ -51,6 +48,8 @@ By IntFocus
       date.date_s = @i.strftime("%Y-%m-%d")
       date.date_w = @i.wday
       date.save
-   
       @i += 1
     end
+    
+  NoMethodError (undefined method `paginate' for #<Array:0xa339ca8>):
+  #require "will_paginate/array"

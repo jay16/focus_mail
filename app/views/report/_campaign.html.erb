@@ -4,7 +4,7 @@
 				  <a onclick="$('#form').fadeOut().html('');" class='btn btn-primary'>back</a>
 				</div>
 </div>
-size:<%= @responsed.size %><br>
+
 
 <%= high_chart("chart_id1", @h) %>
 
@@ -12,22 +12,22 @@ size:<%= @responsed.size %><br>
   <thead>
     <tr>
       <th>Template</th>
-      <th>Create_at</th>
+      <th>Members</th>
       <th>Tracks</th>
+      <th>Clickers</th>
       <th>Clicks</th>
     </tr>
   </thead>
   <tbody>
-    <% @rule.first(20).each do |rule| %>
+    <% @report_click.each do |report| %>
       <tr>
-        <td><%= @campaign_name %></td>
-        <td><%= rule[0] %></td>
-        <td><%= rule[1] %></td>
-        <td><%= rule[2] %></td>
+        <td><%= report[0] %></td>
+        <td><%= report[1] %></td>
+        <td><%= report[2] %></td>
+        <td><%= report[3] %></td>
+        <td><%= report[4] %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-
-
+<%= render "click_qt_2" %>

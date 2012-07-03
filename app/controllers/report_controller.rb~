@@ -1,38 +1,65 @@
 #encoding: utf-8
 class ReportController < ApplicationController
-
+  require "will_paginate/array"
 #活动分析报表
   def campaign
     @campaign_id = params[:id]
+    @report_click = get_campaign_report_by_id(@campaign_id)
     @campaign_name = Campaign.find(@campaign_id).name 
-    @first = Track.find(:all,
-                     :select => "min(tracks.created_at) AS FirstCreate",
-                     :conditions => ["tracks.campaign_id = ?", @campaign_id])[0].FirstCreate
-    @end = @first + 30
-    @responsed = DimDate.find(:all,
-      :select => "date_d,count(tracks.id) AS TrackNum,count(clicks.id) AS ClickNum",
-      :joins => "LEFT JOIN tracks ON date(tracks.created_at) = date(dim_dates.date_d) LEFT JOIN clicks ON date(clicks.created_at) = date(dim_dates.date_d)",
-      :conditions => ["tracks.campaign_id = ? and clicks.campaign_id = ?", @campaign_id, @campaign_id],  
+
+    @responsed1 = DimDate.find(:all,
+      :select => "date_d,count(tracks.id) AS TrackNum",
+      :joins => "LEFT JOIN tracks ON date(tracks.created_at) = date(dim_dates.date_d)",
+      :conditions => ["tracks.campaign_id = ?", @campaign_id],  
       :group => "date_d")
-    #["tracks.campaign_id = ? and clicks.campaign_id = ?", @campaign_id, @campaign_id],            
-    #["date(date_d) >= date('#{@first}') and date(date_d) <= date('#{@end}')"]
-    #and tracks.campaign_id = #{@campaign_id}
-    #and clicks.campaign_id = #{@campaign_id}
-    @rule = Array.new
-    @responsed.each do |m|
-      @rule.push([m.date_d.strftime("%Y-%m-%d"),m.TrackNum.to_i,m.ClickNum])
+
+    @rule1 = Array.new
+    @responsed1.each do |m|
+      @rule1.push([m.date_d.strftime("%Y-%m-%d"),m.TrackNum])
+    end
+    @responsed2 = DimDate.find(:all,
+      :select => "date_d,count(clicks.id) AS ClickNum",
+      :joins => "LEFT JOIN clicks ON date(clicks.created_at) = date(dim_dates.date_d)",
+      :conditions => ["clicks.campaign_id = ?",@campaign_id],  
+      :group => "date_d")
+
+    @rule2 = Array.new
+    @responsed2.each do |m|
+      @rule2.push([m.date_d.strftime("%Y-%m-%d"),m.ClickNum])
     end
     
-    @mydata = ReportData2.new(@rule)
+    @data_track = Array.new
+    @data_x1 = Array.new
+    @rule1.each do |r|
+      @data_x1.push(r[0])
+      @data_track.push(r[1])
+    end
+    @data_click = Array.new
+    @data_x2 = Array.new
+    @rule2.each do |r|
+      @data_x2.push(r[0])
+      @data_click.push(r[1])
+    end 
+    @data_x = Array.new
+    @data_x =  @data_x1|@data_x2 
+    
     @h = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:chart][:defaultSeriesType] = "column"
-      f.series(:name => 'Clicks', :data=> @mydata.get_y1 )
-      f.series(:name => 'Tracks', :data=> @mydata.get_y2 )
+      f.series(:name => 'Clicks', :data=> @data_click )
+      f.series(:name => 'Tracks', :data=> @data_track )
       f.options[:title][:text] = '近30天campaign分析报告'      
-      f.options[:xAxis][:categories] = @mydata.get_report_xAxis
+      f.options[:xAxis][:categories] = @data_x
       f.options[:legend][:layout] = 'horizontal' #'vertical'
     end 
     
+    
+    @click_qt_2 = Click.find(:all,
+      :select => "*,COUNT(DISTINCT link_id) AS ReCount,members.name AS MemName,members.email AS MemEmail,links.url AS LinkUrl",
+      :joins => "LEFT JOIN members ON clicks.member_id = members.id LEFT JOIN links ON clicks.link_id = links.id",
+      :conditions => ["clicks.campaign_id = 3"],
+      :group => "member_id",
+      :having =>"COUNT(link_id) >= 2")
+    @click_qt_2 =@click_qt_2.paginate(:page => params[:page], :per_page => 5)
 				respond_to do |format|
 				  format.js
 				end
@@ -40,19 +67,16 @@ class ReportController < ApplicationController
 
 #点击分析报表
   def click
-    @click = "Click"
-    @entry = "clicks"
-    @report_click,@h = get_analyze(@table_name,@entry)
+    @report_click,@h = get_analyze_report("Click","clicks")
      
 				respond_to do |format|
 				  format.js
 				end
 		end
 		
+#打开分析报表	
 		def track
-	   @track = "Track"
-				@entry = "tracks"
-				@report_track,@h = get_analyze(@track,@entry)
+				@report_track,@h = get_analyze_report("Track","tracks")
 				
 				respond_to do |format|
 				  format.js
@@ -60,7 +84,7 @@ class ReportController < ApplicationController
 		end
 end
 
-def get_analyze(table,entry)
+def get_analyze_report(table,entry)
 
     @id_array=case table
     when "Click"
@@ -74,7 +98,7 @@ def get_analyze(table,entry)
 				@data_x = Array.new
 				@data_click = Array.new
 				@id_array.each do |template_id| 
-						@report_click.push(get_report_array(template_id.CampaignId)) 
+						@report_click.push(get_campaign_report_by_id(template_id.CampaignId)) 
 						
 				  responsed = DimDate.find(:all,
 				    :select => "date_d,count(#{entry}.id) AS ClickNum",
@@ -105,7 +129,7 @@ def get_analyze(table,entry)
       (0..@id_array.size-1).each do |i| 
         f.series(:name => "template#{@id_array[i].CampaignId}", :data=> @data_click[i] )
       end
-      f.options[:title][:text] = '近30天clicks分析报告'      
+      f.options[:title][:text] = "近30天#{entry}分析报告"      
       f.options[:xAxis][:categories] = @datax
       f.options[:legend][:layout] = 'horizontal' #'vertical'
     end 
@@ -113,7 +137,7 @@ def get_analyze(table,entry)
     return @report_click,@h
 end
 
-def get_report_array(id)
+def get_campaign_report_by_id(id)
     @campaign_id = id
     @campaign_name = Campaign.find(@campaign_id).name
     #总名单人数
@@ -135,61 +159,8 @@ def get_report_array(id)
                      :conditions => ["clicks.campaign_id = ?", @campaign_id])[0].MemberCount
                      
     @report_array = Array.new
-    @report_array.push(@campaign_name,@total_members,@total_tracks,@total_clickers,@total_clicks)
+    @report_array.push([@campaign_name,@total_members,@total_tracks,@total_clickers,@total_clicks])
     
     return @report_array
-end
-#
-class ReportData3
-  @y = Array.new
-  @xAxis = Array.new
-  def initialize(data_from,count)
-    y = Array.new
-    xAxis = Array.new
-    
-    data_from.each do |y|
-      xAxis.push(y[0])
-      temp = Array.new
-      (1..count-1).each { |i|  temp.push(y[i]) }
-      y.push(temp)
-    end
-    @y=y
-    @xAxis=xAxis
-  end
-  def get_y
-    return @y
-  end
-  def get_report_xAxis
-    return @xAxis
-  end
-end
-
-class ReportData2
-  @y1 = Array.new
-  @xAxis = Array.new
-  @y2 = Array.new
-  def initialize(data_from)
-    y1 = Array.new
-    xAxis = Array.new
-    y2 = Array.new
-    
-    data_from.each do |y|
-      y1.push(y[1])
-      y2.push(y[2])
-      xAxis.push(y[0])
-    end
-    @y1=y1
-    @y2=y2
-    @xAxis=xAxis
-  end
-  def get_y1
-    return @y1
-  end
-  def get_y2
-    return @y2
-  end
-  def get_report_xAxis
-    return @xAxis
-  end
 end
 
