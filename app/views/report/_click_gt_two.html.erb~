@@ -1,0 +1,41 @@
+<div id="report_title" style="margin-bottom: 20px">
+		<h2 style="display:inline">Template<%= @click_gt_2[0].campaign_id %> 共<%= @click_gt_2_count %>人次点击链接超过２次：</h2>
+		<div style="float:right">
+				  <a onclick="$('#click_gt_2').fadeOut().html('');" class='btn btn-primary'>back</a>
+				</div>
+</div>
+
+<table id="report_table" class="table table-striped">
+  <thead>
+    <tr>
+      <th>MemName</th>
+      <th>MemEmail</th>
+      <th>Campaign_id</th>
+      <th>LinkUrl</th>
+      <th>ClickCount</th>
+    </tr>
+  </thead>
+  <tbody>
+					<% @click_gt_2.each do |click| %>
+					<tr>
+					<td><%= click.MemName %></td>
+					<td><%= click.MemEmail %></td>
+
+					<td><%= click.LinkUrl %></td>
+					<td><%= click.ReCount %></td>
+					 </tr>
+					<% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @click_gt_2, :render => 'WillPaginate::LinkRender' %>
+
+<script>
+$(function() {
+  $(".pagination a").live("click", function() {
+    $(".pagination").html("data is loading...");
+    $.get(this.href, null, null, "script");
+    return false;
+  });
+});
+</script>

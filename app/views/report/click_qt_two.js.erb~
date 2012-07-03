@@ -1,0 +1,2 @@
+$("#click_qt_two").html("<%= j render "click_qt_two" %>").hide().fadeIn();
+

@@ -1,10 +1,11 @@
 #encoding: utf-8
 class ReportController < ApplicationController
   require "will_paginate/array"
+  
 #活动分析报表
   def campaign
     @campaign_id = params[:id]
-    @report_click = get_campaign_report_by_id(@campaign_id)
+    @campaign_report = get_campaign_report_by_id(@campaign_id)
     @campaign_name = Campaign.find(@campaign_id).name 
 
     @responsed1 = DimDate.find(:all,
@@ -52,15 +53,6 @@ class ReportController < ApplicationController
       f.options[:legend][:layout] = 'horizontal' #'vertical'
     end 
     
-    
-    @click_qt_2 = Click.find(:all,
-      :select => "*,COUNT(DISTINCT link_id) AS ReCount,members.name AS MemName,members.email AS MemEmail,links.url AS LinkUrl",
-      :joins => "LEFT JOIN members ON clicks.member_id = members.id LEFT JOIN links ON clicks.link_id = links.id",
-      :conditions => ["clicks.campaign_id = 3"],
-      :group => "member_id",
-      :having =>"COUNT(link_id) >= 2")
-    @click_qt_2_count = @click_qt_2.size
-    @click_qt_2 = @click_qt_2.paginate(:page => params[:page], :per_page => 5)
 				respond_to do |format|
 				  format.js
 				end
@@ -69,12 +61,36 @@ class ReportController < ApplicationController
 #点击分析报表
   def click
     @report_click,@h = get_analyze_report("Click","clicks")
+    
+    @click_gt_2 = Click.find(:all,
+				    :select => "*,COUNT(DISTINCT link_id) AS ReCount,members.name AS MemName,members.email AS MemEmail,links.url AS LinkUrl",
+				    :joins => "LEFT JOIN members ON clicks.member_id = members.id LEFT JOIN links ON clicks.link_id = links.id",
+				    :conditions => ["clicks.campaign_id = 3"],
+				    :group => "member_id",
+				    :having =>"COUNT(link_id) >= 2")
+				@click_gt_2_count = @click_gt_2.size
+				@click_gt_2 = @click_gt_2.paginate(:page => params[:page], :per_page => 5)
      
 				respond_to do |format|
 				  format.js
 				end
 		end
 		
+		def click_gt_two
+		  @campaign_id = params[:campaign_id]
+    @click_gt_2 = Click.find(:all,
+				    :select => "*,COUNT(DISTINCT link_id) AS ReCount,members.name AS MemName,members.email AS MemEmail,links.url AS LinkUrl",
+				    :joins => "LEFT JOIN members ON clicks.member_id = members.id LEFT JOIN links ON clicks.link_id = links.id",
+				    :conditions => ["clicks.campaign_id = ?", @campaign_id],
+				    :group => "member_id",
+				    :having =>"COUNT(link_id) >= 2")
+				@click_gt_2_count = @click_gt_2.size
+				@click_gt_2 = @click_gt_2.paginate(:page => params[:page], :per_page => 10)
+		 
+				respond_to do |format|
+				  format.js
+				end
+		end
 #打开分析报表	
 		def track
 				@report_track,@h = get_analyze_report("Track","tracks")
@@ -82,6 +98,18 @@ class ReportController < ApplicationController
 				respond_to do |format|
 				  format.js
 				end
+		end
+		
+		def click_list
+		  @campaign_id = params[:campaign_id]
+		  @clicks = Click.find(:all,
+		    :select => "members.name AS MemName,members.email AS MemEmail,links.url AS LinkUrl,campaigns.name AS CampaignName",
+		    :joins => "LEFT JOIN members ON members.id = clicks.member_id LEFT JOIN links ON links.id = clicks.link_id LEFT JOIN campaigns ON campaigns.id = clicks.campaign_id",
+		    :conditions => ["clicks.campaign_id = ?", @campaign_id]).paginate(:page => params[:page], :per_page => 10)
+		  
+				respond_to do |format|
+				  format.js
+				end		  
 		end
 end
 
@@ -160,7 +188,7 @@ def get_campaign_report_by_id(id)
                      :conditions => ["clicks.campaign_id = ?", @campaign_id])[0].MemberCount
                      
     @report_array = Array.new
-    @report_array.push([@campaign_name,@total_members,@total_tracks,@total_clickers,@total_clicks])
+    @report_array.push(@campaign_name,@total_members,@total_tracks,@total_clickers,@total_clicks)
     
     return @report_array
 end

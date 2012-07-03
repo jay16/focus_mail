@@ -27,7 +27,8 @@
 
 <hr />
 
-<% javascript "paignation" %>
 <div id="form">
+ <div id="campaign_report"></div>
+ <div id="click_report"></div>
 </div>
 

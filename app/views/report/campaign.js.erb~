@@ -1,3 +1,5 @@
-$("#form").html("<%= j render "campaign" %>").hide().fadeIn();
+$("#campaign_report").html("<%= j render "campaign" %>").hide().fadeIn();
+$("#click_report").html("<%= j render "click_qt_2" %>").hide().fadeIn();
 
+window.scrollTo(0,document.body.scrollHeight);
 $("#report_table").focus();
