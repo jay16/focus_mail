@@ -24,7 +24,7 @@
         <td><%= link_to '名单', {:controller=>'report',:action=>'click_list',:campaign_id => report[4] }, :remote => true, :class => 'btn btn-primary' %></td>
       <td><%= link_to '潜在客户', {:controller=>'report',:action=>'click_gt_two',:campaign_id => report[4] }, :remote => true, :class => 'btn btn-primary' %></td>
         <% if @isFirst %>
-        <td><%= link_to '对比报表', {:controller=>'report',:action=>'ｃｌｉｃｋ'}, :remote => true, :class => 'btn btn-primary' %></td> 
+        <td><%= link_to '对比报表', {:controller=>'report',:action=>'click'}, :remote => true, :class => 'btn btn-primary' %></td> 
         <% @isFirst = false %>
         <% end %>
       </tr>

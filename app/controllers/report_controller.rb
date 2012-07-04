@@ -84,11 +84,11 @@ class ReportController < ApplicationController
 		def click_gt_two
 		  @campaign_id = params[:campaign_id]
     @click_gt_2 = Click.find(:all,
-				    :select => "*,COUNT(DISTINCT link_id) AS ReCount,members.name AS MemName,members.email AS MemEmail,links.url AS LinkUrl",
-				    :joins => "LEFT JOIN members ON clicks.member_id = members.id LEFT JOIN links ON clicks.link_id = links.id",
-				    :conditions => ["clicks.campaign_id = ?", @campaign_id],
-				    :group => "member_id",
-				    :having =>"COUNT(link_id) >= 2")
+				  :select => "*,COUNT(DISTINCT link_id) AS ReCount,members.name AS MemName,members.email AS MemEmail,links.url AS LinkUrl",
+				  :joins => "LEFT JOIN members ON clicks.member_id = members.id LEFT JOIN links ON clicks.link_id = links.id",
+		    :conditions => ["clicks.campaign_id = ?", @campaign_id],
+		    :group => "member_id",
+		    :having =>"COUNT(link_id) >= 2")
 				@click_gt_2_count = @click_gt_2.size
 				@click_gt_2 = @click_gt_2.paginate(:page => params[:page], :per_page => 10)
 		 
@@ -182,6 +182,8 @@ def get_analyze_report(table,entry,campaign_id)
 				  end
       f.options[:title][:text] = "近30天#{entry}分析报告"      
       f.options[:xAxis][:categories] = @data_x
+      f.options[:xAxis][:lineColor] = "#ff0000"
+      f.options[:legend][:backgroundColor] = '#ffffff'
       f.options[:legend][:layout] = 'horizontal' #'vertical'
     end 
 

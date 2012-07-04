@@ -24,4 +24,14 @@
 </table>
 
 
-<%= will_paginate @tracks %>
+<%= will_paginate @tracks, :render => 'WillPaginate::LinkRender' %>
+
+<script>
+$(function() {
+  $(".pagination a").live("click", function() {
+    $(".pagination").html("data is loading...");
+    $.get(this.href, null, null, "script");
+    return false;
+  });
+});
+</script>

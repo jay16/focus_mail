@@ -1,7 +1,5 @@
-<h1>邮件打开(tracks)分析</h1>
-
-
+<h1>链接点击(clicks)分析</h1>
 
 <%= render "tracks_report" %>
 
-<div id="track_list"></div>
+<div id="track_form"></div>

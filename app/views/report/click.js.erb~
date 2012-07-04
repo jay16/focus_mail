@@ -1,4 +1,4 @@
-$("#report_clicks").html("<%= j render "click" %>");
+$("#click_form").html("<%= j render "click" %>");
 
 window.scrollTo(0,document.body.scrollHeight);
 

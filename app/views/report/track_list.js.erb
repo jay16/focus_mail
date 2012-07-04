@@ -1,1 +1,3 @@
-$("#track_form").html("<%= j render "track_list" %>");
+$("#track_form").html("<%= j render "track_list" %>").hide().fadeIn();
+
+window.scrollTo(0,document.body.scrollHeight);
