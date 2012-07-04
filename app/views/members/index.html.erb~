@@ -25,6 +25,5 @@
 <%= will_paginate @members %>
 
 <form id="addmember">
- <%= render 'form' %>
 </form>
 

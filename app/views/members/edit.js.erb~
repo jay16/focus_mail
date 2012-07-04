@@ -1,4 +1,4 @@
 $("#addmember").html("<%= j render 'form' %>").fadeIn();
 
-$("#list_submit").focus();
-$("#list_submit").focus();
+$("#member_submit").focus();
+$("#member_name").focus();

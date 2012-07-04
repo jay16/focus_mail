@@ -16,7 +16,6 @@
       <li><%= link_to "邮件打开分析", tracks_path %></li>
     </ul>
   </div>
-  <%= render 'layouts/footer' %>
 </div>
 
-
+<%= render 'layouts/footer' %>
