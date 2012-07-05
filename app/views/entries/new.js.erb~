@@ -1,13 +1,14 @@
 $("#<%= dom_id @template %> .template_form").html("<%= j render "form" %>");
-$("#<%= dom_id @template %> select").change(function () {
-  var str = "";
-  str += $(this).val();
-  if(str == "select" || str == "multiselect"){
-    $("#<%= dom_id @template %>_collection").show();
-  } else {
-    $("#<%= dom_id @template %>_collection").hide();
-  }
-});
+
+//$("#<%= dom_id @template %> select").change(function () {
+//  var str = "";
+//  str += $(this).val();
+//  if(str == "select" || str == "multiselect"){
+//    $("#<%= dom_id @template %>_collection").show();
+//  } else {
+//    $("#<%= dom_id @template %>_collection").hide();
+//  }
+//});
 
 $("#new_entry #entry_submit").focus();
 $("#new_entry #entry_name").focus();

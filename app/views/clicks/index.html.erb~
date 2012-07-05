@@ -2,7 +2,12 @@
 
 <%= render "clicks_report" %>
 
+<div id ="click_form">
+<img src="/waitting.gif" id="waitting" />
 
-<div id ="click_form"></div>
+<script type="text/javascript">
+ $("#waitting").addClass("hidden");
+</script>
+</div>
 
 
