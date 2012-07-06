@@ -1,2 +1,123 @@
-<%= flash[:notice] %>
-<h1>Focus Mail</h1>
+
+<!--style -->
+<style type="text/css">
+#pageBody {width:60em;
+           height:43em;
+           font-family:"sans-serif";
+           margin:0 auto;    
+           //background-color:blue;
+}
+.toggle{margin-top:13px;
+        padding-top:5px;
+}         
+.article{width:57em;
+         height:40em;
+         margin:0 auto 0 auto;
+        // background-color:red;
+         }
+
+/*toggle use the class*/
+.overflow-y{overflow-y:scroll;}
+.border-right-radius{
+     -moz-border-top-right-radius:50px;
+     -moz-border-bottom-right-radius:50px;
+     -webkit-border-top-right-radius:50px;
+     -webkit-border-bottom-right-radius:50px;
+     border-top-right-radius:50px;
+     border-bottom-right-radius:50px;
+     }
+h2 { background-color:#C0DEED;
+     width:180px;
+     -moz-border-top-right-radius:50px;
+     -moz-border-bottom-right-radius:50px;
+     -webkit-border-top-right-radius:50px;
+     -webkit-border-bottom-right-radius:50px;
+     border-top-right-radius:50px;
+     border-bottom-right-radius:50px;
+     color: #000;
+     text-shadow: 1px 1px rgba(58, 32, 7,0.2),
+                  2px 2px rgba(58, 32, 7,0.2),
+                  3px 3px rgba(58, 32, 7,0.2),
+                  4px 4px rgba(58, 32, 7,0.2),
+                  5px 5px rgba(58, 32, 7,0.2),
+                  6px 6px rgba(58, 32, 7,0.2);
+  }
+h2:hover{cursor:pointer;
+         width:250px;
+         letter-spacing:8px;
+         }
+.km-info{width:20em;
+  //background-color:purple;
+  }
+.article h3+p{text-indent:2em;color:gray;width:45em;}
+.article h3{cursor:pointer;
+    width:20em;
+    padding-left:15px;
+    background-color:#C0DEED;
+    -moz-border-top-right-radius:50px;
+    -moz-border-bottom-right-radius:50px;
+    -webkit-border-top-right-radius:50px;
+    -webkit-border-bottom-right-radius:50px;
+     border-top-right-radius:50px;
+     border-bottom-right-radius:50px;
+     -moz-border-top-left-radius:50px;
+    -moz-border-bottom-left-radius:50px;
+    -webkit-border-top-left-radius:50px;
+    -webkit-border-bottom-left-radius:50px;
+     border-top-left-radius:50px;
+     border-bottom-left-radius:50px;
+      }
+</style>
+<div id="pageBody" >
+    <div class="toggle">
+						 <h2>亮点功能介绍 &raquo</h2><br />
+				 </div>
+ <div class="article">
+				<div class="km-info">
+					<h3>管理各个社交网络账户</h3>
+					<p>我们将多个社交网络融合在一起，为您提供跨平台多账户的管理功能。</p>		
+				</div>
+				<div class="km-info">
+					<h3>发掘有效客户群</h3>
+					<p>我们提供高级的搜索定制功能，凭借专业的搜索技术和有效的信息分析</p>		
+				</div>
+				<div class="km-info">
+					<h3>提高客户忠诚度</h3>
+					<p>提高您在社交网络中的交互程度。通过浏览整理好的消息</p>
+				</div>
+				<div class="km-info">
+					<h3>高效管理联系人</h3>
+					<p>方便的管理您所有社交账户中的联系人，了解他们的最新活动好友，</p>		
+				</div>
+				
+ </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+     $("p").hide();
+     $(".article").css("overflow","auto");
+     $('.toggle').click(function(){  
+       if($("p:visible").length>=3)
+          $("p").hide(1000);
+        else{
+				      $("p:hidden").show(1000);
+				      $('.article').toggleClass("overflow-y");
+         }
+      });
+      $('.km-info').click(function(){
+       $p=$(this).find('p');
+       if($p.is(":visible")) $p.hide();
+       else                  $p.show();
+      });
+       
+   /*
+     $('.km-info').hover(
+      function(){$(this).find('p').show();},
+      function(){$(this).find('p').hide();}
+      );   
+   */   
+    
+  });  
+</script> 
+

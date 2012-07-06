@@ -1,21 +1,27 @@
+<style type="text/css">
+.nav-link:hover{
+  font-size: 130%;
+}
+</style>
 <div class="span3">
   <div class="well sidebar-nav">
     <h3>Sidebar</h3>
     <ul class="nav nav-list">
       <li class="nav-header">Demo</li>
-      <li><%= link_to "发邮件测试", generate_email_path %></li>
+      <li><%= link_to "发邮件测试", generate_email_path, class:"nav-link", id:"nav-generate-email" %></li>
       <li class="nav-header">Lists</li>
-      <li><%= link_to "用户列表", lists_path %></li>
+      <li><%= link_to "用户列表", lists_path, class:"nav-link", id:"nav-lists" %></li>
       <li class="nav-header">Templates</li>
-      <li><%= link_to "邮件模板", templates_path %></li>
+      <li><%= link_to "邮件模板", templates_path, class:"nav-link", id:"nav-templates" %></li>
       <li class="nav-header">Campaigns</li>
-      <li><%= link_to "邮件组", campaigns_path %></li>
+      <li><%= link_to "邮件组", campaigns_path, class:"nav-link", id:"nav-campaigns" %></li>
       <li class="nav-header">Clicks</li>
-      <li><%= link_to "链接点击分析", clicks_path %></li>
+      <li><%= link_to "链接点击分析", clicks_path, class:"nav-link", id:"nav-clicks" %></li>
       <li class="nav-header">Tracks</li>
-      <li><%= link_to "邮件打开分析", tracks_path %></li>
+      <li><%= link_to "邮件打开分析", tracks_path, class:"nav-link", id:"nav-tracks" %></li>
     </ul>
   </div>
+  <%= render 'layouts/footer' %>
 </div>
 
-<%= render 'layouts/footer' %>
+
