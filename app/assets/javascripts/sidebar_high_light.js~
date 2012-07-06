@@ -6,7 +6,7 @@
 	switch(arr[1])
   {
    case "":
-			  $(".nav-home").css({"font-size":"140%","color":"blue"});
+			  $(".nav-home").css({"font-size":"140%","color":"white"});
 				 break;
 			case "generate_email":
 					setStyle("#nav-generate-email");

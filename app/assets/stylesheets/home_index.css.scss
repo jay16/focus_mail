@@ -1,0 +1,51 @@
+@mixin  border_radius($tb:top, $rl:right){
+		-moz-border-#{$tb}-#{$rl}-radius:50px;
+		-webkit-border-#{$tb}-#{$rl}-radius:50px;
+		border-#{$tb}-#{$rl}-radius:50px;
+}
+
+#pageBody {width:60em;
+           height:43em;
+           //font-family:"sans-serif";
+           margin:0 auto;    
+}
+.toggle{margin-top:13px;
+        padding-top:5px;
+}         
+
+//.overflow-y{overflow-y:scroll;}
+
+h2 { 
+     @include border_radius; 
+     @include border_radius(bottom);
+     background-color:#C0D0E0;
+     width:180px;
+     color: white;
+     text-shadow: 1px 1px rgba(58, 32, 7,0.2),
+                  2px 2px rgba(58, 32, 7,0.2),
+                  3px 3px rgba(58, 32, 7,0.2),
+                  4px 4px rgba(58, 32, 7,0.2),
+                  5px 5px rgba(58, 32, 7,0.2),
+                  6px 6px rgba(58, 32, 7,0.2);
+  &:hover{cursor:pointer;
+         width:250px;
+         letter-spacing:8px;
+         }
+}
+.km-info{width:20em;
+  }
+.article{width:57em;
+         height:40em;
+         margin:0 auto 0 auto;
+
+  h3+p{text-indent:2em;color:gray;width:45em;}
+  h3{cursor:pointer;
+    width:20em;
+    padding-left:15px;
+    background-color:#F4F5F3;
+    @include border_radius;
+    @include border_radius(bottom);
+    @include border_radius(top, left);
+    @include border_radius(bottom, left);
+    }
+}
