@@ -2,7 +2,7 @@
 
 <div id="pageBody" >
     <div class="toggle">
-						 <h2>亮点功能介绍 &raquo</h2><br />
+						 <h2>FocusMail介绍&raquo</h2><br />
 				 </div>
  <div class="article">
 				<div class="km-info">
@@ -30,7 +30,8 @@
 				</div>
 				<div class="km-info">
 					<h3>服务范围：</h3>
-					<p>FocusMail邮件群发平台主要应用于电子帐单、电子周刊、会员通知、服务推广、客户维护等邮件投递业务。方便，安全，高效是这项技术的基础，它不会限制您的活动，从而让您成功开展精准性邮件投递活动。而且更为重要的是：可以让您接触，激励，维系您的目标客户。
+					<p>FocusMail邮件群发平台主要应用于电子帐单、电子周刊、会员通知、服务推广、客户维护等邮件投递业务。<br>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp方便，安全，高效是这项技术的基础，它不会限制您的活动，从而让您成功开展精准性邮件投递活动。而且更为重要的是：可以让您接触，激励，维系您的目标客户。
 
 </p>		
 				</div>
@@ -40,10 +41,11 @@
 
 <script type="text/javascript">
   $(function(){
+     var pcount = $(".article .km-info").children("p").length;
      $("p").hide();
      $(".article").css("overflow","auto");
      $('.toggle').click(function(){  
-       if($("p:visible").length>=3)
+       if($("p:visible").length>pcount/2)
           $("p").hide(1000);
         else{
 				      $("p:hidden").show(1000);
@@ -54,15 +56,7 @@
        $p=$(this).find('p');
        if($p.is(":visible")) $p.hide();
        else                  $p.show();
-      });
-       
-   /*
-     $('.km-info').hover(
-      function(){$(this).find('p').show();},
-      function(){$(this).find('p').hide();}
-      );   
-   */   
-    
+      });   
   });  
 </script> 
 
