@@ -3,7 +3,10 @@
     <h3 style="display:inline"><%= template.name %> - <h5 style="display:inline"><%= template.file_name %></h5></h3>
     <div style="float:right" class="title">
     <div class="btn-group">
-    <a onclick='if($("#<%= dom_id template %> .entries_info").css("display")=="none") $("#<%= dom_id template %> .entries_info").css("display","block"); else $("#<%= dom_id template %> .entries_info").css("display","none");return false;' class="btn btn-mini">Entrie</a>
+    <% @info = template.entries && template.entries.present? ? "btn-info" : "" %>
+
+    <a id="<%= dom_id template %>_entries" onclick='if($("#<%= dom_id template %> .entries_info").css("display")=="none") $("#<%= dom_id template %> .entries_info").css("display","block"); else {$("#<%= dom_id template %> .entries_info").css("display","none");}return false;' class="btn btn-mini <%= @info %>">Entrie</a>
+
     
      <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
       Add a Entry <span class="caret"></span></a>
@@ -40,5 +43,4 @@
    <div class="template_form">
   </div>
 </div>
-
 

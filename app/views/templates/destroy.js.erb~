@@ -1,0 +1,3 @@
+$("#<%= dom_id @template %>").remove();
+
+$("#templates_info").html("<%= j render @templates %>");

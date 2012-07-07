@@ -1,27 +1,31 @@
-<%= form_tag('/send_email', method: 'post',class: 'form-horizontal') do %>
-  <label for="from_name">From Name:
-  <%= text_field_tag(:from_name, "name#{rand(1..100)}", :size => 100) %>
-  </label>
+<%= form_tag('/send_email', method: 'post', class:'form-horizontal') do %>
+<fieldset>
 
-  <label for="from_email">From Email:
-  <%= text_field_tag(:from_email, "test#{rand(1..100)}@test.com") %>
-  </label>
-  
-  <label for="subject">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSubject:
-  <%= text_field_tag(:subject, "Test Email #{Time.now}") %>
-  </label>
-  
-  <label for="to_email">&nbsp&nbsp&nbsp&nbsp&nbspTo Email:
-  <%= text_field_tag(:to_email, "neosoyn@gmail.com") %>
-  </label>
-  
-  <label for="amount">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspAmount:
-  <%= number_field_tag(:amount, 1, in: 1..100) %>
-  </label>
-  
-  <label for="body">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspbody:
-  <%= text_area_tag(:body, nil, size: '35x10') %>
-  </label>
-  <br />
-  <%= submit_tag("                                                                                                                                                                     Send" ,class: 'btn btn-primary') %>
+		<label for="from_name">From Name:
+		<%= text_field_tag :from_name, "name#{rand(1..100)}", :size=>170 %>
+		</label>
+		
+		<label for="from_email">From Email:
+		<%= text_field_tag(:from_email, "test#{rand(1..100)}@test.com", :size=>30) %>
+		</label>
+		
+		<label for="subject">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSubject:
+		<%= text_field_tag(:subject, "Test Email #{Time.now}") %>
+		</label>
+
+		<label for="to_email">&nbsp&nbsp&nbsp&nbsp&nbspTo Email:
+		<%= text_field_tag :to_email, "neosoyn@gmail.com" %>
+		</label>
+
+		<label for="amount">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspAmount:
+		<%= number_field_tag(:amount, 1, in: 1..100) %>
+		</label>
+  <div class="control-group">
+		<label for="body">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspbody:
+		<%= text_area_tag(:body, nil, rows:10, cols:30) %>
+		</label>
+		</div>
+		<%= submit_tag("Send" ,class: 'btn btn-primary') %>
+</fieldset>
 <% end %>
+

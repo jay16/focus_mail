@@ -34,6 +34,7 @@ class EntriesController < ApplicationController
 
   def create
     @entry = @template.entries.create(params[:entry])   
+    @templates = Template.all
     
      if deal_with_image_entry(@template,@entry,params[:image],true)
       @is_image = true

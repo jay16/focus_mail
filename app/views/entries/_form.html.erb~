@@ -37,7 +37,7 @@
 
     <div class="form-actions">
       <%= f.submit nil, :id => 'entry_submit', :class => 'btn btn-primary' %>
-      <a onclick="$('.template_form').show().fadeOut().html('');return false;", class='btn'>Cancel</a>
+      <a onclick='$("#<%= dom_id @template %> .template_form > form").show().fadeOut().replaceWith("<form/>");return false;', class='btn'>Cancel</a>
     </div>
   </fieldset>
 <% end %>
