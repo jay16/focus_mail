@@ -3,3 +3,4 @@ $("#<%= dom_id @entry %>").remove();
     $("#<%= dom_id @template %> .entries").css('display', 'none');
     $("#<%= dom_id @template %> #<%= dom_id @template %>_entries").each(function(){$(this).removeClass("btn-info");});
 <% end %>
+alert("hi");

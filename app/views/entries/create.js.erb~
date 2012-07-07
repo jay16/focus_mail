@@ -2,7 +2,8 @@ $("#<%= dom_id @template %> .entries").css('display', 'table');
 $('<%= j render @entry %>').appendTo($("#<%= dom_id @template %> .entries")).hide().fadeIn();
 $("#<%= dom_id @template %> .template_form").html("");
 
-<% if @template.entries.empty? %>
+
+<% if !@template.entries.empty? %>
 $("#<%= dom_id @template %> #<%= dom_id @template %>_entries").each(function(){$(this).addClass("btn-info");});
 <% end %>
 
