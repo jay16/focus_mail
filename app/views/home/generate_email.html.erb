@@ -1,21 +1,27 @@
 <%= form_tag('/send_email', method: 'post',class: 'form-horizontal') do %>
-  <%= label_tag(:from_name, "From Name:") %>
-  <%= text_field_tag(:from_name, "name#{rand(1..100)}") %>
+  <label for="from_name">From Name:
+  <%= text_field_tag(:from_name, "name#{rand(1..100)}", :size => 100) %>
+  </label>
 
-  <%= label_tag(:from_email, "From Email:") %>
+  <label for="from_email">From Email:
   <%= text_field_tag(:from_email, "test#{rand(1..100)}@test.com") %>
-
-  <%= label_tag(:subject, "Subject:") %>
+  </label>
+  
+  <label for="subject">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSubject:
   <%= text_field_tag(:subject, "Test Email #{Time.now}") %>
-
-  <%= label_tag(:to_email, "To Email:") %>
+  </label>
+  
+  <label for="to_email">&nbsp&nbsp&nbsp&nbsp&nbspTo Email:
   <%= text_field_tag(:to_email, "neosoyn@gmail.com") %>
-
-  <%= label_tag(:amount, "Amount:") %>
+  </label>
+  
+  <label for="amount">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspAmount:
   <%= number_field_tag(:amount, 1, in: 1..100) %>
-
-  <%= label_tag(:body, "body:") %>
-  <%= text_area_tag(:body, nil, size: '25x10') %>
+  </label>
+  
+  <label for="body">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspbody:
+  <%= text_area_tag(:body, nil, size: '35x10') %>
+  </label>
   <br />
-  <%= submit_tag("Send" ,class: 'btn btn-primary') %>
+  <%= submit_tag("                                                                                                                                                                     Send" ,class: 'btn btn-primary') %>
 <% end %>

@@ -11,3 +11,7 @@
 
 <div id="templates_form">
 </div>
+
+<script type="text/javascript">
+  $("#<%= dom_id template %> .entries_info").addClass("hidden");
+</script>

@@ -101,10 +101,10 @@ class EntriesController < ApplicationController
     if !image.nil?
       extension = File.extname(image.original_filename).underscore
       if is_create
-				    Dir.mkdir("./public/images/#{@template.id}") unless File.exist?("./public/images/#{@template.id}") 
-				    Dir.mkdir("./public/images/#{@template.id}/#{@entry.id}")
+				    Dir.mkdir("./public/entries/#{@template.id}") unless File.exist?("./public/entries/#{@template.id}") 
+				    Dir.mkdir("./public/entries/#{@template.id}/#{@entry.id}")
       end
-      store_dir = Rails.root.join("public","images","#{@template.id}","#{@entry.id}")
+      store_dir = Rails.root.join("public","entries","#{@template.id}","#{@entry.id}")
       timestamp = DateTime.now.strftime("%y%m%d%H%M%S") 
       store_path = "#{store_dir}/#{timestamp}#{extension}"
       File.open(store_path, "wb") do |f| 

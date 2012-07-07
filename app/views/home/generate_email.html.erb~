@@ -1,44 +1,27 @@
-<table>
 <%= form_tag('/send_email', method: 'post',class: 'form-horizontal') do %>
-<tr><thead><th>
-  <%= label_tag(:from_name, "From Name:") %>
- </th></thead></tr>
- <tr><tbody><td>
-  <%= text_field_tag(:from_name, "name#{rand(1..100)}") %>
- </td></tbody></tr>
- <tr><thead><th>
-  <%= label_tag(:from_email, "From Email:") %>
-  </th></thead></tr>
- <tr><tbody><td>
+  <label for="from_name">From Name:
+  <%= text_field_tag(:from_name, "name#{rand(1..100)}", :size => 100) %>
+  </label>
+
+  <label for="from_email">From Email:
   <%= text_field_tag(:from_email, "test#{rand(1..100)}@test.com") %>
- </td></tbody></tr>
- <tr><thead><th>
-  <%= label_tag(:subject, "Subject:") %>
-  </th></thead></tr>
- <tr><tbody><td>
+  </label>
+  
+  <label for="subject">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSubject:
   <%= text_field_tag(:subject, "Test Email #{Time.now}") %>
-	</td></tbody></tr>
-		<tr><thead><th>
-  <%= label_tag(:to_email, "To Email:") %>
-  </th></thead></tr>
- <tr><tbody><td>
+  </label>
+  
+  <label for="to_email">&nbsp&nbsp&nbsp&nbsp&nbspTo Email:
   <%= text_field_tag(:to_email, "neosoyn@gmail.com") %>
-	</td></tbody></tr>
-		<tr><thead><th
-  <%= label_tag(:amount, "Amount:") %>
-   </th> </thead></tr>
- <tr><tbody><td>
+  </label>
+  
+  <label for="amount">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspAmount:
   <%= number_field_tag(:amount, 1, in: 1..100) %>
-	</td></tbody></tr>
-		<tr><thead><th>
-  <%= label_tag(:body, "body:") %>
-   </th></thead></tr>
- <tr><tbody><td>
-  <%= text_area_tag(:body, nil, size: '25x10') %>
+  </label>
+  
+  <label for="body">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspbody:
+  <%= text_area_tag(:body, nil, size: '35x10') %>
+  </label>
   <br />
-  </td></tbody></tr>
-  	<tr><tbody><td>
-  <%= submit_tag("Send" ,class: 'btn btn-primary') %>
-   </td></tbody></tr>
+  <%= submit_tag("                                                                                                                                                                     Send" ,class: 'btn btn-primary') %>
 <% end %>
-</table>

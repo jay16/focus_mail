@@ -1,0 +1,7 @@
+
+
+alert("hi");
+
+$('<%= j render @template %>').appendTo('#templates_info').hide().fadeIn();
+
+$("#templates_form > form").replaceWith("<form/>");

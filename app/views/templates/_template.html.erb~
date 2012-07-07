@@ -3,7 +3,7 @@
     <h3 style="display:inline"><%= template.name %> - <h5 style="display:inline"><%= template.file_name %></h5></h3>
     <div style="float:right" class="title">
     <div class="btn-group">
-    <a onclick='$("#<%= dom_id template %> .entries_info").toggleClass("hidden");return false;' class="btn btn-mini">Entrie</a>
+    <a onclick='if($("#<%= dom_id template %> .entries_info").css("display")=="none") $("#<%= dom_id template %> .entries_info").css("display","block"); else $("#<%= dom_id template %> .entries_info").css("display","none");return false;' class="btn btn-mini">Entrie</a>
     
      <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
       Add a Entry <span class="caret"></span></a>
@@ -20,7 +20,7 @@
   </div>
   </div>
 
-  <div class="entries_info">
+  <div class="entries_info" style="display:none;">
     <% has_entries = template.entries && template.entries.present? %>
     <table class="table table-striped entries" style="display:<%= has_entries ? 'table' : 'none' %>">
       <thead>
@@ -40,8 +40,5 @@
    <div class="template_form">
   </div>
 </div>
-<script type="text/javascript">
-$(function(){
-  $(#"<%= dom_id template %> .entries_info").addClass("hidden");
-});
-</script>
+
+

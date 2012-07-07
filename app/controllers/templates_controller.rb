@@ -96,7 +96,7 @@ class TemplatesController < ApplicationController
   end
   
   def is_dir_empty(dir)
-    Dir.foreach(Rails.root.join("public/images","#{dir}")) do |d|
+    Dir.foreach(Rails.root.join("public/entries","#{dir}")) do |d|
       if d!="." and d!=".."
         return false 
       end
@@ -104,7 +104,7 @@ class TemplatesController < ApplicationController
     return true
   end
   def auto_check_template_img_dir
-    img_dir = Rails.root.join("public/images")
+    img_dir = Rails.root.join("public/entries")
     Dir.foreach(img_dir) do |dir|
        if dir!="." and dir!=".." and Template.find_by_id(dir.to_i).nil?
          FileUtils.remove_dir("#{img_dir}/#{dir}") if File.exists?("#{img_dir}/#{dir}")

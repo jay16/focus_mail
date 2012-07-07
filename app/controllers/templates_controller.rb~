@@ -96,7 +96,7 @@ class TemplatesController < ApplicationController
   end
   
   def is_dir_empty(dir)
-    Dir.foreach(Rails.root.join("public/images","#{dir}")) do |d|
+    Dir.foreach(Rails.root.join("public/entries","#{dir}")) do |d|
       if d!="." and d!=".."
         return false 
       end
