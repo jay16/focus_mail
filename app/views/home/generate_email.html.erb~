@@ -1,31 +1,35 @@
+<div id="report_title" style="margin-bottom: 20px">
+		<h1 style="display:inline"> 邮件发送测试 </h1>
+</div>
+<% @content = "亲爱的用户,\n\n　　您好，欢迎使用FocusMail邮件代发软件。\n\n　　FocusMail邮件代发由一支专业的营销技术团队为企业服务，结合用户需求、收件人群体特征策划最合适您的群发方案。\n\n　　专业的邮件营销技巧在节约企业人力物力的同时，更好的保证了邮件送达率和邮件营销效果。\n\n　　邮件点开率，链接点击率应有尽有并以图表对比形式分析，可以具体到邮箱列表，而不单单是一个数字，让你的邮件发送效果更加直观！\n\n　　希望您使用的开心！\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t--@IntFocus" %>
+		
 <%= form_tag('/send_email', method: 'post', class:'form-horizontal') do %>
 <fieldset>
-  <div class="control-group">
 		<label for="from_name">From Name:
-		<%= text_field_tag :from_name, "name#{rand(1..100)}", :size=>170 %>
-		</label>
-		</div>
-		<label for="from_email">From Email:
-		<%= text_field_tag(:from_email, "test#{rand(1..100)}@test.com", :size=>30) %>
+		<%= text_field_tag(:from_name, "name#{rand(1..100)}", class:'text_field span7') %>
 		</label>
 		
-		<label for="subject">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSubject:
-		<%= text_field_tag(:subject, "Test Email #{Time.now}") %>
+		<label for="from_email">From Email:
+		<%= text_field_tag(:from_email, "test#{rand(1..100)}@test.com", class:'text_field span7') %>
+		</label>
+		
+		<label for="subject"  style= "margin-left:27px;">Subject:
+		<%= text_field_tag(:subject, "Test Email #{Time.now}", class:'text_field span7') %>
 		</label>
 
-		<label for="to_email">&nbsp&nbsp&nbsp&nbsp&nbspTo Email:
-		<%= text_field_tag :to_email, "neosoyn@gmail.com" %>
+		<label for="to_email"  style= "margin-left:20px;">To Email:
+		<%= text_field_tag(:to_email, "neosoyn@gmail.com", class:'text_field span7') %>
 		</label>
 
-		<label for="amount">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspAmount:
-		<%= number_field_tag(:amount, 1, in: 1..100) %>
+		<label for="amount" style= "margin-left:27px;">Amount:
+		<%= number_field_tag(:amount, 1, in: 1..100, class:'text_field span7') %>
 		</label>
   <div class="control-group">
-		<label for="body">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspbody:
-		<%= text_area_tag(:body, nil, rows:10, cols:30) %>
+		<label for="body" style= "margin-left:45px;">body:
+		<%= text_area_tag(:body, "#{@content}", rows:16, class:'text_area span7') %>
 		</label>
 		</div>
-		<%= submit_tag("Send" ,class: 'btn btn-primary') %>
+		<%= submit_tag("Send", class: 'btn btn-primary', style:"margin-left:90px;") %>
 </fieldset>
 <% end %>
 

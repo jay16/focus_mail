@@ -24,10 +24,9 @@ module ApplicationHelper
       end
 
       source = source.gsub(/\$\|#{e.entry.name}\|\$/, v)
-      source = source.gsub("&gt;", ">")
-      source = source.gsub("&lt;", "<")
     end
-
+    source = source.gsub("&gt;", ">")
+    source = source.gsub("&lt;", "<")
     source
   end
 
