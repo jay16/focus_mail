@@ -95,6 +95,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    markaby (0.7.2)
+      builder (>= 2.0.0)
     mime-types (1.18)
     multi_json (1.3.4)
     mysql2 (0.3.11)
@@ -212,6 +214,7 @@ DEPENDENCIES
   guard-spork
   jquery-rails
   lazy_high_charts (~> 1.1.5)
+  markaby
   mysql2
   rails (= 3.2.3)
   remotipart (~> 1.0)

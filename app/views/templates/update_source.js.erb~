@@ -1,0 +1,3 @@
+$('#<%= dom_id @template %> .source').html("<%= j render "update_source" %>");
+$('#<%= dom_id @template %> .source').removeClass('hidden');
+

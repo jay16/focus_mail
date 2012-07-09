@@ -1,0 +1,6 @@
+<pre>
+<a onclick="$('#<%= dom_id @template %> .source').addClass('hidden');return false;", style="float:right;" class='btn btn-mini'>Cancel</a>
+<%= @dyna_content %>
+</pre>
+
+

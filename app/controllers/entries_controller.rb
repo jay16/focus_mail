@@ -1,7 +1,6 @@
 class EntriesController < ApplicationController
   before_filter :create_template, :only =>[:new, :new_image, :edit, :create, :update,
-                                           :destroy, :auto_create_email_template] 
-  after_filter :auto_create_email_template, :only => [:create, :edit, :update, :destroy]
+                                           :destroy] 
   
   def new
     @entry = @template.entries.build
@@ -93,11 +92,8 @@ class EntriesController < ApplicationController
   
   def deal_with_image_entry(template,entry,image,create_or_update)
     is_create = false; is_update = false;
-    if create_or_update 
-      is_create = true
-    else
-      is_update = true
-    end
+    create_or_update ? is_create = true : is_update = true
+
     if !image.nil?
       extension = File.extname(image.original_filename).underscore
       if is_create
@@ -119,28 +115,4 @@ class EntriesController < ApplicationController
       return false
     end
   end
-  
-  def auto_create_email_template
-    File.open(Rails.root.join("lib/emails","#{@template.file_name}.html.erb"),"w") do |file|
-      str = "<h1>$|Title|$</h1>\n\n"
-      str << "Hello $|NAME|$, Your Email is $|EMAIL|$, Subject is $|SUBJECT|$\n\n\n\n"
-      unless @template.entries.empty?
-				    str << "<ul>\n"
-				    @template.entries.each do |entry|
-				      if is_img_entry(entry)
-				        path = img_path(entry)
-				        str << %{<li><img src="#{path}" alt=#{entry.name} width="150" /></li>\n}
-				      else
-				        str << %{<li><a href="#{entry.default_value}" target="blank">#{entry.name}</a></li>\n}
-				      end
-				    end
-				    str << "</ul>\n\n\n"
-				  end
-      3.times{ str << "<br>\n" }
-      str << "@Intfocus"
-      file.write(str)
-      file.close
-    end
-  end
-
 end

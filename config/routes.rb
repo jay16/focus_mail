@@ -14,6 +14,7 @@ FocusMail::Application.routes.draw do
   resources :campaign_members
   resources :templates do
     get 'dyna_source', :on => :member
+    get 'update_source', :on => :member
     resources :entries do
         get 'new_image', :on => :collection
     end

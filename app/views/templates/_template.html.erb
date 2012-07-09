@@ -1,23 +1,38 @@
 <div id="<%= dom_id template %>" class="box" >
   <div class="template_info">
     <h3 style="display:inline"><%= template.name %> - <h5 style="display:inline"><%= template.file_name %></h5></h3>
-    <div style="float:right;" class="btn-group">
+    <div style="float:right;margin-top:-7px;" class="btn-toolbar">
 
+    <div class="btn-group">
     <% @info = template.entries && template.entries.present? ? "btn-info" : "" %>
     <a id="<%= dom_id template %>_entries" onclick='if($("#<%= dom_id template %> .entries_info").css("display")=="none") $("#<%= dom_id template %> .entries_info").css("display","block"); else {$("#<%= dom_id template %> .entries_info").css("display","none");}return false;' class="btn btn-mini <%= @info %>">Entrie</a>
-  
-
-     <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+    </div>
+    
+     <div class="btn-group" style="margin-left:-2px;">
+     <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="##">
       Add a Entry <span class="caret"></span></a>
       <ul class="dropdown-menu">
-      <li style="margin-left:40px;"><%= link_to 'link', new_template_entry_path(template.id), remote: true %></li>
-      <li style="margin-left:40px;"><%= link_to 'image', new_image_template_entries_path(template.id), remote: true %></li>
+      <li style="margin-left:20px;"><%= link_to 'link', new_template_entry_path(template.id), remote: true %></li>
+      <li style="margin-left:20px;"><%= link_to 'image', new_image_template_entries_path(template.id), remote: true %></li>
       </ul>
-
-      <%= link_to "Source", dyna_source_template_path(template.id), :remote => true, :class => 'btn btn-mini' %>
+     </div>
+     
+     <div class="btn-group" style="margin-left:-2px;">
+      <%= link_to 'Edit', edit_template_path(template), :class => 'btn btn-mini', remote: true %>  
+      </div>
       
-      <%= link_to 'Edit', edit_template_path(template), :class => 'btn btn-mini', remote: true %>      
+     <div class="btn-group" style="margin-left:-2px;">      
+     <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+      Source <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+      <li><%= link_to "View", dyna_source_template_path(template.id), :remote => true %></li>
+      <li><%= link_to "Update", update_source_template_path(template.id), :remote => true %></li></li>
+      </ul>
+    </div>
+    
+    <div class="btn-group" style="margin-left:-2px;">
       <%= link_to 'Destroy', template_path(template), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger', remote: true %>
+     </div>
     </div>
 
   </div>
@@ -42,7 +57,4 @@
    <div class="template_form">
   </div>
 </div>
-<script>
-$('.dropdown-toggle').dropdown()
-</script>
 

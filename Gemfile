@@ -12,6 +12,7 @@ gem 'spreadsheet'
 gem 'carrierwave'
 gem 'remotipart', '~> 1.0'
 gem 'lazy_high_charts', '~> 1.1.5' 
+gem 'markaby'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

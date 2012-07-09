@@ -10,8 +10,8 @@ module ApplicationHelper
 
   def replace_email_source(campaign_id, member_id)
     campaign = Campaign.find(campaign_id)
-    source = IO.readlines(Rails.root.join('lib/emails', "#{campaign.template.file_name}.html.erb")).join("").strip
-
+    mab = IO.readlines(Rails.root.join('lib/emails', "#{campaign.template.file_name}.html.erb")).join("").strip
+    source = eval(mab).to_s
     # replace all campaign_entries
     entries = campaign.valid_entries
     entries.each do |e|
@@ -24,6 +24,8 @@ module ApplicationHelper
       end
 
       source = source.gsub(/\$\|#{e.entry.name}\|\$/, v)
+      source = source.gsub("&gt;", ">")
+      source = source.gsub("&lt;", "<")
     end
 
     source

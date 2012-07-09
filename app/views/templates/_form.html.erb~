@@ -19,7 +19,7 @@
     <div class="control-group">
       <%= f.label :source, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_area :source, :class => 'text_area span7', :rows => 5 %>
+        <%= f.text_area :source,"hello", :class => 'text_area span7', :rows => 5 %>
       </div>
     </div>
 
