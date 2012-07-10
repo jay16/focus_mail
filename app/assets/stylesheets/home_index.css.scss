@@ -30,9 +30,7 @@
 }
 .toggle{margin-top:13px;
         padding-top:5px;
-}         
-
-//.overflow-y{overflow-y:scroll;}
+}
 
 .km-info{width:20em;
   }
@@ -61,10 +59,12 @@ h2{
 
 
 #navmenu { 
+  $bkcolor: #CCC;
 		float:right;
 		margin: 0; 
 		list-style: none;  
 		z-index:-1;
+		a { display: block; }
   li { 
 				margin: 0; 
 				float: left; /*For Gecko*/  
@@ -77,34 +77,33 @@ h2{
 				display: none; 
 				position: absolute; 
 				width:80px;
-				background-color: #CCC;
+				background-color: lighten($bkcolor, 10%);
+				border: 1px solid $bkcolor; 
 				@include border_radius(top, right, 5px);
-    @include border_radius(bottom, right, 5px);
-    @include border_radius(top, left, 5px);
-    @include border_radius(bottom, left, 5px);
-    li { 
+		  @include border_radius(bottom, right, 5px);
+		  @include border_radius(top, left, 5px);
+		  @include border_radius(bottom, left, 5px);
+		  li { 
 						float: none; /*For Gecko*/ 
-				  @include border_radius(top, right, 5px);
-				  @include border_radius(bottom, right, 5px);
-				  @include border_radius(top, left, 5px);
-				  @include border_radius(bottom, left, 5px); 
-				  a { 
+						@include border_radius(top, right, 5px);
+						@include border_radius(bottom, right, 5px);
+						@include border_radius(top, left, 5px);
+						@include border_radius(bottom, left, 5px); 
+						a { 
 								padding: 0 6px; 
 								color: #666;
 								text-decoration: none; 
 						}
-    &:hover, 
-    &.iehover { 
-						a{ 
-								color: white;
-      }
-      background-color:green;
-    }
-   } 
-  } 
+		  &:hover, 
+		  &.iehover { 
+						a{  color: white; } 
+						background:green;
+		  }
+		 } 
+		} 
   li:hover ul, 
   ul li:hover{ 
 				display: block; 
-				z-index:100;
+				z-index:1;
   }
 }

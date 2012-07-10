@@ -12,7 +12,7 @@
       Add Entry  <span class="caret"></span></a>
       <ul>
       <li><%= link_to 'link', new_template_entry_path(template.id), remote: true %></li>
-      <li><%= link_to 'image', new_image_template_entries_path(template.id), remote: true %></li>
+      <li><%= link_to 'image---', new_image_template_entries_path(template.id), remote: true %></li>
       </ul>
     </li>
       
