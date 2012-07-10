@@ -1,7 +1,6 @@
 class TemplatesController < ApplicationController
   after_filter :auto_check_email_file, :only => [:create, :update, :destroy]
   after_filter :auto_check_template_img_dir, :only => [:destroy]
-  after_filter :auto_create_email_template, :only => [:create]
 
   def index
     @templates = Template.all

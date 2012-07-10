@@ -1,7 +1,3 @@
-<div id="report_title" style="margin-bottom: 20px">
-		<h2 style="display:inline"> 邮件发送测试 </h2>
-</div>
-		
 <%= form_for @template, remote: true, :html => { :class => 'form-horizontal' } do |f| %>
   <fieldset>
     <%= render :partial => "common/form_error", :locals => { model: @template } %>
@@ -23,7 +19,7 @@
     <div class="control-group">
       <%= f.label :source, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_area :source, :class => 'text_area span7', :rows => 5 %>
+        <%= f.text_area :source, :class => 'text_area span7', :rows => 11 %>
       </div>
     </div>
 

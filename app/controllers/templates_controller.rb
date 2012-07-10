@@ -1,7 +1,6 @@
 class TemplatesController < ApplicationController
   after_filter :auto_check_email_file, :only => [:create, :update, :destroy]
   after_filter :auto_check_template_img_dir, :only => [:destroy]
-  after_filter :auto_create_email_template, :only => [:create]
 
   def index
     @templates = Template.all
@@ -139,35 +138,5 @@ class TemplatesController < ApplicationController
          FileUtils.remove_dir("#{img_dir}/#{dir}") if File.exists?("#{img_dir}/#{dir}")
        end
     end
-  end
-  
-  def auto_create_email_template
-    @template = Template.new(params[:template])
-		  File.open(Rails.root.join("lib/emails","#{@template.file_name}.html.erb"),"w") do |file|
-		     str = "Markaby::Builder.new.html do\n"
-		     str << "  head do\n"
-		     str << '    title "$|Title|$"'
-		     str << "\n  end\n"
-		     str << "  body do\n"
-		     str << '    p "Hello $|NAME|$, Your Email is $|EMAIL|$, Subject is $|SUBJECT|$"'
-		     str << "\n    ul do\n"
-		     unless @template.entries.empty?
-						   @template.entries.each do |entry|
-						     if is_img_entry(entry)
-						       path = img_path(entry)
-						       str << %{      li '<img src="#{path}" alt="#{entry.name}" width="150" />'}
-						       str << "\n"
-						     else
-						       str << %{      li '<a href="#{entry.default_value}" target="blank">#{entry.name}</a>'}
-						       str << "\n"
-						     end
-						   end
-						 end
-						 str << "    end\n"
-						 str << "  end\n"
-						 str << "end\n"
-		     file.write(str)
-		     file.close
-		  end
   end
 end
