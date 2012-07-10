@@ -1,0 +1,10 @@
+Markaby::Builder.new.html do
+  head do
+    title "$|Title|$"
+  end
+  body do
+    p "Hello $|NAME|$, Your Email is $|EMAIL|$, Subject is $|SUBJECT|$"
+    ul do
+    end
+  end
+end

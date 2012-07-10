@@ -1,7 +1,7 @@
-@mixin  border_radius($tb:top, $rl:right){
-		-moz-border-#{$tb}-#{$rl}-radius:50px;
-		-webkit-border-#{$tb}-#{$rl}-radius:50px;
-		border-#{$tb}-#{$rl}-radius:50px;
+@mixin  border_radius($tb:top, $rl:right, $rad:50px){
+		-moz-border-#{$tb}-#{$rl}-radius:$rad;
+		-webkit-border-#{$tb}-#{$rl}-radius:$rad;
+		border-#{$tb}-#{$rl}-radius:$rad;
 }
 @mixin h2_style{
 		@include border_radius; 
@@ -55,5 +55,54 @@ h2{
   @include h2_style;
  	@include border_radius(top,left);
 		@include border_radius(bottom,left);
-		margin-left:2px;
+		padding-left:2px;
+}
+
+#navmenu { 
+		float:right;
+		margin: 0; 
+		list-style: none;  
+		z-index:-1;
+  li { 
+				margin: 0; 
+				float: left; /*For Gecko*/  
+				list-style: none; 
+				position: relative; 
+		}
+		ul { 
+				margin: 0; 
+				list-style: none; 
+				display: none; 
+				position: absolute; 
+				width:80px;
+				background-color: #CCC;
+				@include border_radius(top, right, 5px);
+    @include border_radius(bottom, right, 5px);
+    @include border_radius(top, left, 5px);
+    @include border_radius(bottom, left, 5px);
+    li { 
+						float: none; /*For Gecko*/ 
+				  @include border_radius(top, right, 5px);
+				  @include border_radius(bottom, right, 5px);
+				  @include border_radius(top, left, 5px);
+				  @include border_radius(bottom, left, 5px); 
+				  a { 
+								padding: 0 6px; 
+								color: #666;
+								text-decoration: none; 
+						}
+    &:hover, 
+    &.iehover { 
+						a{ 
+								color: white;
+      }
+      background-color:green;
+    }
+   } 
+  } 
+  li:hover ul, 
+  ul li:hover{ 
+				display: block; 
+				z-index:100;
+  }
 }

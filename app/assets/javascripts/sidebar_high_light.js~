@@ -29,3 +29,34 @@
    default:
    alert("where do you click?!") 
   }
+  
+function menuFix() {
+	var sfEls = document.getElementById("navmenu").childNodes;
+	for (var i=0; i<sfEls.length; i++) {
+  	alert("1");
+		sfEls[i].onclick=function(){
+		 alert("click");
+				var lis=this.getElementsByTagName("li");
+				for(i=0;i<lis.length;i++){
+					lis[i].style.display="none";
+				}
+		}
+		sfEls[i].onmouseover=function() {
+				this.className+=(this.className.length>0? " ": "") + "sfhover";
+				var lis=this.getElementsByTagName("li");
+				for(i=0;i<lis.length;i++){
+					lis[i].style.display="block";
+				}
+		}
+		sfEls[i].onMouseDown=function() {
+		this.className+=(this.className.length>0? " ": "") + "sfhover";
+		}
+		sfEls[i].onMouseUp=function() {
+		this.className+=(this.className.length>0? " ": "") + "sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+		this.className=this.className.replace(new RegExp("( ?|^)sfhover\\b"),"");
+		}
+	}
+}
+window.onload=menuFix;
