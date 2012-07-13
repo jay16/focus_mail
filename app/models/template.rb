@@ -15,7 +15,7 @@ class Template < ActiveRecord::Base
 	     str << "  body do\n"
 	     str << '    p "Hello $|NAME|$, Your Email is $|EMAIL|$, Subject is $|SUBJECT|$"'
 	     str << "\n    ul do\n"
-      str << '      li "当有entry添加后点击update后代码自动生成"'
+      str << '      li "当有entry添加后点击update，代码自动更新"'
       str << "\n"
 					 str << "    end\n"
 					 str << "  end\n"

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Template < ActiveRecord::Base
   attr_accessible :file_name, :name, :source
   has_many :entries, :dependent => :destroy
@@ -14,7 +15,7 @@ class Template < ActiveRecord::Base
 	     str << "  body do\n"
 	     str << '    p "Hello $|NAME|$, Your Email is $|EMAIL|$, Subject is $|SUBJECT|$"'
 	     str << "\n    ul do\n"
-      str << '      li "当有entry添加后点击update后代码自动生成"'
+      str << '      li "当有entry添加后点击update代码自动更新"'
       str << "\n"
 					 str << "    end\n"
 					 str << "  end\n"

@@ -1,3 +1,4 @@
+
 <div id="report_title" style="margin-bottom: 20px">
 		<h2 style="display:inline"> <%= @clicks[0].CampaignName %>打开邮件用户名单： </h2>
 		<div style="float:right">
@@ -24,4 +25,14 @@
   </tbody>
 </table>
 
-<%= will_paginate @clicks %>
+<%= will_paginate @clicks, :render => 'WillPaginate::LinkRender' %>
+
+<script>
+$(function() {
+  $(".pagination a").live("click", function() {
+    $(".pagination").html("data is loading...");
+    $.get(this.href, null, null, "script");
+    return false;
+  });
+});
+</script>
