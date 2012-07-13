@@ -6,54 +6,41 @@ class ReportController < ApplicationController
   def campaign
     @campaign_id = params[:id]
     @campaign_report = get_campaign_report_by_id(@campaign_id)
-    @campaign_name = Campaign.find(@campaign_id).name 
-    bg = Track.find(:all,:select => "date(MIN(tracks.created_at)) AS FirstCreate", 
-      :conditions => ["tracks.campaign_id = ?", @campaign_id])[0].FirstCreate
-		  ed = bg + 30
+    @campaign_name = Campaign.find(@campaign_id).name
+    @data_x = Array.new
+    @data = Hash.new
+    klazzs = [Track, Click]
+    klazzs.each do |klazz|
+      entry = klazz.to_s.downcase.pluralize
+      bg = klazz.find(:all,:select => "date(MIN(#{entry}.created_at)) AS FirstCreate", 
+        :conditions => ["#{entry}.campaign_id = ?", @campaign_id])[0].FirstCreate
+		    ed = bg + 30
+				  responsed = DimDate.find(:all,
+				    :select => "date_d,count(#{entry}.id) AS Number",
+				    :joins => "LEFT JOIN #{entry} ON date(#{entry}.created_at) = date(dim_dates.date_d) AND #{entry}.campaign_id = #{@campaign_id}",
+				    :conditions => ["date(dim_dates.date_d) BETWEEN '#{bg}' AND '#{ed}'"],  
+				    :group => "date_d")
 
-    @responsed1 = DimDate.find(:all,
-      :select => "date_d,count(tracks.id) AS TrackNum",
-      :joins => "LEFT JOIN tracks ON date(tracks.created_at) = date(dim_dates.date_d) AND tracks.campaign_id = #{@campaign_id}",
-      :conditions => ["date(dim_dates.date_d) BETWEEN '#{bg}' AND '#{ed}'"],  
-      :group => "date_d")
-
-    @rule1 = Array.new
-    @responsed1.each do |m|
-      @rule1.push([m.date_d.strftime("%d %b"),m.TrackNum])#%Y-%m-%d
-    end
-    bg = Click.find(:all,:select => "date(MIN(clicks.created_at)) AS FirstCreate", 
-      :conditions => ["clicks.campaign_id = ?", @campaign_id])[0].FirstCreate
-		  ed = bg + 30
-    @responsed2 = DimDate.find(:all,
-      :select => "date_d,count(clicks.id) AS ClickNum",
-      :joins => "LEFT JOIN clicks ON date(clicks.created_at) = date(dim_dates.date_d) AND clicks.campaign_id = #{@campaign_id}",
-      :conditions => ["date(dim_dates.date_d) BETWEEN '#{bg}' AND '#{ed}'"],  
-      :group => "date_d")
-
-    @rule2 = Array.new
-    @responsed2.each do |m|
-      @rule2.push([m.date_d.strftime("%d %b"),m.ClickNum])
+				  rule = Array.new
+				  responsed.each do |m|
+				    rule.push([m.date_d.strftime("%d %b"),m.Number])#%Y-%m-%d
+				  end
+				  data = Array.new
+				  data_x = Array.new
+				  rule.each do |r|
+				    data_x.push(r[0])
+				    data.push(r[1])
+				  end
+				  @data_x = @data_x|data_x
+				  @data["#{entry}"] = data
     end
     
-    @data_track = Array.new
-    @data_x1 = Array.new
-    @rule1.each do |r|
-      @data_x1.push(r[0])
-      @data_track.push(r[1])
-    end
-    @data_click = Array.new
-    @data_x2 = Array.new
-    @rule2.each do |r|
-      @data_x2.push(r[0])
-      @data_click.push(r[1])
-    end 
-    @data_x = Array.new
-    @data_x =  @data_x1|@data_x2 
     
     @h = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:chart][:defaultSeriesType] = "column"
-      f.series(:name => 'Clicks', :data=> @data_click )
-      f.series(:name => 'Tracks', :data=> @data_track )
+      @data.each_pair do |key, value| 
+        f.series(:name => key, :data=> value)
+      end
       f.options[:title][:text] = "近30天#{@campaign_report[0]}分析报告"      
       f.options[:xAxis][:categories] = @data_x
       f.options[:legend][:layout] = 'horizontal' #'vertical'
@@ -66,7 +53,7 @@ class ReportController < ApplicationController
 
 #点击分析报表
   def click
-    @report_click,@h = get_analyze_report("Click","clicks",params[:campaign_id])
+    @report_click,@h = get_analyze_report(Click,params[:campaign_id])
     params[:campaign_id].present?? (@isCampare=false) : (@isCampare=true)
       
 				respond_to do |format|
@@ -103,7 +90,7 @@ class ReportController < ApplicationController
 		end
 #打开分析报表	
 		def track
-				@report_track,@h = get_analyze_report("Track","tracks",params[:campaign_id])
+				@report_track,@h = get_analyze_report(Track,params[:campaign_id])
 				params[:campaign_id].present?? (@isCampare=false) : (@isCampare=true) 
 				
 				respond_to do |format|
@@ -125,39 +112,29 @@ class ReportController < ApplicationController
 
 end
 
-def get_analyze_report(table,entry,campaign_id)
-  if campaign_id.nil?
-    case table
-    when "Click"
-      @bg = Click.find(:all,
-        :select => "date(MIN(clicks.created_at)) AS FirstCreate")[0].FirstCreate  
-    when "Track" 
-      @bg = Track.find(:all,
-        :select => "date(MIN(tracks.created_at)) AS FirstCreate")[0].FirstCreate
-    end
+def get_analyze_report(klazz,campaign_id)
+  entry = klazz.to_s.downcase.pluralize
+  if campaign_id.nil? 
+    bg = klazz.find(:all,
+      :select => "date(MIN(#{entry}.created_at)) AS FirstCreate")[0].FirstCreate
   else
-				@bg = Click.find(:all,
-				  :select => "date(MIN(clicks.created_at)) AS FirstCreate",
-				  :conditions => ["clicks.campaign_id = ?", campaign_id])[0].FirstCreate
+				bg = klazz.find(:all,
+				  :select => "date(MIN(#{entry}.created_at)) AS FirstCreate",
+				  :conditions => ["#{entry}.campaign_id = ?", campaign_id])[0].FirstCreate
   end
-		@ed = @bg + 30
+		ed = bg + 30
   @report_click = Array.new
 		@data_x = Array.new
 		@data_click = Array.new
   if campaign_id.nil?
-    @id_array=case table
-    when "Click"
-      Click.find(:all,:select => "DISTINCT #{entry}.campaign_id AS CampaignId")
-    when "Track" 
-      Track.find(:all,:select => "DISTINCT #{entry}.campaign_id AS CampaignId")
-    end
-    @datax = Array.new
+    @id_array = klazz.find(:all,:select => "DISTINCT #{entry}.campaign_id AS CampaignId")
+    datax = Array.new
 				@id_array.each do |template_id| 
 						@report_click.push(get_campaign_report_by_id(template_id.CampaignId)) 
 				  responsed = DimDate.find(:all,
 				    :select => "date_d,count(#{entry}.id) AS ClickNum",
 				    :joins => "LEFT JOIN #{entry} ON date(#{entry}.created_at) = date(dim_dates.date_d) AND #{entry}.campaign_id = #{template_id.CampaignId}",
-				    :conditions => ["date(dim_dates.date_d) BETWEEN '#{@bg}' AND '#{@ed}'"],            
+				    :conditions => ["date(dim_dates.date_d) BETWEEN '#{bg}' AND '#{ed}'"],            
 				    :group => "date_d")
 				  rule = Array.new
 				  responsed.each do |m|
@@ -169,11 +146,11 @@ def get_analyze_report(table,entry,campaign_id)
 				    data_x.push(r[0])
 				    data_click.push(r[1])
 				  end
-				  @datax.push(data_x)
+				  datax.push(data_x)
 				  @data_click.push(data_click)
 			 end
 			 
-			 @datax.each do |x|
+			 datax.each do |x|
 			   @data_x |= x
 			 end
   else
@@ -181,7 +158,7 @@ def get_analyze_report(table,entry,campaign_id)
 				responsed = DimDate.find(:all,
 				    :select => "date_d,count(#{entry}.id) AS ClickNum",
 				    :joins => "LEFT JOIN #{entry} ON date(#{entry}.created_at) = date(dim_dates.date_d) AND #{entry}.campaign_id = #{campaign_id}",
-				    :conditions => ["date(dim_dates.date_d) BETWEEN '#{@bg}' AND '#{@ed}'"],            
+				    :conditions => ["date(dim_dates.date_d) BETWEEN '#{bg}' AND '#{ed}'"],            
 				    :group => "date_d")
 
 		  responsed.each do |m|
