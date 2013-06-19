@@ -1,0 +1,85 @@
+
+ <style>
+.focus-sign{
+  background: url("/images/2nd/glyphicons-halflings.png") no-repeat scroll 0 0 transparent;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  *margin-right: .3em;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+  margin-top: 1px;
+}
+</style>
+  <span class="login-brand">
+    <%= image_tag("",:id=>"login_brand")%>
+  </span>
+  <span class="login-logo">
+    <%= image_tag("", :id=>"login_logo")%>
+  </span>
+  
+  <div class="login-pane"><!--span4-->
+   <div class="login-shadow"><!--login-shadow-->
+   <div class="login-border"><!--login-pane-->
+    <span class="pane-arrow"></span>
+    <span class="pane-arrow-dot"></span>
+     <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+      <%= devise_error_messages! %>
+         <table>
+       <tr><td>
+        <div class="login-welcome">忘记密码 ？</div>
+        </td></tr>
+        <tr><td>
+       <div>
+             <div class="input-prepend">
+                <span class="add-on focus-sign" style="background-position: -68px 5px; "></span>
+                <%= f.email_field :email, :placeholder => '请输入注册邮箱地址',:style=>"padding-left:0px;margin-left:-6px;"%>     
+             </div>
+       </div>
+        </td></tr>
+         <tr><td>
+          <div><%= f.submit "发送找回密码信", :class => 'btn'%></div>
+          <div class="login-forget">
+          <%= render :partial => "devise/shared/links" %>
+         </div>
+         </td></tr>
+       </table>
+       <% end %>
+      </div><!--login-pane-->
+      </div><!--login-shadow-->
+     </div><!--span4-->
+     
+     
+<script>
+ $(function(){
+ //根据域名，加载不同公司logo
+ var strhost = window.location.host;
+ if(strhost.indexOf('demo.online-edm.com')>=0){
+  $("#login_brand").attr("src","/images/2nd/openfind-brand-logo.png");
+  $("#login_brand").attr("alt","Openfind");
+  $("#login_brand").attr("title","Openfind");
+  $("#login_logo").attr("src","/images/2nd/login-logo.png");
+  $("#login_logo").attr("alt","Openfind");
+  $("#login_logo").attr("title","Openfind");
+ }else if(strhost.indexOf('edm.mailhok.com')>=0){
+  $("#login_brand").attr("src","/images/2nd/mailhok-brand-logo.png");
+  $("#login_brand").attr("alt","FocusMail");
+  $("#login_brand").attr("title","FocusMail");
+  $("#login_logo").attr("src","/images/2nd/login-logo.png");
+  $("#login_logo").attr("alt","FocusMail");
+  $("#login_logo").attr("title","FocusMail");
+ }else{
+  $("#login_brand").attr("src","");
+  $("#login_brand").attr("alt","UnKnown");
+  $("#login_brand").attr("title","UnKnown");
+  $("#login_logo").attr("src","");
+  $("#login_logo").attr("alt","UnKnown");
+  $("#login_logo").attr("title","UnKnown");
+ }
+})
+</script>
+
+      
+

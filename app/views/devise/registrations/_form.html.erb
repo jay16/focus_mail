@@ -1,0 +1,134 @@
+<style>
+.focus-sign{
+  background: url("/images/2nd/glyphicons-halflings.png") no-repeat scroll 0 0 transparent;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  *margin-right: .3em;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+  margin-top: 1px;
+}
+.wonder-org {
+ background-position: -96px -95px;
+}
+.wonder-org:hover{
+ background-color: transparent;
+ background-position: -96px -95px;
+}
+</style>
+
+  <span class="login-brand">
+    <%= image_tag("",:id=>"login_brand")%>
+  </span>
+  <span class="login-logo">
+    <%= image_tag("", :id=>"login_logo")%>
+  </span>
+
+
+  <div class="login-pane"><!--span4-->
+   <div class="login-shadow"><!--login-shadow-->
+   <div class="login-border"><!--login-pane-->
+    <span class="pane-arrow"></span>
+    <span class="pane-arrow-dot"></span>
+           <%= devise_error_messages! %>
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+      
+      <table><tr><td>
+    <div class="login-welcome">欢迎注册 </div>
+     </td></tr>
+       <tr><td>
+            <div>
+             <div class="input-prepend">
+                <span class="add-on focus-sign" style="background-position: -68px 5px; "></span>
+                <%= f.email_field :email, :placeholder => '请输入注册邮箱地址',:style=>"padding-left:0px;margin-left:-6px;"%> 
+              </div>
+          </div>
+           </td></tr>
+           <tr><td>
+          <div>
+             <div class="input-prepend">
+                <span class="add-on focus-sign" style="background-position: -283px -18px;"></span>
+                <%= f.password_field :password, :placeholder => '帐户密码',:style=>"padding-left:0px;margin-left:-6px;" %> 
+              </div>
+          </div>
+           </td></tr>
+           <tr><td>
+          <div>
+             <div class="input-prepend">
+                <span class="add-on focus-sign" style="background-position: -283px -18px;"></span>
+                <%= f.password_field :password_confirmation, :placeholder => '确认密码' ,:style=>"padding-left:0px;margin-left:-6px;"%>
+             </div>
+          </div>
+           </td></tr>
+           <tr><td>
+            <div>
+             <div class="input-prepend">
+                <span class="add-on focus-sign" style="background-position: -42px -113px;"></span>
+                <%= f.text_field :user_org, :placeholder => '组织名称',:style=>"padding-left:0px;margin-left:-6px;" %>
+             
+                <%= link_to 'add',nil,:class=>"focus-link",:href=>"javascript:void(0)",:style=>"margin-left:0px;padding-left:0px;","data-placement"=>"bottom","data-content"=>"[组织名称]相同，可以与同事共同使用[确达]服务！", :rel=>"popover", "data-original-title"=>"关于[组织名称]" %>
+             </div>
+             
+            </div>
+           </td></tr>
+           <tr><td>
+             <div><%= f.submit "注册", :class => 'btn hidden',:id=>"registration_btn",:style=>"display:none;" %>
+              <a id="check_userorg" data-remote="true" href="/application/check_userorg?user_org=intfocus" style="display:none;" >确认[组织]名称</a>
+              <a class="btn" onclick="registration_click()">注册</a>
+             </div>
+             <div class="login-forget">
+              <%= render :partial => "devise/shared/links" %>
+             </div>
+           </td></tr>
+         </table>
+        <% end %>
+      </div><!--login-pane-->
+      </div><!--login-shadow-->
+     </div><!--span4-->
+     
+    <a id="userorg_model_btn" href="#userorg_model" role="button" class="btn" data-toggle="modal" style="display:none;"></a>
+     <!-- Modal -->
+     <div id="userorg_model" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="max-width:400px;width:400px;">
+     </div>
+<script>
+ $(function(){
+ //根据域名，加载不同公司logo
+ var strhost = window.location.host;
+ if(strhost.indexOf('demo.online-edm.com')>=0){
+  $("#login_brand").attr("src","/images/2nd/openfind-brand-logo.png");
+  $("#login_brand").attr("alt","Openfind");
+  $("#login_brand").attr("title","Openfind");
+  $("#login_logo").attr("src","/images/2nd/login-logo.png");
+  $("#login_logo").attr("alt","Openfind");
+  $("#login_logo").attr("title","Openfind");
+ }else if(strhost.indexOf('edm.intfocus.com')>=0){
+  $("#login_brand").attr("src","/images/2nd/mailhok-brand-logo.png");
+  $("#login_brand").attr("alt","FocusMail");
+  $("#login_brand").attr("title","FocusMail");
+  $("#login_logo").attr("src","/images/2nd/login-logo.png");
+  $("#login_logo").attr("alt","FocusMail");
+  $("#login_logo").attr("title","FocusMail");
+ }else{
+  $("#login_brand").attr("src","/images/2nd/mailhok-brand-logo.png");
+  $("#login_brand").attr("alt","FocusMail");
+  $("#login_brand").attr("title","FocusMail");
+  $("#login_logo").attr("src","/images/2nd/login-logo.png");
+  $("#login_logo").attr("alt","FocusMail");
+  $("#login_logo").attr("title","FocusMail");
+ }
+})
+
+ function registration_click(){
+  var user_org = $("#user_user_org").val();
+  var href = "/application/check_userorg?user_org="+user_org;
+  $("#check_userorg").attr("href",href);
+  $("#check_userorg").trigger("click");
+ }
+</script>
+     
+      
+
+

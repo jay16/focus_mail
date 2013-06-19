@@ -1,0 +1,47 @@
+<div class="container">
+	<div class="row">
+		<div class="span8">
+      		<h1 style="margin-top:15px;">Openfind Mailcloud Service</h1>
+      		<h2 style="color:white;padding-left:25px;font-weight:normal;">Focus Mail</h2>
+        </div>
+        <div class="span4">
+      	  <div class="sign_in_bkground">
+      		  <img src="/images/sign_in/arrow.png" style="left:-20px;bottom:-30px;position:absolute;">
+	      	  <h2>修改 <%= resource_name.to_s.humanize %>密码：</h2>
+	
+				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+				  <%= devise_error_messages! %>
+				  
+				  <div>
+				  	<%= f.label :email, "用户登录邮箱" %>
+				  	<%= f.email_field :email %>
+				  </div>
+				
+				  <div>
+				  	<%= f.label :password, "新密码<i>(为空白将不修改密码)</i>".html_safe %>
+				  	<%= f.password_field :password, :autocomplete => "off" %>
+				  </div>
+				
+				  <div>
+				  	<%= f.label :password_confirmation, "重复新密码" %>
+				  	<%= f.password_field :password_confirmation %>
+				  </div>
+				
+				  <div>
+				  	<%= f.label :current_password, "旧密码<i>(需要您当前的密码并确认您的更改)</i>".html_safe %>
+				  	<%= f.password_field :current_password %>
+				  </div>
+				
+				  <div><%= f.submit "修改密码 ", :class => 'btn btn-primary' %></div>
+				<% end %>
+				
+				<h3>关闭我的帐户</h3>
+				
+				<p>不适合? <%= link_to "关闭我的帐户", registration_path(resource_name), :data => { :confirm => "你肯定吗?" }, :method => :delete %>.</p>
+				
+				<%= link_to "返回", :back, :style => "padding-left: 20px" %>
+      	  </div>
+      	</div>
+	</div>
+</div>
+

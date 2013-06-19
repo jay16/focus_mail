@@ -1,0 +1,4 @@
+$('#<%= dom_id @entry %>_edit').html('');
+$("#<%= dom_id @entry %>").replaceWith("<%= j render @entry %>");
+$('#<%= dom_id @entry %>_edit').addClass('hidden');
+$('#<%= dom_id @entry %>').removeClass('hidden');

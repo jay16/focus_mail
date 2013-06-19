@@ -1,0 +1,244 @@
+<style>
+.stream-item:hover{
+ cursor: default;
+}
+</style>
+   
+   <div class="main-content" style="width:540px;">
+     <div class="header">
+                   邮件列表
+       <span style="float:right;margin-top:-3px;">
+       <%= form_tag '/categories/index', :class => 'form-horizontal', :id => "uploadsubmit" do %>
+         <%= select_tag "lists_all", options_from_collection_for_select(@lists_all, "id", "name", @l_id),{:include_blank => true, :style => "width: 220px", :class => "chzn-select-deselect", :"data-placeholder" => "查找邮件列表"} %>
+       <% end %>
+       </span>
+     </div><!--header-->
+
+      <!--Body content-->
+    <div class="js-stream-items stream-items" style="height: 900px;border-radius: 0px 0px 5px 5px;background:white;padding-bottom:10px;">
+     <% if @lists.count > 0 %>
+      <% @lists.each do |list| %>
+      <!--<% mos,lma,name_num = memberorg(list.id) %>-->
+      <div class="js-stream-item stream-item" media="true" data-item-type="tweet"  id="<%= dom_id list %>">
+       <div class="stream-item-content tweet" data-is-reply-to="false">
+       <table class="focus-content" style="width:100%;">
+         <tr class="tweet-row" style="height:22px;">
+          <td>
+           <a class="focus-rel" style="color:blue;" id="orglist<%= list.id %>" onclick="edit_list(<%= list.id %>,false,true)" 
+            data-placement="top" rel="tooltip" data-original-title="点击标题进行修改">
+            <%= list.name.present? ? (list.name.length > 25 ? "#{list.name[0..20]}..." : list.name) : "unset" %>
+           </a>
+
+           <span id="editlist<%= list.id %>" class="hidden">
+            <%= form_tag "/categories/update/#{list.id}", :style=>"margin:0px;" , remote: true, :id => 'categories_form' do %>
+            <%= hidden_field_tag :id => 'org_id' %>
+            <span>
+              <%= text_field_tag 'name', list.name, :class => 'text_field' %>
+            </span>
+            <span>
+              <%= submit_tag '保存', :class => 'btn btn-mini'%>
+              <input type="button" href="#" class="btn btn-mini" onclick="edit_list(<%= list.id %>,true,false)" value="取消">
+            </span>
+            <% end %>
+          </span>
+          </td>
+         </tr>
+
+         <tr class="tweet-row">
+            <td>
+              <ul>
+                <li>邮箱数量：
+                 <span id="list_<%= list.id %>_mc" style="display:inline-block;width:55px;"><%= list.member_count.present? ? list.member_count : 0 %></span>
+                  <a href="/categories/<%= list.id %>/update_member_count" id="list_<%= list.id %>_mc_refresh" style="display:none;" class='focus-icon refresh-icon' rel='tooltip' data-remote='true' data-placement='top' data-original-title='点击刷新数据'>
+                  </a>
+                </li>
+                 <li>创建时间：<%= list.created_at.strftime("%Y/%m/%d") %></li>
+                 <li>修改时间：<%= list.updated_at.strftime("%Y/%m/%d") %></li>
+                 <li>上传状态：
+                   <iframe id="iframe_<%= dom_id list %>"　marginwidth="0px" height="15px" width="60px" frameborder="0" scrolling="no" style="padding:0px;margin:0px 0px 0px -5px;"
+                    allowTransparency="true" src="http://192.168.0.114/member/state?list_id=<%=h list.id %>&user_id=<%=h current_user.id %>">
+                   </iframe>
+
+                  <a href="javascript:void(0);" style="display:none;" id="list_<%= list.id %>_job_refresh" onclick="$('#iframe_<%= dom_id list%>').attr('src',$('#iframe_<%= dom_id list%>').attr('src'));" class='focus-icon refresh-icon' rel='tooltip' data-remote='true' data-placement='top' data-original-title='点击刷新状态'>
+                  </a>
+                 </li>
+              </ul>
+            </td>
+         </tr>
+         <tr class="tweet-row hidden">
+          <td align="left">
+            <%= link_to '+1', new_list_member_path(list.id), :class => 'btn btn-mini', :style => 'width:23px;',:remote=>true,
+              :rel=>"tooltip", :title=>"添加一个名单" %>
+            <%= link_to '+n', members_imexport_path(list.id), :class => 'btn btn-mini', :style => 'width:23px;',:remote=>true,
+            :rel=>"tooltip", :title=>"批量导入名单" %>
+            <a class='btn btn-mini', style = 'width:23px;',:rel="tooltip", :title="split list" 
+            onclick="list_split(<%=list.id%>)">split</a>
+            <%= link_to '删除', category_path(list), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini', :remote => true %>
+            <a href="javascript:void(0)" style="margin-left:15px;margin-top:5px;" onclick="list_refresh(<%= list.id %>)" class='focus-icon refresh-icon' style="margin:5px 0px 0px 10px;" rel='tooltip' data-remote='true' data-placement='top' data-original-title='刷新数据、显示名单列表'>
+           </a>
+          </td>
+         </tr>
+        </table>
+      </div><!--stream-item-->
+    </div><!--item-content-->
+    
+     <% end %><!-- each -->
+    
+     <!--Body content-->
+     <div class="focus-center">
+     <%= will_paginate @lists ,:inner_window => 1, :outer_window => 1 , :previous_label => '上一页 ' , :next_label => '下一页 ' %>
+    </div>
+     <% end %><!-- if -->
+    </div><!--stram-item-->
+     </div>
+   <!--main-content-->
+    
+
+    <div class="dashboard" style="float:right;padding:0px;">
+     
+     <div class="databoard">
+     <div class="header">新建列表</div>
+     <div class="body">
+         <!-- 新建名单-->
+         <%= form_tag '/categories/create', :class => 'form-horizontal' , remote: true, :id => 'categories_form' do %>
+           <%= render "form" %>
+         <% end %>
+      </div>
+    </div>
+      
+     <div class="databoard" style="height:820px;">
+     <div id="main_content">
+      <% if @lists.count > 0 %><!--<%= session[:list_id] == nil ? @lists[0].id : session[:list_id] %>-->
+      <iframe id="list_member" src="/lists/<%= session[:list_id] == nil ? @lists[0].id : session[:list_id] %>/members" width="100%"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" style="-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;">    
+      </iframe>
+      <% end %>
+     </div>
+     <div id="members_imexport">
+     </div>
+     </div>
+   </div><!-- databoard-->
+   <!--add-modal-->
+   <div id="add_member" class="modal fade">
+    <div class="modal-header header">
+      <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
+              添加新名单
+    </div>
+    <div class="modal-body">
+    </div>
+   </div>
+  <!--add modal-->
+  <a href="#add_member" id="add_btn" role="button" class="hidden" data-toggle="modal"></a>
+
+   <div id="list_split_model" class="modal fade">
+    <div class="modal-header header">
+      <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
+        List Split
+    </div>
+    <div class="modal-body">
+     split num:<%= text_field_tag 'split_num', nil, :class => 'span2', :placeholder => 'split num'  %>
+    </div>
+    <div class="focus-center">
+     <button class="btn btn-primary" onclick="list_split_submit()">Submit</button>
+    </div>
+   </div>
+  <!--add modal-->
+  <a href="#list_split_model" id="list_split" role="button" class="hidden" data-toggle="modal"></a>
+  <%= hidden_field_tag 'splited_list_id',    nil %>
+
+<script type="text/javascript">
+ //新建列表 提交按钮
+ $("#category_submit").click(function(){
+   var list_name = $.trim($("#category_form_name").val());
+   if(list_name.length==0){
+    alert("列表创建失败\n原因：\n新建列表名称不可以为空");
+   }else{
+    $(this).submit();
+    showLoading("保存中");
+   }
+ });
+ $(".chzn-select-deselect").chosen({allow_single_deselect:true});
+ $("#list_member").load(function(){
+  var mainheight = $(this).contents().find("body").height();
+  var span = $(".dashboard").height();
+  if(span > mainheight)
+  {
+   $(this).height(span);
+  }
+  else
+  {
+   $(this).height(mainheight);
+  }
+  $(this).height(820);
+ }); 
+ //选择列表下拉列表时，自动提交
+ $("#lists_all").change(function() {
+   $("#uploadsubmit").submit();
+ });
+ //点击列表区域显示该列表邮件名单
+ function list_refresh(listid)
+ {
+  //刷新列表名单数量/上传状态
+  member_count = "#list_"+listid+"_mc_refresh";
+  upload_job = "#list_"+listid+"_job_refresh";
+  $(member_count).trigger("click");
+  $(upload_job).trigger("click");
+  //
+  $('#list_member').attr("src","/lists/" + listid + "/members");
+  //在批量导入的js操作中，会隐藏邮件列表;
+  $("#members_imexport").addClass('hidden');
+  $("#main_content").removeClass('hidden');
+ }
+ //点击列表标题进行编辑时，编辑框与显示框的显示隐藏切换！
+ function edit_list(id,ob,eb){
+  var strid = String(id);
+  if(ob==true) $('#orglist'+strid).css('display','block'); else $('#orglist'+strid).css('display','none');
+  if(eb==true) $('#editlist'+strid).removeClass('hidden'); else $('#editlist'+strid).addClass('hidden');
+ }
+ 
+ function list_split(list_id){
+  $("#list_split").trigger("click");
+  $("#splited_list_id").val(list_id);
+ }
+ function list_split_submit(){
+   var list_id = $("#splited_list_id").val();
+   var split_num = $("#split_num").val();
+   
+   alert(list_id);
+   alert(split_num);
+   var strhost = window.location.host;
+   var strprotocol = window.location.protocol;
+   var strport = window.location.port;
+   if(strport > 0){
+     if(strhost.indexOf(strport)==-1){
+      strhost = strhost + ":"+String(strport)
+     }
+   }
+   var strurl = strprotocol+"//"+strhost+"/categories/list_split";
+ 
+   
+    $.ajax({
+    type: 'POST',
+    url: strurl,
+    contentType: 'multipart/form-data',
+     headers: {
+           'X-Transaction': 'POST Example',
+           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+         },
+    datatype: 'json',
+    data:{"list_id": list_id, "split_num": split_num },
+    success:function(data)
+    {
+     alert(data);
+      window.location.reload();
+    },
+    error:function(xhr,r,e)
+    {
+       alert("Create Tag Fail!");
+    }
+   });
+  
+ }
+
+</script>
+
+

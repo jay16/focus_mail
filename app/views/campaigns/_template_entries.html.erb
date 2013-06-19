@@ -1,0 +1,37 @@
+<div id="campaign_id_value" style="display:none"><%= template && template.id || 0 %></div>
+    <div id="myModal3" class="modal fade hidden">
+      <% if template %> 
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3><h2><%= template.name %></h2></h3>
+      </div>
+      <div class="modal-body">
+        <div class="display">
+          <div class="tabbable">
+  	  <ul class="nav nav-tabs">
+  	    <li class="active"><a href="#tab<%=template.id%>1" data-toggle="tab">网页邮件</a></li>
+  	    <li><a href="#tab<%=template.id%>2" data-toggle="tab">源代码</a></li>
+  	  </ul>
+  	  <div class="tab-content">
+  	    <div class="tab-pane active" id="tab<%=template.id%>1">
+                  <%= field_set_tag do %>
+  	    	<%= display_email(template.id,template.img_url).html_safe %>
+                  <% end %>
+  	    </div>
+  	    <div class="tab-pane" id="tab<%=template.id%>2">
+  	      <div class="control-group">
+  	        <div class="controls">
+  	          <pre><%= display_email(template.id,template.img_url) %></pre>
+  	        </div>
+  	      </div>
+  	    </div>
+  	  </div>
+  	</div>
+        </div>
+      </div>
+      <% end %>  
+    </div>
+    
+
+
+

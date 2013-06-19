@@ -1,0 +1,57 @@
+
+		<div class="header">
+		  导入/导出 <small> (<%= @list .name %>) </small>
+ 	  <div style="float:right;margin-top:15px;">
+ 	  	<button  class='btn btn-mini hidden' style="display:none;" onclick='$("#main_content").removeClass("hidden");$("#members_imexport").addClass("hidden");'>
+ 	  	 返回
+ 	  	 </button>
+    </div>
+  </div>
+  
+  <div  style="padding: 20px 20px 20px 20px">
+   <div id="sel_mes" class="stream-content" style="display: block;">
+     <!--发送活动外包装 -->
+     <table class="table">
+      <tr>
+       <td><div class="focus-label">导出名单</div></td>
+       <td>
+        <%= link_to "Excel格式文件", members_export_path(:list_id => @list_id, :format => 'xls'), :class => "btn", :style =>"width:120px;" %>
+        <%= link_to "CSV格式文件", members_export_path(:list_id => @list_id, :format => 'csv'), :class => "btn", :style =>"width:120px;" %>
+       </td>
+      </tr>
+      <tr>
+       <td><div class="focus-label">下载模板</div></td>
+       <td>
+       <%= link_to "Excel导入模板", members_import_template_path(:format => 'xls'), :class => "btn", :style =>"width:120px;" %>
+       <%= link_to "CSV导入模板",   members_import_template_path(:format => 'csv'), :class => "btn", :style =>"width:120px;" %>
+       </td>
+      </tr>
+      
+      <tr>
+       <%= render :template => "/members/Outer_Upload"%>
+      <!--
+       <td><div class="focus-label" style="vertical-align: center;">导入名单</div></td>
+       <td>
+        
+       <%=form_tag('/members/import', :multipart => true) %>
+       <%= hidden_field_tag(:list_id, @list_id) %>
+       <%= hidden_field_tag(:type, 'xls') %>
+       <%= file_field_tag 'file' %>
+       <%= submit_tag "上传Excel", :class => 'btn', :style=>"width:100px;" %>
+       </form>
+
+       <%=form_tag('/members/import', :multipart => true) %>
+       <%= hidden_field_tag(:list_id, @list_id) %>
+       <%= hidden_field_tag(:type, 'csv') %>
+       <%= file_field_tag 'file' %>
+       <%= submit_tag "上传CSV", :class => 'btn', :style=>"width:100px;" %>
+       </td>
+       -->
+      </tr>
+    </table>
+   </form>
+  </div>
+ </div> 
+<script>
+ 
+</script>

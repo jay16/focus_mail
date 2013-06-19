@@ -1,0 +1,172 @@
+
+		  		<!--单条发送活动 -->
+			  	<div class="js-stream-item stream-item" id="<%= dom_id campaign %>" data-item-type="tweet" media="true"> 
+		    		<div class="stream-item-content tweet" id=<%="l-" + campaign.id.to_s %> data-is-reply-to="false" >
+		    			
+		      <div class="focus-content">
+    						<div class="tweet-row">
+							    <span class="" style="color:#963EBA;">
+							     <%= campaign.name %>
+							    </span>
+						 	</div>
+							<div class="tweet-row">
+							 <div>
+           活动主题:
+							    <span class="focus-name">
+							     <% if campaign.subject.split("|$$|").length > 1 %>
+							     
+              <%= campaign.subject.split("|$$|")[0]+"(多主题)" %>
+							       <a data-placement="bottom"   rel="popover" data-toggle="popover" class="focus-link"
+							       data-content="<%= campaign.subject.split('|$$|').join('<br>') %>" data-original-title="多主题">查看</a>
+							     <% else %>
+							       <%= campaign.subject %>
+							     <% end %>
+							    </span></div>
+       <div>信件模板:<span style="color:green;"><%= campaign.template.try(:name) %></span></div>
+       <div>收件总数:<span><%= get_campaign_data(campaign.id)[:isGetData] ? get_campaign_data(campaign.id)[:send_totle] : "未出炉"  %></span></div>
+       
+       </div>
+
+							<% is_deliver = check_deliver(campaign.id) > 0 ? true : false %>
+							<div class="tweet-row">
+				  			  <div class="tweet-text js-tweet-text">
+
+			  			    	<div>创建时间:<span><%= campaign.created_at ==nil ? '未保存' : campaign.created_at.strftime("%Y/%m/%d") %></span></div>
+			  			    	<div>发送时间:<span style="color:red;"><%= is_deliver ? campaign.created_at.strftime("%Y/%m/%d") : (campaign.from_time == nil ? '待发送' : campaign.from_time.strftime("%Y/%m/%d")) %><span></div>
+             
+				  			  </div>
+				  			  
+				  			  <!--margin-top为自身高度，保存与左侧一至-->
+				  			  <div class="tweet-text js-tweet-text" style="margin-left:200px;margin-top:-25px;">
+             
+             <div>发送类型:<span><%= campaign.from_time == nil ? '手工发送' : '预约发送' %></span></div> 
+             <div style="display:<%= (is_deliver == false and campaign.from_time !=nil) ? '' : 'none'%>">倒计时间:<span id="campaign_from_time_<%= campaign.id%>"></span></div>
+             <div style="display:<%= is_deliver == true ? '' : 'none'%>">发送状态:<span>已发送</span></div>
+             <div style="display:<%= (is_deliver == false and campaign.from_time ==nil) ? '' : 'none'%>">发送状态:<span>待发送</span></div>   
+           </div>
+							</div>
+							<div class="tweet-row" >
+							 <!--手工发送-->
+							 <%= link_to '发送', "#deliver_sure_#{campaign.id}", :class => 'btn btn-mini', :"data-toggle" => "modal",:style => "color: black; display:#{(is_deliver == false and campaign.from_time == nil) ? '' : 'none'}" %>
+				  		<!--预约发送-->
+				  		<%= link_to '发送', nil , :class => "btn btn-mini", :remote => true, :onclick => "alert('已设定预约时间,若要手工发送请修改发送设置！');",:href => 'javascript:void(0);',
+				  		  :style => "color: black; display:#{(is_deliver == false and campaign.from_time != nil) ? '' : 'none'}" , :disabled =>"disabled" %>
+						   <%= link_to '修改', edit_campaign_path(campaign), :class => 'btn btn-mini', :remote => true, :style => "color: black;display:#{is_deliver ? 'none' : ''}",:onclick=>"showLoading('数据加载中');" %>
+							  <%= link_to '删除', campaign_path(campaign), :method => :delete,
+						        :confirm => '不可恢复，确定要删除吗?', :class => 'btn btn-mini', :remote => true, :style => "color: black;display:#{is_deliver ? 'none' : ''}"%>
+         <%= link_to '发送测试', "#mailtest_#{campaign.id}", :class => 'btn btn-mini', :"data-toggle" => "modal", :remote => true,:style => "display:#{is_deliver ? 'none' : ''}" %>
+         <%= link_to '复制', copies_campaign_path(campaign.id), :class => "btn btn-mini", :remote => true %>
+         
+         <button onclick = "campaign_report(<%= campaign.id%>)" class = 'btn btn-mini', style="color: black;; display:<%= is_deliver ? '' : 'none' %>">发送报告</button>
+					  	</div>
+				  </div>
+					</div>
+				</div>
+				<!--单条发送活动 结束-->       
+				
+    <!--mail test-->
+				<% if is_deliver == false %>
+       <div id="mailtest_<%= campaign.id %>" class="modal fade">
+         <div class="modal-header header">
+          <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
+                         发送测试信
+         </div>
+         <div class="modal-body  body">
+          <fieldset style="margin:10px auto 10xp 10xp;padding-left:30px;">
+            <label for="subject">发件人:
+            <%= text_field_tag :from_name, nil,:disabled => true, :class => 'span4', :placeholder => "#{campaign.from_name}<#{campaign.from_email}>"%>
+            </label>
+            <label for="subject">主&nbsp;&nbsp;&nbsp;题:
+           <%= text_field_tag :from_email,nil,:disabled => true, :class => 'span4',:placeholder => "#{campaign.subject}" %>
+            </label>
+            <label for="subject">模&nbsp;&nbsp;&nbsp;板:
+           <%= text_field_tag :from_email,nil,:disabled => true, :class => 'span4',:placeholder => "#{campaign.template.try(:name)}" %>
+            </label>
+            <label for="email_name<%= campaign.id %>">收件箱:
+             <input class="span4" id="mailtest_email_<%= campaign.id %>" type="text" placeholder="<%= current_user.email %>">
+            </label>
+          </fieldset>
+
+         </div>
+         <div class="focus-center" style="margin:15px;">
+          <a href="#" id="schange" class="btn" data-dismiss="modal" onclick="mail_test(<%= campaign.id %>);">发送</a>
+          <a href="#" class="btn" data-dismiss="modal">取消</a>
+         </div>
+       </div><!--modal-->
+				<% end %>
+				<!--发送前确认-->
+   <div id="deliver_sure_<%= campaign.id %>" class="modal fade" style="min-width:350px;width:450px;max-height:500px;">
+     <div class="modal-header header">
+      <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
+                   发送信息确认
+     </div>
+     <div class="modal-body  body">
+            
+       <fieldset style="margin:10px auto 10xp 10xp;padding-left:30px;">
+         <label for="subject">发件人:
+         <%= text_field_tag :from_name, nil,:disabled => true, :class => 'span4', :placeholder => "#{campaign.from_name}<#{campaign.from_email}>"%>
+         </label>
+         <% list_str = String.new %>
+         <% @lists.each_with_index do |list,index| %>
+           <% if campaign.lists.include?(list) -%>
+             <% list_str += "#{list.name}<#{list.member_count}人>;"  %>
+           <% end %>
+         <% end %>
+         <label for="subject">收件人:
+         <%= text_field_tag :subject, nil, :disabled => true ,:class => 'span4' , :placeholder => "#{list_str}"%>
+         </label>
+         <label for="subject">主&nbsp;&nbsp;&nbsp;题:
+        <%= text_field_tag :from_email,nil,:disabled => true, :class => 'span4',:placeholder => "#{campaign.subject}" %>
+         </label>
+         <label for="subject">模&nbsp;&nbsp;&nbsp;板:
+        <%= text_field_tag :from_email,nil,:disabled => true, :class => 'span4',:placeholder => "#{campaign.template.try(:name)}" %>
+         </label>
+         
+       </fieldset>
+
+     </div>
+     <div class="focus-center" style="margin:15px;">
+      <%= link_to '发送',deliver_campaign_path(campaign.id), :class => "btn", :remote => true, "data-dismiss"=>"modal",
+          :style => "color: black;" %>
+      <a href="#" class="btn" data-dismiss="modal">取消</a>
+     </div>
+   </div><!--modal-->
+				
+<script>
+//倒计时
+ function update_countdown(from_time,campaign_id){
+  var from = new Date(from_time);
+  var now = new Date();
+  var from_int = parseInt(from.valueOf());
+  var now_int  = parseInt(now.valueOf());
+  var dif = from_int - now_int;
+  var day = parseInt(dif/1000/60/60/24);
+  var hour = parseInt(dif/1000/60/60%24);
+  var min = parseInt(dif/1000/60%60);
+  var sec = parseInt(dif/1000%60);
+  if(day > 0){
+   var cd_str = String(day)+"天"+String(hour)+"时"+String(min)+"分"+String(sec)+"秒"
+   $("#campaign_from_time_"+String(campaign_id)).html(cd_str);
+  }else if(day == 0 && hour > 0){
+   var cd_str = String(day)+"天"+String(hour)+"时"+String(min)+"分"+String(sec)+"秒"
+   $("#campaign_from_time_"+String(campaign_id)).html(cd_str);
+  }else if(day == 0 && hour == 0 && min > 0){
+   var cd_str = String(day)+"天"+String(hour)+"时"+String(min)+"分"+String(sec)+"秒"
+   $("#campaign_from_time_"+String(campaign_id)).html(cd_str);
+  }else if(day == 0 && hour == 0 && min ==0 && sec > 0){
+   var cd_str = String(day)+"天"+String(hour)+"时"+String(min)+"分"+String(sec)+"秒"
+   $("#campaign_from_time_"+String(campaign_id)).html(cd_str);
+  }else{
+   $("#campaign_from_time_"+String(campaign_id)).html("已发送");
+  }
+  setTimeout(update_countdown,1000,from_time,campaign_id);
+ }
+$(function(){
+ if("<%= (is_deliver == false and campaign.from_time != nil) ? true : false %>"=="true"){
+  
+  <% if campaign.from_time.present? %>
+  update_countdown("<%= campaign.from_time.strftime('%B %d,%Y %H:%M:%S') %>","<%= campaign.id %>");
+  <% end %>
+ }
+})
+</script>

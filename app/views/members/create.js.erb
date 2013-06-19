@@ -1,0 +1,11 @@
+$("#add_btn").trigger("click");
+
+<% if @save_state %>
+$('#list_member').attr("src","/lists/" + "<%= @list.id %>" + "/members");
+var org_mc = parseInt($("#list_<%= @list.id %>_mc").html());
+$("#list_<%= @list.id %>_mc").html(org_mc+1);
+<% else %>
+alert("名单创建失败..")
+<% end %>
+
+

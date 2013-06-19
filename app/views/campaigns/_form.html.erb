@@ -1,0 +1,341 @@
+<style>
+.chzn-results {
+ height:200px;
+}
+</style>
+<%= form_for @campaign, :html => { :class => 'form-horizontal' }, remote: true do |f| %>
+
+  <%#= render :partial => "common/form_error", :locals => { model: @campaign} %>
+  <%= f.hidden_field :org_id %>
+
+
+  <div class="control-group" style="margin-top:5px;">
+   <%= f.label :name, "活动名称：", :class => 'control-label',:style=>"text-align:left;margin-left:20px;width:70px;" %>
+   <div class="controls" style="margin-left:90px;">
+    <%= f.text_field :name, :class => 'span3' , :placeholder => '活动名称'%>
+   </div>
+  </div>
+         
+  <div class="tabbable">
+    <ul class="nav nav-tabs" id="campaign_new_tab">
+      <li class="active"><a href="#tab1" data-toggle="tab">1:基本信息</a></li>
+      <li><a href="#tab2" data-toggle="tab">2:收信人</a></li>
+      <li><a href="#tab4" data-toggle="tab">3:发送时间</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active controls" id="tab1" style="margin:20px 15px">
+        <fieldset>
+          <%= f.label :subject, "信件标题：" %>
+          <%= f.text_field :subject, :class => 'span4' , :placeholder => '新建发送邮件标题'%> 
+          
+          <%= link_to 'add',nil,:class=>"focus-link",:href=>"javascript:void(0)",:onclick => "add_campaign_subject();",
+          :style=>"margin-left:0px;padding-left:0px;","data-placement"=>"bottom","data-content"=>"使用多个发信主题，提高开信率！", :rel=>"popover", "data-original-title"=>"多主题" %>
+          
+          <div id="add_campaign_subject_tag" style="display:none;"></div>
+          
+          <%= f.label :name, "发件者名称：" %>
+          <%= f.text_field :from_name, :class => 'span4', :placeholder => '发件者名称'%>
+          
+          <%= f.label :from_email, "发件者邮箱："%>
+          <%= f.text_field :from_email, :class => 'span4',:placeholder => 'yourname@yourdomain.com' %>
+
+          <%= f.label :template_id, '选择模板:' %>
+          <table><tr><td>
+          <%= f.select :template_id, @templates.map{|t| [t.name, t.id]}, { :include_blank => true}, {:class => "chzn-select", "data-placeholder" => "选择邮件模板"} %>
+	         <a class='btn btn-mini' style='color: black;vertical-align:top;margin-top:4px;' disabled="disabled" id="template_preview" >预览</a>
+	         </td><td>
+	        <!-- <a data-toggle="modal" href="#myModal3" class='btn btn-mini hidden'>预览</a>-->
+	         </td></tr></table>
+        </fieldset>
+      </div>
+
+      <div class="tab-pane" id="tab2" style="overflow:hidden;height:230px;">
+
+        <div class="control-group">
+          <%= f.label :list_id, "邮件列表：", :class => 'control-label',:style=>"text-align:left;margin-left:20px;width:70px;" %>
+          <div class="controls" style="margin-left:90px;">
+           <%= f.select :list_ids, @lists.map{|l| [l.name, l.id]}, { :include_blank => true }, {:multiple => true, :class => "chzn-select-deselect", "data-placeholder" => "Choose a Lists"} %>
+          </div>
+         </div>
+       <!--
+       <div>邮件列表:</div>
+          <div style="margin-left:20px;"> 
+            <% @lists.each_with_index do |list,index| %>
+             <%= check_box_tag "list_ids_"+index.to_s, list.id, @campaign.lists.include?(list), :name => 'campaign[list_ids][]'  -%>
+             <%= label_tag "list_ids_"+index.to_s, :style => "display:inline" do %>
+               <%= list.name%>
+            <% end %><br>
+          <% end %>
+          </div>
+        -->
+      </div>
+
+  
+      <div class="tab-pane" id="tab4" style="height:200px;margin:20px 15px">
+      	<%= f.label :from_times1, "发件类别："%>
+      		<div class="btn-group" data-toggle="buttons-radio">
+        <button class="btn btn-mini <%= @campaign.from_time == nil ? "" : "active" %>" type="button" id="yyfs">预约发送</button>
+    				<button class="btn btn-mini <%= @campaign.from_time == nil ? "active" : "" %>" type="button" id="jsfs">手动发送</button>
+    			</div></br>
+			<div class="hidden" id="dtyyfs">
+				<%= label_tag "datetime_yyfs", "发送日期：" %>
+				<input type="text" id="datepicker" name="datepicker",class="span4" ></br>
+				<%= label_tag "selecthour", "发送时间：" %>
+				<select id="selecthour" name="selecthour" data-placeholder="Hour" style="width:60px;" class="chzn-select-deselect" tabindex="7">
+					<option value=""></option>
+					<% for i in 1..24 do %>
+					<option value=<%= i.to_s.length < 2 ? "0" + i.to_s : i.to_s %>><%= i.to_s.length < 2 ? "0" + i.to_s : i.to_s %></option>
+					<% end %>
+				</select>
+				<select id="selectminute" name="selectminute" data-placeholder="Minute" style="width:70px;" class="chzn-select-deselect" tabindex="7">
+					<option value=""></option>
+					<% for i in 0..59 do %>
+					<option value=<%= i.to_s.length < 2 ? "0" + i.to_s : i.to_s %>><%= i.to_s.length < 2 ? "0" + i.to_s : i.to_s %></option>
+					<% end %>
+				</select>
+				<select id="selectsecond" name="selectsecond" data-placeholder="Second" style="width:70px;" class="chzn-select-deselect" tabindex="7">
+					<option value=""></option>
+					<% for i in 0..59 do %>
+					<option value=<%= i.to_s.length < 2 ? "0" + i.to_s : i.to_s %>><%= i.to_s.length < 2 ? "0" + i.to_s : i.to_s %></option>
+					<% end %>
+				</select>
+			</div>
+			<%= f.hidden_field :from_time %>
+      	</div>
+      </div>
+    </div>
+  
+   <div style="margin-top:10px;margin-left:15px;" id="campaign_form">
+    <% f.submit '保存', :class => 'btn', :style=>"color:black;", :id => "form_submit" %>
+    
+    <a id="campaign_form_submit" class="btn">保存</a>
+    <%= link_to '重置', new_campaign_path, :class => 'btn', :style=>"color:black;", remote: true,:id=>'campaign_form_reset' %>
+    <!--<a onclick="$('#form > form').html('');$('#campaigns_docs').removeClass('hidden');return false;", class='btn'>取消</a>-->
+   </div>
+<% end %>
+
+<script>
+ //新建campaign，添加主题
+ function add_campaign_subject(){
+   var num = $("input[type=text][name=add_campaign_subject]").length;
+   num = num + 2;
+   var $input = $("<label for='campaign_subject'>&lt;新信件标题"+String(num)+"&gt;：</label><input type='text' size='30' placeholder='新建发送邮件标题' name='add_campaign_subject'  class='span4'>");
+   $input.insertBefore($("#add_campaign_subject_tag"));
+   //alert("add_campaign_subject");
+ };
+ 
+//点击[保存]按钮后的应用效果
+$(function(){
+ //此处script必须在_form.html.erb中，因为reset后，会重新加载_form,对提交按钮的操作会失败
+ //新建模板，提交按钮
+ $("#campaign_form_submit").click(function(){
+   var subject = $.trim($("#campaign_subject").val());
+   var from_name = $.trim($("#campaign_from_name").val());
+   var from_email = $.trim($("#campaign_from_email").val());
+   //含有类chzn-default说明没有选择
+   var isTrue = $("#campaign_template_id_chzn a:first").hasClass("chzn-default");
+   //名单列表选择项数量
+   var list_sel = $("#campaign_list_ids").find("option:selected").length;
+   
+   var canCreate = true;
+   var errInfo = "发送设置创建失败！\n原因:\n";
+   if(subject.length==0){
+     errInfo = errInfo + "信件标题为空\n";
+     canCreate = false;
+   }
+   if(from_name.length==0){
+     errInfo = errInfo + "发件者名称为空\n";
+     canCreate = false;
+   }
+   if(from_email.length==0||from_email.indexOf("@")<0){
+     errInfo = errInfo + "发件者邮箱不正确\n";
+     canCreate = false;
+   }
+   if(isTrue==true){
+     errInfo = errInfo + "邮件模板未选择\n";
+     canCreate = false;
+   }
+   if(list_sel == 0){
+     errInfo = errInfo + "邮件列表未选择\n";
+     canCreate = false;
+   }
+
+   if(canCreate == false)
+    alert(errInfo);
+   else{
+    $(this).submit();
+    //合并多主题
+     var inputs = $("input[type=text][name=add_campaign_subject]");
+     alert(inputs.length);
+     if(inputs.length > 0){
+       tt_array = new Array();
+       inputs.each(function(){
+         $input = $(this);
+         var tt = $.trim($input.val());
+         if(tt.length>0){
+          tt_array.push(tt);
+         }
+       });
+       var new_subjects = tt_array.join("|$$|");
+       alert(new_subjects);
+       $("#campaign_subject").val(subject+"|$$|"+new_subjects);
+     }
+   
+    showLoading('保存中...');
+    $('#campaign_form a').addClass('disabled');
+   }
+ });
+ 
+ 
+ //模板预览
+ function template_preview(t_id){
+  var strhost = window.location.host;
+  var strprotocol = window.location.protocol;
+  var strurl = strprotocol + "//" + strhost + "/templates/preview/" + String(t_id);
+  var win = window.open(strurl);
+  win.focus();
+ };
+ 
+  //监视模板选择
+ var t_id = $("#campaign_template_id").children('option:selected').val();
+ if(typeof(t_id)!="undefined"&&t_id!=""){
+   $("#template_preview").removeAttr("disabled");
+   $("#template_preview").unbind('click').click(function() { 
+    template_preview(t_id);
+   });
+ };
+ $("#campaign_template_id").change(function(){
+   var t_id = $(this).children('option:selected').val();
+   $("#template_preview").removeAttr("disabled");
+   $("#template_preview").unbind('click').click(function() { 
+    template_preview(t_id);
+   });
+ });
+});
+</script>
+
+<script>
+ $(function(){
+ function init_select(select, values){
+   var arr = values.split(',');
+   var length = arr.length;
+   var value = '';
+   for(i=0;i<length;i++){
+       value = arr[i];
+       $(select+" [value='"+value+"']").attr('selected','selected');
+   }
+   $(select).trigger("liszt:updated");
+ }
+ init_select("email_list","jay");
+ })
+ 
+</script>
+<script>
+  window.onload = function(){
+  	$(function() {
+  		$("#campaign_from_time").val('');
+  		$("#jsfs").click(function(){
+	    	$("#dtyyfs").addClass('hidden')
+	    	$("#campaign_from_time").val('');
+	    });
+    
+  var d = new Date();
+  d = d.valueOf();
+  d = d + 5*60*1000
+  d = new Date(d);
+		var vYear = d.getFullYear();
+		if(vYear < 10)
+		{
+			vYear = "0" + vYear;
+		}
+		var vMon = d.getMonth() + 1
+		if(vMon < 10)
+		{
+			vMon = "0" + vMon;
+		}
+		var vDay = d.getDate();
+		if(vDay < 10)
+		{
+			vDay = "0" + vDay;
+		}
+		var h = d.getHours();
+		if(h < 10)
+		{
+			h = "0" + h;
+		}
+		var m = d.getMinutes();
+		if(m < 10)
+		{
+			m = "0" + m;
+		}
+		var se = d.getSeconds(); 
+		if(se < 10)
+		{
+			se = "0" + se;
+		}
+		
+		$("#yyfs").click(function(){
+	    	$("#dtyyfs").removeClass('hidden');
+	    	$("#campaign_from_time").val(vYear+ "-" + vMon + "-" + vDay + " " + h + ":" + m + ":" + se);
+	    });
+		
+
+		$("#datepicker").datepicker({
+			changeMonth: true,
+			changeYear: true
+		});
+		
+		$("#datepicker").datepicker( "option", "dateFormat", "yy-mm-dd" );
+		$(".chzn-select-deselect").chosen({allow_single_deselect:true}); 
+		
+		$("#datepicker").val(vYear+ "-" + vMon + "-" + vDay);
+		chose_set_ini("#selecthour", h);
+		chose_set_ini("#selectminute", m);
+		chose_set_ini("#selectsecond", se);
+		
+		//单选select 数据初始化
+	  	function chose_set_ini(select, value){
+	  	  	$(select).attr('value',value);
+	  		$(select).trigger("liszt:updated");
+	  	}
+	  	
+	  	$("#datepicker").change(function(){
+	  		$("#campaign_from_time").val($(this).val() + " " + chose_get_value("#selecthour") + ":" + chose_get_value("#selectminute") + ":" + chose_get_value("#selectsecond"));
+	  	});
+	  	
+	  	$("#selecthour").change(function(){
+	  		$("#campaign_from_time").val($("#datepicker").val() + " " + $(this).val() + ":" + chose_get_value("#selectminute") + ":" + chose_get_value("#selectsecond"));
+	  	});
+	  	
+	  	$("#selectminute").change(function(){
+	  		$("#campaign_from_time").val($("#datepicker").val() + " " + chose_get_value("#selecthour") + ":" + $(this).val() + ":" + chose_get_value("#selectsecond"));
+	  	});
+	  	
+	  	$("#selectsecond").change(function(){
+	  		$("#campaign_from_time").val($("#datepicker").val() + " " + chose_get_value("#selecthour") + ":" + chose_get_value("#selectminute") + ":" + $(this).val());
+	  	});
+	  	
+	  	function chose_get_value(select){
+	  	  	return $(select).val();
+	  	}
+	  	
+    $("#yyfs").trigger("click");
+	});
+	
+    var display_campaign_entries;
+
+    $(function() {
+      return $('form #campaign_template_id').chosen().change(function() {
+        return display_campaign_entries($("#campaign_id_value").html(), $("form #campaign_template_id").val());
+      });
+    });
+
+    display_campaign_entries = function(campaign_id, template_id) {
+      return $.ajax({
+        url: 'campaigns/template_entries/' + campaign_id + "/" + template_id,
+        type: 'GET',
+        dateType: 'script'
+      });
+    };
+  };
+</script>

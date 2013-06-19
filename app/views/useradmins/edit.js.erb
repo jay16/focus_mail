@@ -1,0 +1,25 @@
+//$("#uadmin<%= @user.id %>").removeClass('hidden');
+//$("#useradmin_form<%= @user.id %>").html("<%= j render :partial => 'form' %>");
+
+function buntf(bunstr, hidstr,statu)
+{
+ //alert($(hidstr).val());
+ if($(hidstr).val() == "1" || $(hidstr).val() == 1 )
+ {
+  $(hidstr).val("0");
+  $(bunstr).text("启动");
+  $(statu).addClass("remove-icon");
+  $(statu).removeClass("add-icon");
+  //alert($(hidstr).val());
+ }
+ else
+ {
+  $(hidstr).val("1");
+  $(bunstr).text("禁用");
+  $(statu).addClass("add-icon");
+  $(statu).removeClass("remove-icon");
+ }
+}
+//add css-modify
+$("#adminset_form .modal-body").html("<%= j render :partial => 'form' %>");
+$("#adminset_btn").trigger("click");

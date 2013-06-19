@@ -1,0 +1,57 @@
+<style>
+#error_explanation {
+    width: 250px;
+}
+</style>
+  <span class="login-brand">
+    <%= image_tag("/images/2nd/logo1.png")%>
+  </span>
+  <span class="login-logo">
+    <%= image_tag("/images/2nd/bg1.png")%>
+  </span>
+  
+  <div class="login-pane"><!--span4-->
+   <div class="login-shadow"><!--login-shadow-->
+   <div class="login-border"><!--login-pane-->
+    <span class="pane-arrow"></span>
+    <span class="pane-arrow-dot"></span>
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+      <table><tr><td>
+    <div class="login-welcome">欢迎注册 </div>
+     </td></tr>
+       <tr><td>
+          <div>
+          <%= f.email_field :email, :placeholder => '请输入注册邮箱地址'%> 
+          </div>
+           </td></tr>
+           <tr><td>
+          <div>
+          <%= f.password_field :password, :placeholder => '帐户密码' %> 
+          </div>
+           </td></tr>
+           <tr><td>
+          <div>
+          <%= f.password_field :password_confirmation, :placeholder => '确认密码' %> 
+          </div>
+           </td></tr>
+           <tr><td>
+            <div><%= f.text_field :user_org, :placeholder => '组织名称' %>
+                 <%= link_to '什么东东?',nil,:class=>"focus-link",:href=>"#",:style=>"margin-left:0px;padding-left:0px;","data-placement"=>"bottom","data-content"=>"[组织名称]相同，可以与同事共同使用[确达]服务！", :rel=>"popover", "data-original-title"=>"关于[组织名称]" %></div>
+           </td></tr>
+           <tr><td>
+             <div><%= f.submit "注册", :class => 'btn'%></div>
+             <div class="login-forget">
+              <%= render :partial => "devise/shared/links" %>
+             </div>
+           </td></tr>
+         </table>
+        <% end %>
+
+      </div><!--login-pane-->
+      </div><!--login-shadow-->
+      <%= devise_error_messages! %>
+     </div><!--span4-->
+     
+     
+      
+

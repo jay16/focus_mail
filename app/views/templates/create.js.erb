@@ -1,0 +1,13 @@
+$("<%= j render @template %>").prependTo('#templates_info').hide().fadeIn();
+
+//$('#new_template')[0].reset();
+//激活保存、重置按钮
+$('#template_form a').removeClass('disabled');
+hideLoading();
+showLoading('处理中...');
+//重置新建窗体，赋予new过的@template
+$('#template_form_reset').trigger('click');
+
+
+hideLoading();
+

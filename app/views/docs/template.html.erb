@@ -1,0 +1,30 @@
+<div class="docs-form">
+  <!--<div class="close">x</div>-->
+ <div class="header">邮件模板使用说明</div>
+
+ 
+ <div class="docs-body">
+  <div class="subtitle">名词解释</div>
+  <ol>
+   <li><div class="key-word">模板名称</div>
+             邮件模板的标识，邮件发送后数据提取、分析的依据。
+   </li>
+   <li><div class="key-word">网页源码</div>
+        对上传的zip文件进行读取、分析，然后生成符合条件的模板网页源代码。</li>
+   <li><div class="key-word">zip上传</div>
+    html模板文件，及模板所引用图片存放的images文件夹，压缩为zip文件进行上传。</li>
+  </ol>
+  <div class="subtitle">zip上传说明</div>
+  <ol>
+    <table><tr><td id="zip_word" style="">
+   zip文件结构:共分两部分,第一部分：html模板文件命名为index.html;第二部分：模板所引用图片存入的images文件夹;选中这两部分压缩为zip文件 。
+   <a class="focus-link focus-center" onclick="$('#zip_word').css('display','none');$('#zip_image').css('display','');">
+    图片说明</a>
+   </td><td id="zip_image" style="display:none;">
+    <img src="/images/2nd/download-warn.png" style="width:300px;"><br>
+    <a class="focus-link focus-center" onclick="$('#zip_word').css('display','');$('#zip_image').css('display','none');">
+     文字说明</a>
+    </td></tr></table>
+  </ol>
+ </div>
+</div>

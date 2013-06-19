@@ -1,0 +1,61 @@
+<!--发送活动外包装 -->
+<div class="stream-manager js-stream-manager-container">
+	<div class="js-stream-manager" id="profile-stream-manager">
+		<div class="stream-container">
+			<div class="stream ">
+				<div class="js-stream-items stream-items" id="stream-items-id">
+				<% if @cam_list != nil && @cam_list != "" %>
+		  			<% @cam_list.each do |c| %>
+		  			  <% @c_summery = get_campaign_summery(c.id) %>
+		  			<!--单条发送活动 -->
+			  		<div class="js-stream-item stream-item" id=<%="cl" + c.id.to_s %> data-item-type="tweet" media="true"> 
+		    			<div class="stream-item-content tweet" id=<%="l-" + c.id.to_s %> data-is-reply-to="false" >
+						    <div>
+								  	<span style="color: #963EBA;" class="focus-name"><%=h @c_summery[:name][0,16] %></span><span style="color: #8E8E8E;"><%= c.created_at.strftime("%Y-%m-%d") %></span>
+				   			</div>
+		      				<div class="tweet-image" >
+		      					<%#= high_chart("chart" + @c_summery[:id].to_s , @c_summery[:pie]) %>
+		      					<%#= image_tag("/images/2nd/pix01.gif",:style=>"width:90%;height:90%;",:alt => "Chart") %>
+		      					 <div class="top" style="width:100px;height:100px;background:url(/images/2nd/loudou.png);background-position: -13px -9px;">
+                <div class="logo" style="padding:2px 0 0 10px;">总数: <%=h @c_summery[:send_totle] %></div>
+                <div class="logo" style="padding:8px 0 0 20px;">送达: <%=h @c_summery[:send_reach] %></div>
+                <div class="logo" style="padding:8px 0 0 30px;">打开: <%=h @c_summery[:open_num] %></div>
+                <div class="logo" style="padding:8px 0 0 35px;">点击: <%=h @c_summery[:click_num] %></div>     
+              </div>
+				      		</div> 
+				 			<div class="tweet-content">
+				   				<div class="tweet-row">
+				      			  <div class="tweet-text js-tweet-text">
+				      			  	总发送量：<%=h @c_summery[:send_totle] %>
+				      			  </div>
+				   				</div>
+				   				<div class="tweet-row">
+				      			  <div class="tweet-text js-tweet-text">
+				      			  	到达量：<%=h @c_summery[:send_reach] %>
+				      			  </div>
+				   				</div>
+				   				<div class="tweet-row">
+				      			  <div class="tweet-text js-tweet-text">
+				      			  	到达率：<%=h (@c_summery[:back_hard].round(2) * 100).to_i %>%
+				      			  </div>
+				   				</div>
+				   				<div class="tweet-row">
+				      			  <div class="tweet-text js-tweet-text">
+				      			  	打开率：<%=h (@c_summery[:back_soft].round(2) * 100).to_i %>%
+				      			  </div>
+				   				</div>
+					        </div>
+						</div>
+					</div>
+					<!--单条发送活动 结束-->       
+		  			<% end %>
+		  		<% end %>
+		  		</div>
+		  		<div class="focus-center">
+		  		 
+		  		<%= will_paginate @cam_list, :previous_label => '上一页 ', :next_label => '下一页 ' if @cam_list.present? %>
+		  		</div>
+			</div>
+		</div>
+	</div>
+</div>

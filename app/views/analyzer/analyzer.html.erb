@@ -1,0 +1,32 @@
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+    
+  <div>
+   <%= high_chart("analyzer_chart", pie(@etype_list,"analyzer")) %>
+  </div> 
+  <div>
+    <table class='table table-bordered'>
+    <caption>邮件收取率</caption>
+    <thead>
+    <tr>
+    <th>邮件类型</th>
+    <th>邮件总数</th>
+    <th>正常接收数量</th>
+    <th>单比</th>
+    <th>总比</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @etype_list.each do |hash| %>
+    <tr>
+    <td><%= hash[:type] %></td>
+    <td><%= hash[:num]%></td>
+    <td><%= hash[:valid_num]%></td>
+    <td><%= hash[:self_per]%></td>
+    <td><%= hash[:all_per]%></td>
+    </tr>
+    <% end %>
+    </tbody>
+    </table>
+  </div> 

@@ -1,0 +1,115 @@
+<%= javascript_include_tag "application" %>
+<%= csrf_meta_tags %>
+<%= stylesheet_link_tag "application", :media => "all" %>
+<%= stylesheet_link_tag "focusmore" %>
+<style>
+body{
+ padding: 0px;
+ -webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;
+ margin:0px;
+}
+</style>
+  
+	<div class="main-content" style="width:100%;height:820px;">
+
+   <div class="header" style="vertical-align: top;">
+    <%= @list.name.present? ? (@list.name.length > 17 ? "#{@list.name[0..15]}..." : @list.name) : "unset" %>
+   <div class="" style="background:transparent;margin-top:-3px;padding-top:0px;padding-left:10px;float:right;">
+    <table style="display:block;"><tr><td>
+     <input id="search_input" type="text" onkeydown="enterSumbit(<%= @list.id %>,$('#search_input').val());" placeholder="邮箱搜索" name="name"  class="text_field span2" style="height:28px;">
+    </td><td>
+    <a class="focus-icon search-icon" style="width:25px;height:25px;vertical-align: middle;" onclick="members_search(<%= @list.id %>,$('#search_input').val());"></a>
+    </td></tr>
+    </table>
+    </div>
+   </div>
+    
+  <div class="stream-content focus-center" style="display: block;padding:0px;vertical-align: top;" id="list_members_search">
+  </div>
+  <div class="stream-content focus-center" style="display: block;padding:0px;vertical-align: top;" id="list_members_show">
+    <!--名单 列表-->
+    <table class="table table-striped" style="margin-left:0px;">
+     <thead class="focus-thead">
+      <tr>
+        <th style="width:15%;">序号</th>
+        <th style="width:30%;">名称</th>
+        <th style="width:40%;">邮件地址</th>
+        <th style="width:15%;">操作</th>
+      </tr>
+      </thead>
+      <% @index = params[:page].to_i >= 1 ? ((params[:page].to_i - 1) * params[:per_page ].to_i + 1 ) : 1 %>
+      <%= render @members if @members %>
+    </table>
+ 
+    <%= will_paginate @members,:inner_window => 0,:outer_window => 0,:previous_label => '上一页 ', :next_label => '下一页 ' %>
+   </div>
+</div>
+<script language="javascript"> 
+ //搜索输入框回车直接提交
+ function enterSumbit(listid,keyword){  
+  //消除浏览器差异  
+  var event=arguments.callee.caller.arguments[0]||window.event;
+  if (event.keyCode == 13){  
+     members_search(listid,keyword);
+  }  
+  }  
+
+ function showLoading(info) {
+   if($("#member_loading").length>0){
+    $("#member_loading").html(info);
+    $("#member_loading").innerHTML = info;
+    $("#member_loading").css("display","block");
+   }else{
+    $("<div id='member_loading' class='loadingtxt'></div>").insertAfter($("body"));
+    $("#member_loading").html(info);
+    $("#member_loading").innerHTML = info;
+    $("#member_loading").css("display","block");
+   }
+ }
+ function hideLoading(){
+  $("#member_loading").css("display","none");
+ }
+ function members_search(listid,keyword){
+  keyword = $.trim(keyword);
+  if(keyword.length>0){
+    var strhost = window.location.host;
+    var strprotocol = window.location.protocol;
+    var strurl = strprotocol + "//" + strhost + "/categories/"+String(listid)+"/member_search"
+    //alert(strurl);
+    showLoading('搜索中');
+    $.ajax({
+     type: 'GET',
+     url: strurl,
+     data: {"keyword":keyword},
+     contentType: 'multipart/form-data',
+     datatype: 'json',
+     success:function(data)
+     {
+      hideLoading();
+      $("#list_members_show").html('');
+      $("#list_member body").css({"margin":"0px","padding":"0px"});
+      $("#list_members_search").html(data);
+      $('#search_input').val('');
+     },
+     error:function(xhr,r,e)
+     {
+      hideLoading();
+      alert(e);
+     }
+     });
+   }else{
+    alert("请输入搜索关键字！");
+   }
+ }
+</script>
+<script>
+function edit_member(memberid,ishidden){
+ if(ishidden==true){
+ $("#member_"+String(memberid)).css("display","none");
+ $("#member_"+String(memberid)+"_edit").css("display","");
+ }else{
+ $("#member_"+String(memberid)).css("display","");
+ $("#member_"+String(memberid)+"_edit").css("display","none");
+ }
+}
+</script>

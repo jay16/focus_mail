@@ -1,0 +1,83 @@
+<!--发送活动外包装 -->
+<div class="stream-manager js-stream-manager-container">
+	<div class="js-stream-manager" id="profile-stream-manager">
+		<div class="stream-container">
+			<div class="stream ">
+				<div class="js-stream-items stream-items" id="stream-items-id">
+				<% if @cam_list != nil && @cam_list != "" %>
+		  			<% @cam_list.each do |c| %>
+		  			  <% @c_summery = get_campaign_data(c.id) %>
+		  			<!--单条发送活动 -->
+			  		<div class="js-stream-item stream-item" id=<%="cl" + c.id.to_s %> data-item-type="tweet" media="true"> 
+		    			<div class="stream-item-content tweet" id=<%="l-" + c.id.to_s %> data-is-reply-to="false" style="height:120px;">
+						    <div >
+								  	<span style="color: #963EBA;" class="focus-name"><%=h Campaign.find(c.id).subject %></span><span style="color: #8E8E8E;"><%= c.created_at.strftime("%Y-%m-%d") %></span>
+				   			</div>
+		      				<div class="tweet-image" style="width:330px;">
+              <%= high_chart("chart" + c.id.to_s, g_chart([@c_summery[:send_totle],@c_summery[:send_reach],@c_summery[:open_num],@c_summery[:click_num]])) %>
+				      		</div> 
+				      		
+				 			<div class="tweet-content" style="width:150px;float:right;margin:15px 0 0 0;">
+				 			 <% if @c_summery[:isGetData] %>
+				   				<div class="tweet-row">
+				      			  <div class="tweet-text js-tweet-text">
+				      			  	发送量：<%=h @c_summery[:isGetData] ? @c_summery[:send_totle] : "未出炉" %>
+				      			  </div>
+				   				</div>
+				   				<div class="tweet-row">
+				      			  <div class="tweet-text js-tweet-text">
+				      			  	到达量：<%=h @c_summery[:isGetData] ?@c_summery[:send_reach] : "" %>
+				      			  </div>
+				   				</div>
+				   				<div class="tweet-row">
+				      			  <div class="tweet-text js-tweet-text">
+				      			  	到达率：<%=h @c_summery[:isGetData] ? (@c_summery[:send_totle] == 0 ? 0 : (@c_summery[:send_reach]/@c_summery[:send_totle].round(2) * 100).to_i).to_s+"%" : "" %>
+				      			  </div>
+				   				</div>
+				   				<div class="tweet-row" style="display:none;">
+				      			  <div class="tweet-text js-tweet-text">
+				      			  	打开率：<%=h @c_summery[:isGetData] ? (@c_summery[:send_reach]==0 ? 0 : (@c_summery[:open_peo]/@c_summery[:send_reach].round(2) * 100).to_i).to_s+"%" : "" %>
+				      			  </div>
+				   				</div>
+           <div class="tweet-row">
+               <div class="tweet-text js-tweet-text">
+                <button onclick = "campaign_report(<%= c.id%>)" class = 'btn btn-mini', style='color: black;width:80px;'>发送报告</button>                      
+               </div>
+           </div>
+				   		<% else %>
+				   		  <div class="tweet-row">
+              <div class="tweet-text js-tweet-text">
+                <div>数据状态: <span>未出炉</span></div>
+              </div>
+            </div>
+            <div class="tweet-row">
+              <div class="tweet-text js-tweet-text">
+                <div>信件模板: <span><%= c.template.try(:name) %></span></div>
+              </div>
+            </div>
+            <div class="tweet-row">
+              <div class="tweet-text js-tweet-text">
+                <div>创建时间: <span><%= c.created_at.strftime("%Y/%m/%d") %></span></div>
+              </div>
+            </div>
+            <div class="tweet-row">
+              <div class="tweet-text js-tweet-text">
+                <div>发送时间: <span style="color:red;"><%= c.created_at.strftime("%Y/%m/%d") %><span></div>
+              </div>
+           </div>
+				   		<% end %>
+					   </div><!--tweet-content-->  
+						</div>
+					</div>
+					<!--单条发送活动 结束-->       
+		  			<% end %>
+		  		<% end %>
+		  		</div>
+		  		<div class="focus-center">
+		  		 
+		  		<%= will_paginate @cam_list, :previous_label => '上一页 ', :next_label => '下一页 ' if @cam_list.present? %>
+		  		</div>
+			</div>
+		</div>
+	</div>
+</div>

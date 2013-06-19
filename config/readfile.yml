@@ -1,0 +1,9 @@
+readfile: /mailgates/mqueue/log/mgmailerd.log
+readzg: /mailgates/log_archive/
+sendmail: /home/webmail/mailtem/
+sendip: 220.248.30.60
+sendport: 80
+reply: adm@online-edm.com
+mgtest: /home/work/focus_mail/lib/gm_test/
+filepath: /webmail/
+ips: m1.intfocus.com,m2.intfocus.com,m3.intfocus.com,m4.intfocus.com,m5.intfocus.com,m5.intfocus.com,m6.intfocus.com,m7.intfocus.com,m8.intfocus.com,m9.intfocus.com,m10.intfocus.com

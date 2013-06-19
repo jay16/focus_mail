@@ -1,0 +1,9 @@
+<p>您好, <%= @resource.email %>! 感谢您注册Focus Mail</p>
+
+<p>请点击下面链接来确认您的帐户邮箱:</p>
+
+<p><%= link_to '激活我的帐户', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<br />
+<p>----------------------------------------</p>
+<p>您的Focus Mail 团队</p>
+<p>联系我们: focus_mail@openfind.com</p>

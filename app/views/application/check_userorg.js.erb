@@ -1,0 +1,10 @@
+<% if @user_org.present? %>
+$("#userorg_model").html('<%=j render 'application/yes' %>')
+$("#userorg_model_btn").trigger("click");
+<% elsif params[:user_org].present? %>
+$("#userorg_model").html('<%=j render 'application/no' %>')
+$("#userorg_model_btn").trigger("click");
+<% else %>
+$("#registration_btn").trigger("click");
+<% end %>
+

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= full_title yield(:title) %></title>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/2nd/web-icon.gif" media="screen" /> 
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= render 'layouts/shim' %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= stylesheet_link_tag "focusmore" %>
+        <style type="text/css">
+      /* Override some defaults */
+      html, body {
+        background-color: white;/*#C0DEED;#FBFBFB;/*/
+        background-position: 0 261px;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        color: #333;
+        font-family: 微软雅黑;
+      }
+      body {
+        padding-top: 60px; /* 40px to make the container go all the way to the bottom of the topbar */
+      }
+      .container > footer p {
+        text-align: center; /* center align it with the container */
+      }
+      /* The white background content wrapper */
+      .container > .content {
+        background: transparent;/*rgba(218, 236, 244, 0.9);*/
+        font-family: 微软雅黑;
+        padding: 0 0 0 0;
+        margin: 0; /* -20px;  negative indent the amount of the padding to maintain the grid system */
+       /* -webkit-border-radius: 5px 5px 6px 6px;
+           -moz-border-radius: 5px 5px 6px 6px;
+                border-radius: 5px 5px 6px 6px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.5);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.5);
+                box-shadow: 0 1px 2px rgba(0,0,0,.5);*/
+      }
+
+
+      .topbar .btn {
+        border: 0;
+      }
+      .tweet {
+        font-size: 13px;
+        position: relative;
+        zoom: 1px;
+        padding: 10px 20px;
+      }
+     footer p{
+      margin:10px auto;
+      text-align: center;
+      color: #B400AD;
+     }
+     .main-content{background:transparent;}
+    </style>
+  </head>
+  <% if user_signed_in? %>    
+  <body><!--style="background: url(/assets/bg.jpg)"-->
+  <%= hidden_field_tag 'controller_head', params[:controller]%>
+  
+    <%= render 'layouts/header' %>
+
+    <div class="container">
+      	<div style="display: none;">
+      		<%= flash[:notice] %>
+        </div>
+      <div class="content">
+        <div class="row">
+          <!--<%= render 'layouts/sidebar' %>-->
+          <div class="span12">
+            <div id="loading" class="loadingtxt" style="display: none;">加载中……</div>
+            <%= yield %>
+          </div>
+        </div><!--/row-->
+      </div><!--/content-->
+
+      <%= render 'layouts/footer' %>
+
+    </div> <!-- /container -->
+    
+  </body>
+  <% else %>   
+  <body> 
+    <%= yield %>
+  </body>
+  <% end %>
+			  
+  <script type="text/javascript">
+  	$(document).ready(function(){
+  		var head_num = 0;
+  		$("#navbar_head li").each(function(){
+  			$(this).removeClass('active');
+  		})
+  		
+  		var head_name = $("#controller_head").val();
+  		switch(head_name){
+  			case 'categories': head_num = 1; break;
+  			case 'templates': head_num = 2; break;
+  			case 'campaigns': head_num = 3; break;
+  			case 'useradmins': head_num = 4; break;
+     case 'delete': head_num = 5; break;
+  			default:head_num = 0;
+  		}
+  		$("#navbar_head li:eq(" + head_num + ")").addClass('active')
+
+  	});
+  	//加载提示框，自定义显示信息
+   function showLoading(info){
+   if(typeof(info)!='undefined'){
+   $("#loading").html(String(info)+"…").hide().fadeIn();
+   }
+   $("#loading").css("display","block");
+   }
+  </script>
+  <script type="text/javascript">
+  $(".docs-form .close").click(function(){
+   $(".docs-warn").removeClass("hidden");
+   $(this).parent().addClass("hidden");
+  });
+    $(".docs-warn").click(function(){
+   $(this).addClass("hidden");
+   $(".docs-form").removeClass("hidden");
+  });
+  </script>
+</html>

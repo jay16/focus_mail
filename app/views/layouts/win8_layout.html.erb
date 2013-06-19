@@ -1,0 +1,96 @@
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "focusmore" %>
+<style>
+ html {
+     background-color: #0F6D32;
+     font-family: 微软雅黑
+ } 
+ body {
+     background-color: #0F6D32;
+ } 
+
+#headerWrapper {
+    background-color: rgba(60, 60, 60, 0.3);
+    border-bottom: 1px solid #999999;
+}
+#headerTitles > h1 > a {
+    color: #FFFFFF;
+    font-size: 42px;
+    font-weight: 300;
+    text-decoration: none;
+}
+#headerTitles > h1 > a:hover {
+    color: #FF9900;
+    background: transparent;
+}
+#headerTitles > h2 {
+    color: #CCCCCC;
+    font-size: 15px;
+    margin: 5px 0 5px 3px;
+}
+
+#headerCenter {
+    margin: 0 auto 7px;
+    max-width: 1200px;
+    overflow: hidden;
+    padding: 0 15px;
+    position: relative;
+}
+#headerTitles {
+    display: inline-block;
+    float: left;
+    position: relative;
+}
+#headerTitles > h1 {
+    margin: 7px 0 3px;
+}
+
+.metro-accordion > h3:hover {
+    color: #FF9900;
+    cursor: pointer;
+    background: transparent;
+}
+
+.table-striped tbody tr:nth-child(2n+1) td, 
+.table-striped tbody tr:nth-child(2n+1) th {
+    background-color: #F9F9F9;
+}
+.table-striped tbody tr:nth-child(2n) td, 
+.table-striped tbody tr:nth-child(2n) th {
+    background-color: #F5F5F5;
+}
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #A8A8A8;
+}
+</style>
+
+<header>
+<div id="headerWrapper">
+  <div id="headerCenter">
+   <div id="headerTitles"> 
+    <% @campaign = Campaign.find(params[:c_id])%>
+   <h1><a href="/report/index?c_id=<%= params[:c_id] %>"><%= @campaign.subject %></a>
+    <small><%= @campaign.created_at.strftime("%Y-%m-%d %H:%M") %></small>
+    <%= link_to_function "Back", "history.back()" ,:style => "float:right;font-size:20px;margin-top:10px;margin-left:30px;",:id=>"browser_back"%></h1>
+   
+    </div>
+ 
+  </div>
+</div>
+<script>
+//根据url路径判断是否是首页，以此显示back
+  var path = window.location.pathname;
+  path_arr = path.split("/");
+  var pathname = path_arr[2];
+  if(pathname == "index"){
+   $("#browser_back").css("display","none");
+  }else{
+   $("#browser_back").css("display","black");
+  }
+  
+</script>
+</header>
+
+<%= yield %>
+

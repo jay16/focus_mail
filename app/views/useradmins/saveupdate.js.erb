@@ -1,0 +1,7 @@
+$('#adminset_form').modal('hide')
+
+$('#<%= dom_id @user, action_name %>').parent().html('');
+$("#uadmin<%= @user.id %>").remove();
+$("#<%= dom_id @user %>").replaceWith("<%= j render @useradmins %>");
+
+

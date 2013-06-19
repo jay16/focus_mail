@@ -1,0 +1,18 @@
+
+   <div class="body-header">
+    <div class="header">
+     <button type="button" class="focus-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+               欢迎加入[<%= @user_org.name %>]
+     </div>
+   </div>
+   
+     <div class="modal-body">
+       <div class="focus-center">
+       <br>
+        <div>[<%= @user_org.name %>]组织已有<font size=4><%= get_count_from_userorg(@user_org.id) %></font>个同事</div>
+        <br><br><br>
+           <a  class="btn" onclick="$('#registration_btn').trigger('click');">确定</a>
+           <a  class="btn" data-dismiss="modal" aria-hidden="true">修改</a>
+       </div>
+     </div>
+     

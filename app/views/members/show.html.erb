@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @member.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @member.email %>
+</p>
+
+<p>
+  <b>List:</b>
+  <%= @member.list[0].id %>
+</p>
+
+<p>
+	<b>Week_Number:</b>
+	<%= @member.week_number %>
+</p>
+
+
+<%= link_to 'Edit', edit_list_member_path(@list.id, @member) %> |
+<%= link_to 'Back', list_members_path(@list.id) %>

@@ -1,0 +1,11 @@
+ <body style="padding-top:0px">       
+ <div style="margin:0 auto;width:1200px;margin-top:50px;">
+   <span style="width:700px;">
+   <%= high_chart("chart_domain_track", g_chart_domain(params[:c_id],"track")) %>
+   </span>
+    <span style="width:700px;float:right;margin-top:-400px;">
+   <%= high_chart("chart_domain", g_chart_domain(params[:c_id],"click")) %>
+   </span>
+   </div>
+ </body>
+

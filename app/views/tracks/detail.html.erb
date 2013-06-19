@@ -1,0 +1,22 @@
+ 
+  <div class="header">打开具体时间<small>(<%= @tracks.first().member.name%>)</small></div>
+      <table class="table table-striped">
+        <thead class="focus-thead">
+          <tr>
+            <th></th>
+            <th>打开时间</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tracks.each do |track| %>
+            <tr>
+              <td></td>
+              <td><%= track.created_at.strftime("%F %T") %></td>
+              <td></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="focus-center"><%= will_paginate @tracks,:previous_label => "上一页",:next_label => "下一页" %></div>

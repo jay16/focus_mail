@@ -1,0 +1,36 @@
+   <div class="container">
+				
+      <div class="row">
+        <div class="span8">
+      		<h1 style="margin-top:15px;">Openfind Mailcloud Service</h1>
+      		<h2 style="color:white;padding-left:25px;font-weight:normal;">Focus Mail</h2>
+        </div>
+        <div class="span4">
+      	  <div class="sign_in_bkground">
+      		  <img src="/images/sign_in/arrow.png" style="left:-20px;bottom:-30px;position:absolute;">
+      		  <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
+  				<%= devise_error_messages! %>
+      		    <table>
+      		      <tr><td>
+      				<div>
+      				  <h2>重新发送激活邮件</h2>
+      				</div>
+      			  </td></tr>
+      			  <tr><td>
+      				<div>
+      				<%= f.email_field :email, :placeholder => '请输入注册邮箱地址'%> 
+      				</div>
+      			  </td></tr>
+      			   <tr><td>
+                     <div><%= f.submit "发送确认信", :class => 'btn btn-primary'%></div>
+                     <div style="padding: 10px;">
+		    		   <%= render :partial => "devise/shared/links" %>
+		    	     </div>
+                   </td></tr>
+                 </table>
+              <% end %>
+	      </div>
+	    </div>
+	  </div>
+	
+

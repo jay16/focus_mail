@@ -1,0 +1,17 @@
+ <div class="body-header">
+  <div class="header">
+   <button type="button" class="focus-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+   [<%= params[:user_org]  %>]不存在
+   </div>
+ </div>
+ 
+   <div class="modal-body">
+     <div class="focus-center">
+     <br>
+      <div>您确定创建[<%= params[:user_org] %>]组织吗?</div>
+      <br><br><br>
+      <a  class="btn" onclick="$('#registration_btn').trigger('click');">确定</a>
+      <a  class="btn" data-dismiss="modal" aria-hidden="true">修改</a>
+    </div>
+   </div>
+     

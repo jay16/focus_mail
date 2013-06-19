@@ -1,0 +1,3 @@
+$('#<%= dom_id @useradmin, action_name %>').parent().html('');
+$("#uadmin<%= @useradmin.id %>").remove();
+$("#<%= dom_id @useradmin %>").replaceWith("<%= j render @useradmin %>");

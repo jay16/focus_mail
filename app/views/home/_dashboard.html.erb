@@ -1,0 +1,147 @@
+<div class="dashboard" style="height:100%;padding:0px;margin-left:20px;">
+ 
+  <% @dashboard = get_dashboard_data %>
+  <div class="databoard">
+    <div class="header">发送统计</div>
+    <div class="body">
+     <div id="container" style="height: 200px;margin-left:20px;"></div>
+    </div>
+  </div>
+  <div class="databoard">
+    <div class="header">名单统计</div>
+    <div class="body">
+     
+    </div>
+  </div>
+</div>
+<script>
+ $(function () {
+    var chart = new Highcharts.Chart({
+        credits: { text: '' },
+        chart: {
+            renderTo: 'container',
+            events: {
+                load: function () {
+                    // Draw the flow chart
+                    var ren = this.renderer,
+                        colors = Highcharts.getOptions().colors,
+                        rightArrow = ['M', 0, 0, 'L', 100, 0, 'L', 95, 5, 'M', 100, 0, 'L', 95, -5],
+                        leftArrow = ['M', 100, 0, 'L', 0, 0, 'L', 5, 5, 'M', 0, 0, 'L', 5, -5];
+                    // SaaS client label
+                    ren.label("<%= number_to_currency(@dashboard[:send_totle],:unit => '', :precision => 0) %>", 10, 10)
+                        .attr({})
+                        .css({
+                            color: 'black',
+                            fontSize: '20px'
+                        })
+                        .add();
+                    ren.label("邮件发送", 10, 35)
+                        .attr({
+                            fill: colors[0],
+                            stroke: 'white',
+                            'stroke-width': 2,
+                            padding: 5,
+                            r: 5
+                        })
+                        .css({
+                            color: 'white'
+                        })
+                        .add()
+                        .shadow(true);
+                    // Arrow from SaaS client to Phantom JS
+                    ren.path(rightArrow)
+                         .attr({
+                             'stroke-width': 2,
+                             stroke: colors[3]
+                         })
+                        .translate(95, 23)
+                        .add();
+                             
+                    ren.label("成功送达", 110, 30)
+                        .css({
+                            fontSize: '10px',
+                            color: colors[3]
+                        }) 
+                        .add();
+                    
+                    ren.label("<%= number_to_currency(@dashboard[:send_reach],:unit => "", :precision => 0) %>封<br/>邮件送达", 210, 10)
+                       .attr({
+                            fill: colors[0],
+                            stroke: 'white',
+                            'stroke-width': 2,
+                            padding: 5,
+                            r: 5
+                        })
+                        .css({
+                            color: 'white'
+                        })
+                        .add()
+                        .shadow(true);
+                    // 邮件送达 -> 开信人数
+                    ren.path(['M', 250, 40, 'L', 250, 115, 'L', 245, 110, 'M', 250, 115, 'L', 255, 110])
+                         .attr({
+                             'stroke-width': 2,
+                             stroke: colors[3]
+                         })
+                         .add();
+                             
+                    ren.label('打开邮件', 195, 60)
+                        .css({
+                            color: colors[3],
+                            fontSize: '10px'
+                        })                       
+                        .add();
+                    
+                    ren.label("<%= number_to_currency(@dashboard[:open_peo],:unit => "", :precision => 0) %>人次<br/>开信人数", 210, 130)
+                         .attr({
+                            fill: colors[0],
+                            stroke: 'white',
+                            'stroke-width': 2,
+                            padding: 5,
+                            r: 5
+                        })
+                        .css({
+                            color: 'white',
+                            fontSize: '13px'
+                        })
+                        .add()
+                        .shadow(true);
+                    // Browser label
+                      ren.path(leftArrow)
+                         .attr({
+                             'stroke-width': 2,
+                             stroke: colors[3]
+                         })
+                        .translate(95, 145)
+                         .add();
+                             
+                    ren.label('点击邮件中链接', 110, 120)
+                        .css({
+                            color: colors[3],
+                            fontSize: '10px'
+                        })
+                        .add();
+                             
+
+                    ren.label("<%= number_to_currency(@dashboard[:click_num],:unit => "", :precision => 0) %>次<br/>点击链接", 10, 130)
+                        .attr({
+                            fill: colors[0],
+                            stroke: 'white',
+                            'stroke-width': 2,
+                            padding: 5,
+                            r: 5
+                        })
+                        .css({
+                            color: 'white'
+                        })
+                        .add()
+                        .shadow(true);
+                }
+            }
+        },
+        title: {
+            text: ''
+        }   
+    });
+});
+</script>

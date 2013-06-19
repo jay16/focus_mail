@@ -1,0 +1,27 @@
+<tr id="user_<%= useradmin.asset_id %>">
+  <td>
+   <% if useradmin.user.email.length > 25 %>
+     <a class="focus-rel" rel="tooltip" data-original-title="<%= useradmin.user.email %>"><%= useradmin.user.email[0..23].concat('...') %></a>
+   <% else%>
+     <%= useradmin.user.email %>
+   <% end %>
+   
+  </td>
+  <% user_permission(useradmin.asset_id).each do |permission| %>
+  <td><% permission.type_user == 1 ? "启用" : "禁用" %>
+   <a class="focus-icon <%= permission.type_user == 1 ? 'ok-icon':'delete-icon'%>"></a>
+  </td>
+  <% end %>
+  <td><%= get_user_org(useradmin.asset_id) %></td>
+  <td>
+    <%= link_to '编辑', edit_useradmin_path(useradmin.asset_id), :class => 'btn btn-mini', :remote => true %>
+    <%= link_to '删除', useradmin_path(useradmin.asset_id), :method => :delete,
+      :confirm => 'Are you sure?', :class => 'btn btn-mini', :remote => true %>
+  </td>
+</tr>
+<!--<tr id="uadmin<%= useradmin.asset_id %>" class="hidden">
+ <td colspan="5">
+   <div id="useradmin_form<%= useradmin.asset_id %>"></div>
+ </td>
+</tr>
+-->

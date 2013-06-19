@@ -1,0 +1,38 @@
+
+<% if @dlists.present? %>
+<div class="header">名单列表删除管理<small>(物理删除)</small>
+ <%= link_to '一键删除', {:controller => "delete", :action => "delete_all_lists"},
+               :method => :delete, :confirm => '删除所有，不可恢复，确定要删除吗?', 
+               :class => 'btn btn-mini', :remote => true, :style => "color: black;" if @dlists.count > 0 %>
+</div>
+<table class="table table-striped">
+  <thead class="focus-thead">
+    <tr>
+      <th>序号</th> 
+      <th>ID</th>
+      <th>名称</th>
+      <th>删除时间</th>
+      <th>邮箱数量</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @dlists.each_with_index do |list,index| %>
+      <tr id="<%= dom_id list %>">
+        <td><%= index %></td>
+        <td><%= list.id %></td>
+        <td><%= list.name %></td>
+        <td><%= list.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+        <td><%= list.member_count %></td>
+        <td><%= link_to '删除', {:controller => "delete", :action => "delete_list",:list_id => list.id},
+               :method => :delete, :confirm => '物理删除，不可恢复，确定要删除吗?', :class => 'btn btn-mini', 
+               :remote => true, :style => "color: black;"  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="focus-center"><%#= will_paginate @clicks,:previous_label => "上一页",:next_label => "下一页" %></div>
+<% else %>
+<div class="focus-center" style="min-height:300px;">链接点击记录为空！</div>
+<% end %>

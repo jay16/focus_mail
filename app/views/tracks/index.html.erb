@@ -1,0 +1,25 @@
+<% if @tracks.present? %>
+  <div class="header">链接分析<small>(<%= @tracks[0].campaign.subject %>)(<%= @track_data.track_num %>次数|<%= @track_data.peo_num %>人次)</small></div>
+  <table class="table table-striped">
+    <thead class="focus-thead">
+      <tr>
+        <th>会员信息</th>
+        <th>最近开信时间</th>
+        <th>开信次数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tracks.each do |track| %>
+        <tr>
+          <td><%= track.member ? "#{track.member.name} <#{track.member.email}>" : "-" %></td>
+          <td><%= track.last_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+          <td><%= track.count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="focus-center"><%= will_paginate @tracks,:previous_label => "上一页",:next_label => "下一页" %></div>
+<% else %>
+ <div class="focus-center" style="min-height:300px;">开信记录为空！</div>
+<% end %>

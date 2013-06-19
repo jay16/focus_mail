@@ -1,0 +1,8 @@
+showLoading("[<%= @list.name %>]删除完毕");
+
+$("#<%= dom_id @list %>").remove();
+
+setTimeout("hideLoading()",1000);
+
+
+

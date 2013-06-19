@@ -1,0 +1,42 @@
+ <tr id="<%= dom_id member %>">
+  <td><%= @index %></td>
+  <td><div id="<%= member.id %>_name">
+      <a class="focus-rel" rel="tooltip" data-original-title="<%= member.name %>">
+     <% if member.name.present? and member.name.length > 5  %>
+       <%= member.name[0..5].concat('...') %>
+      <% else %>
+      <%= member.name  %>
+      <% end %>
+      </a>
+    </div>
+  </td>
+  <td><div id="<%= member.id %>_email">
+      <a class="focus-rel" rel="tooltip" data-original-title="<%= member.email %>">
+      <% if member.email.present? and member.email.length > 18  %>
+       <%= member.email[0..17].concat('...') %>
+      <% else %>
+      <%= member.email  %>
+      <% end %>
+      </a>
+     </div>
+  </td>
+  <td>
+   <a class="focus-icon pencil-icon"  onclick="edit_member(<%= member.id %>,true)"></a>
+    <%= link_to '', [@list, member], :method => :delete, :confirm => 'Are you sure?', :class => 'focus-icon delete-icon'  %>
+  </td>
+</tr>
+<tr id="<%= dom_id member %>_edit" style="display:none;">
+ <td><%= @index %></td>
+ <td colspan="3">
+ <form method="post"  data-remote="true" style="margin:0px;height:23px;" action="/lists/<%= @list.id %>/members/<%= member.id %>" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="put" name="_method"><input type="hidden" value="/i4QOaVOpqq3emjD3JGk+2d6LZOy8ECAbRHiawtOuOw=" name="authenticity_token"></div>
+ <input type="text" value="<%= member.name %>" style="height:25px; line-height:25px; width:90px;" name="member[name]" def="member_name">
+ <input type="text" value="<%= member.email %>" style="height:25px; line-height:25px; width:160px;" name="member[email]" def="member_email">
+  <span class="form_submit" style="float:right;margin-right:5px;">
+  <input type="submit" value="保存" name="commit" class="hidden" style="display:none;" id="<%= @list.id %><%= member.id %>">
+  <a onclick="showLoading('保存中');$('#<%= @list.id %><%= member.id %>').trigger('click');$('#<%= dom_id member %>_edit .form_submit a').addClass('disabled');" class="focus-icon ok-icon"></a>
+  <a onclick="edit_member(<%= member.id %>,false)" class="focus-icon delete-icon"></a>
+  </span>
+ </td>
+   </form>
+</tr>
+<% @index += 1 %>

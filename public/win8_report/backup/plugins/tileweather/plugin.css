@@ -1,0 +1,51 @@
+﻿.tileWeather .weatherwrapper{
+	position: relative;
+}
+.tileWeather .weatherwrapper>.img{
+	float:left; margin-left:10px
+}
+.tileWeather .weatherwrapper>.weathercontent{
+	position: absolute; top: 0; left: 170px;
+	padding-right:5px;
+}
+.tileWeather .weathercontent>.temp{
+	font-size:36px;
+	font-weight:lighter;
+}
+.tileWeather .location{
+	position:relative;
+	display:block;
+	margin-top:5px;
+	margin-botttom:5px;
+	text-align:right;
+	font-size:14px;
+	text-decoration:none;
+}
+.tileWeather .weathercontent>.wind{
+	position:relative;
+	margin-top:10px;
+	font-size:11px;
+	font-weight:lighter;
+	margin-left:10px;
+}
+.tileWeather .weathercontent>.humid{
+	position:relative;
+	font-size:11px;
+	font-weight:lighter;
+	margin-left:10px;
+}
+.tileWeather .forecast{
+	font-size:18px; position:absolute; top: 113px; left: 7px;
+	font-weight:lighter;
+}
+.tileWeather .for_temp{
+	margin-top:15px;
+	text-align:right;
+	font-size:11px;
+}
+.tileWeather .for_title{
+	font-size:30px;
+	font-weight:lighter;
+	margin-top:10px;
+	margin-bottom:1px;
+}

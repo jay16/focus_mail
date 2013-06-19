@@ -1,0 +1,3 @@
+  <%= field_set_tag do %>
+   <%= display_email(@template.id,@template.img_url).html_safe if File.exist?(@template.img_url.to_s) %>
+  <% end %>

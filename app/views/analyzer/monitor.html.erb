@@ -1,0 +1,23 @@
+
+
+<div class="header">用户行为记录</small></div>
+<table class="table table-striped">
+  <thead class="focus-thead">
+    <tr>
+      <th>用户邮箱</th>
+      <th>操作行为</th>
+      <th>操作时间</th> 
+    </tr>
+  </thead>
+  <tbody>
+    <% @actions.each do |action| %>
+      <tr>
+        <td><%= link_to action.email.present? ? action.email : '用户已经删除', {:controller => "analyzer",:action =>"monitor",:user_id => action.user_id},:class=>"focus-rel"%></td>
+        <td><%= action.asset_type %>/<%= action.action_name %></td>
+        <td><%= action.action_datetime.strftime('%Y/%m/%d %H:%M:%S') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="focus-center"><%= will_paginate @actions,:previous_label => "上一页",:next_label => "下一页" %></div>

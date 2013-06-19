@@ -1,0 +1,40 @@
+<style>
+.tooltip {
+   z-index: 100;
+}
+.tooltip-inner {
+  max-width: 200px;
+  background-color: gray;
+}
+.tooltip.bottom .tooltip-arrow {
+    border-bottom: 5px solid gray;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+.tooltip.top .tooltip-arrow {
+  border-top: 5px solid gray;
+}
+</style>
+<% if @clicks.present? %> 
+  <div class="header">点击具体信息<small>(<%= link_to @clicks.first().link.url[0..80]+"...",'javascript:void(0)',:class=>"focus-rel",:rel=>'tooltip', "data-placement"=>'bottom',"data-original-title"=>@clicks.first().link.url %>)</small></div>
+      <table class="table table-striped">
+        <thead class="focus-thead">
+          <tr>
+            <th>会员信息</th>
+            <th>点击时间</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @clicks.each do |click| %>
+            <tr>
+              <td><%= click.member ? "#{click.member.name} <#{click.member.email}>" : "-" %></td>
+              <td><%= click.created_at.strftime("%F %T") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="focus-center"><%= will_paginate @clicks,:previous_label => "上一页",:next_label => "下一页" %></div>
+<% else %>
+ <div class="focus-center" style="min-height:300px;">链接打开次数为0</div>
+<% end %>

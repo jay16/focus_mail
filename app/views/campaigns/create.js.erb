@@ -1,0 +1,7 @@
+$("<%= j render @campaign %>").prependTo('#stream-items-id').hide().fadeIn();
+
+$('#form a').removeClass('disabled');
+hideLoading();
+
+$('#campaign_form_reset').trigger('click');
+

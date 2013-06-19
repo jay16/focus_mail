@@ -1,0 +1,30 @@
+
+
+<% if @is_valid %>
+
+ $("#<%= @member.id.to_s %>_name a").attr("data-original-title","<%= @member.name %>");
+ $("#<%= @member.id.to_s %>_email a").attr("data-original-title","<%= @member.email %>");
+ 
+ <% if @member.name.present? and @member.name.length > 5 %>
+ $("#<%=  @member.id.to_s %>_name a").html("<%= @member.name[0..5].concat('...') %>");
+ <% else %>
+ $("#<%=  @member.id.to_s %>_name").html("<%= @member.name %>");
+ <% end %>
+ <% if @member.email.present? and @member.email.length > 18 %>
+ $("#<%= @member.id.to_s %>_email a").html("<%= @member.email[0..17].concat('...') %>");
+ <% else %>
+ $("#<%= @member.id.to_s %>_email a").html("<%= @member.email %>");
+ <% end %>
+ 
+$("#member_<%=  @member.id.to_s %>_edit input[def=member_name]").attr("value","<%= @member.name %>");
+$("#member_<%=  @member.id.to_s %>_edit input[def=member_email]").attr("value","<%= @member.email %>");
+
+$('#<%= dom_id @member %>_edit .form_submit a').removeClass('disabled');
+edit_member(<%= @member.id %>,false);
+
+<% else %>
+alert("新邮箱地址[<%= params[:member][:email]%>]\n请确认邮箱格式正确！");
+edit_member(<%= @member.id %>,false);
+<% end %>
+hideLoading();
+

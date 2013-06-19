@@ -1,0 +1,232 @@
+<style>
+ .stream-items :hover {
+ cursor: default;
+}
+</style>
+<%- model_class = Campaign.new.class -%>
+	<div class="main-content" style="width:540px;background:white;">
+	 
+ 		<div class="header">
+ 		  <div>邮件模板
+ 		    <form class="form-search hidden" style="float:right;margin-right:10px;margin-top:-3px;">
+       <input id="search_input" type="text" class="input-medium search-query" placeholder="关键字">
+       <button type="submit" class="btn" onclick="template_search($('#search_input').val());">搜索</button>
+       </form>
+ 		   </div>
+    </div>
+    <div id="sel_mes" class="stream-content" style="display: block;">
+      <!--邮件模板外包装 -->
+      <div class="stream-manager js-stream-manager-container">
+      	<div class="js-stream-manager" id="profile-stream-manager">
+      		<div class="stream-container">
+      			<div class="stream ">
+      				<div class="js-stream-items stream-items" id="templates_info">
+      				<% if @templates.present? %>
+        		  <% @templates.each do |template| %>
+               <%= render template %>
+            <% end %>
+          <% end %>
+    		  		</div>
+    		  </div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <div class="focus-center">
+      <%= will_paginate @templates,:previous_label => '上一页 ', :next_label => '下一页 ' if @templates.present? %>
+    </div>
+ </div>
+ 
+  <div id="myModal4" class="modal fade">
+   <div class="modal-header header">
+   <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
+       邮件模板评分
+   </div>
+   <div class="modal-body" style="height: 100px;">
+    <div class="focus-center" style="vertical-align: middle;">
+           邮件模板评分为
+     <span class="grade"></span>
+            属于
+     <span class="info"></span>
+    </div>
+   </div>
+  </div>
+  <a href="#myModal4" role="button" class="hidden" data-toggle="modal" id="trigger" style="display:none;"></a>
+<!--   dashboard begin   -->
+ <div class="dashboard" style="height:100%;padding:0px;margin-left:20px;">  
+    	<!--<div class="component" style="width:100%;height:40px;">
+    		      <div style="float:right;">
+               <%= link_to '新建邮件模板', new_template_path, :class => 'btn', remote: true, :style => 'color: black;' %>
+            </div>
+      </div>
+     -->
+    <div class="databoard">
+     <div class="header" id="template_add_edit">
+              新建邮件模板
+     <!--<%= link_to '新建邮件模板', new_template_path, :class => 'btn', remote: true %>-->
+     </div>
+    	<div class="component">
+      		<div id="templates_form" style="padding:10px 15px;height:400px;">
+  			     <%=  render :partial => 'form' %>
+        </div>
+     </div>
+    </div>
+  <!--   dashboard end   --> 
+   <div class="databoard" style="height:100%;">
+       <div class="component">
+           <%= render :template => "/docs/template.html.erb"%>
+        </div>  
+   </div>
+   
+ </div>
+<!--   details pane   --> 
+<div id="details-pane-outer">
+	<div class="details-pane-shell">
+		<div class="details-pane" id="details-pane" style="display: none; height: 585px; width: 415px; left: 530px; margin-top: 15px; -webkit-transition-property: none; ">
+			<div class="inner-pane active">
+				<div class="pane-toolbar pane-built-in">
+					<a class="pane-close toolbar-control " rel="pane_close" href="javascript:void(0)">
+						关闭 <span>×</span>
+					</a>
+					<br style="clear: both">
+				</div>
+				<div id="pane-load" style="overflow-y:scroll; ">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--   details pane  end --> 
+<script type="text/javascript"> 
+	$(function(){
+	//重置新建窗体，赋予new过的@template
+ $('#template_form_reset').trigger('click');
+
+ 
+  $("a[rel=pane_close]").click(function(e) {
+   $("#details-pane").css("display","none");
+  })
+ $("#fjzip").click(function(){
+ if($(this).text() == "zip上传")
+ {
+  $("#htmlsource").addClass("hidden");
+  $("#zipfile").removeClass("hidden");
+  $(this).text("内容填写");
+ }
+ else
+ {
+  $("#htmlsource").removeClass("hidden");
+  $("#zipfile").addClass("hidden");
+  $(this).text("zip上传");
+ }
+});
+	});
+</script>
+<script type="text/javascript">
+	var strhost = window.location.host;
+	var strprotocol = window.location.protocol;
+	
+	$(document).ready(function(){
+		$("#details-pane").css("height",$(window).height() - 70);
+		// 点击显示Pane_detail
+		//$(".stream-item-content").click(function(e) {
+		//    open_cam_pane($(this).attr("id").substring(2));
+		//})
+	});
+	function showpane(){
+		showLoading();
+		$("#details-pane").css("display","block");
+	    $(document).ready(function(){
+	    	$("#details-pane").css("height",$(window).height() - 70);
+		});
+	}	
+
+	function open_cam_pane(cam_id){
+		showpane();
+		var strurl = strprotocol + "//" + strhost + "/home/campaign";
+	   	$.ajax({
+			type: 'GET',
+		    url: strurl,
+		    data: {"cam_id":cam_id},
+		    contentType: 'multipart/form-data',
+		    datatype: 'json',
+		    success:function(data)
+		    {
+		    	//alert(data);
+		    	$("#pane-load").html(data);
+		    	hideLoading();
+		    },
+		    error:function(xhr,r,e)
+		    {
+		    	alert(e);
+		    	hideLoading();
+		    }
+		  });
+	}
+
+	//<!--   发送活动  search --> 
+	function start_search(f){
+		showLoading();
+		//var txtq = $("#str_month").val();
+		var strhost = window.location.host;
+		var strprotocol = window.location.protocol;
+		var strurl = strprotocol + "//" + strhost + "/home?f=" + f;
+		//alert(strurl);
+	    window.open(strurl,'_self');
+	};
+	//<!--   发送活动  search end -->
+</script>
+
+<script>
+	function imgurl(val)
+	{
+	 var strhost = window.location.host;
+		var strprotocol = window.location.protocol;
+		var strurl = strprotocol + "//" + strhost + "/templates/saveimgurl"
+		$.ajax({
+			type: 'POST',
+			url: strurl,
+			data: {"iu":val},
+			contentType: 'multipart/form-data',
+			datatype: 'json'
+		});
+ }
+</script>
+<script>
+ function template_search(keywork){
+  alert(keyword);
+  var strhost = window.location.host;
+  var strprotocol = window.location.protocol;
+  var strurl = strprotocol + "//" + strhost + "/templates/search"
+  alert(strurl);
+  showLoading();
+  $.ajax({
+   type: 'GET',
+   url: strurl,
+   data: {"keyword":keyword},
+   contentType: 'multipart/form-data',
+   datatype: 'json',
+   success:function(data)
+   {
+    $("#templates_info").html(data);
+    alert(data)
+    hideLoading();
+   },
+   error:function(xhr,r,e)
+   {
+    alert(e);
+    hideLoading();
+   }
+   });
+ }
+</script>
+<script type="text/javascript">
+ function preview(template_id){
+  var strhost = window.location.host;
+  var strprotocol = window.location.protocol;
+  var strurl = strprotocol + "//" + strhost + "/templates/preview/" + String(template_id);
+  //alert(strurl);
+  var win = window.open(strurl);
+  win.focus();
+ }
+</script>

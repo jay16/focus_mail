@@ -1,0 +1,25 @@
+<!--css modify-->
+<% @member ||= @list.members.build %>
+<%= form_for([@list, @member], :html => { :class => 'form-horizontal' },:remote => true) do |f| %>
+
+  <%= render :partial => "common/form_error", :locals => { model: @list } %>
+
+  <div class="control-group">
+    <%= f.label '名称：', :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field', :style => "height:26px; line-height:26px;" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label '邮件地址：', :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :email, :class => 'text_field', :style => "height:26px; line-height:26px;" %>
+    </div>
+  </div>
+ <!--css modify-->
+  <div class="focus-center">
+    <%= f.submit '保存', :class => 'btn' %>
+    <input type='button' class="btn" data-dismiss="modal" aria-hidden="true" value='取消'>
+  </div>
+<% end %>

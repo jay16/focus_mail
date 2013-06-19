@@ -1,0 +1,139 @@
+/* Flip tile */
+.tileFlip{
+	z-index:0;	
+	overflow:visible;
+}
+.tileFlip:hover{
+	box-shadow:none;
+	outline:none;
+	padding:0;
+}
+.tileFlip>.flipContainer{
+	height:100%;
+	width:100%;
+	z-index:0;	
+	-webkit-transition:-webkit-transform 0.6s;
+	-moz-transition:-moz-transform 0.6s;
+	-o-transition:-o-transform 0.6s;
+	-ms-transition:-ms-transform 0.6s;
+	transition:transform 0.6s;
+}
+.tileFlipped{
+	-webkit-perspective: 600px;
+	-moz-perspective: 600px;
+	-o-perspective: 600px;
+	-ms-perspective: 600px;
+	perspective: 600px;
+}
+.tileFlipped>.flipContainer{
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	transform-style: preserve-3d;		
+}
+.tileFlip:hover .flipContainer{
+	outline: 1px solid #FFF;
+	-moz-box-shadow: 0 0 10px #DDD;
+	-webkit-box-shadow: 0 0 10px #DDD;
+	box-shadow: 0 0 10px #DDD;
+}
+@-moz-document url-prefix() { /* Firefox renders outlines wrong, so fix it */
+   .tileFlip:hover .flipContainer{
+		outline: none;
+		-moz-box-shadow: 0 0 10px #DDD, 0 0 1px 1px #FFF;
+		box-shadow: 0 0 10px #DDD, 0 0 1px 1px #FFF;
+	}	
+}
+
+.tileFlip:hover.noClick .flipContainer{
+	outline: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+.support3D:hover .flipContainer{
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
+	-o-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+}
+.tileFlipped .flipBack{
+	-webkit-backface-visibility: hidden;	
+	-moz-backface-visibility: hidden;	
+	-ms-backface-visibility: hidden;	
+	-o-backface-visibility: hidden;	
+	backface-visibility: hidden;	
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
+	-o-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+}
+.tileFlipped .flipFront{
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;	
+	-ms-backface-visibility: hidden;	
+	-o-backface-visibility: hidden;	
+	backface-visibility: hidden;		
+}
+.flipImgCenterer{
+	display:table-cell;
+	vertical-align: middle;
+	text-align:center;
+	width:100%;
+	height:100%;
+}
+.flipImgCenterer>img{
+	display:inline;
+	position:relative;
+	z-index:5;
+	width:auto;
+	height:auto;
+}
+.flipImgWrapper{
+	display:table;
+	width: 100%;
+	height: 100%;
+}
+.flipFront{
+	position: absolute;
+	display:block;
+	padding:0;
+	marign:0;
+	width: 100%;
+	height: 100%;
+	overflow:hidden;
+	z-index:2;
+}
+.flipBack{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	display: block;
+	padding: 10px;
+	color: white;
+	text-align: center;
+	z-index:0;
+	background:inherit;
+}
+.tileFlipped  .tileLabelWrapper{
+	-webkit-backface-visibility: hidden;	
+	-moz-backface-visibility: hidden;	
+	-ms-backface-visibility: hidden;	
+	-o-backface-visibility: hidden;	
+	backface-visibility: hidden;
+	z-index:30;
+}
+.tileFlip .tileLabelWrapper.top{
+	right:-2px;
+}
+.tileFlip .tileLabelWrapper.bottom{
+	bottom:-2px;
+	right:0;
+	left:0;
+}

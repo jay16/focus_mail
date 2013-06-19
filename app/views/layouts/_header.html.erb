@@ -1,0 +1,145 @@
+<style>
+.navbar .brand {
+    display: block;
+    float: left;
+    height:25px;
+    line-height:25px;
+    margin-left: 2px;
+    padding: 5px 10px 6px
+}
+.navbar .brand:hover {
+    cursor: pointer;
+}
+.navbar .nav .active > a,
+.navbar .nav .active > a:hover {
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top:2px;
+}
+.navbar .nav > li > a {
+    color: black;
+    float: none;
+    text-decoration: none;
+    margin-top:2px;
+}
+
+#navbar_head,#navbar_head > li:hover,
+#navbar_head > li > a:hover{
+ color: black;
+ cursor: pointer;
+}
+.navbar .nav > li > a {
+ text-shadow: none;
+  margin-top:2px;
+}
+
+
+#navbar .nav-tabs > li > a,
+#navbar .nav-tabs > li > a:hover{
+  font-family: verdana,arial,helvetica,sans-serif;
+  color: black;
+  border-color: transparent;
+  cursor: pointer;
+    margin-top:2px;
+}
+
+
+#navbar .nav-tabs > .active > a,
+#navbar .nav-tabs > .active > a:hover,
+.navbar .nav .active > a,
+.navbar .nav .active > a:hover {
+  border-radius: 0px;
+  background: transparent;
+  cursor: pointer;
+  color: #B400AD;
+  border-bottom:3.5px solid #B400AD;
+  height:13px;
+}
+#navbar .user-brand {
+   float:right;
+   height:25px;
+   margin-top:5px;
+   margin-right:10px;
+   padding:2px 2px 0px 10px;
+   border: solid 2px lightgray;
+   -moz-border-radius:10px;
+   border-radius:10px;
+}
+</style>
+  
+<div class="navbar navbar-fixed-top"  style="background:#D0B9D7;background-color:#D0B9D7;height:25px;"><!--rgb(201,135,191);-->
+  <div class="navbar-inner"  style="background:#D0B9D7;background-color:#D0B9D7;height:25px;">
+    <div class="container"   style="background:#D0B9D7;background-color:#D0B9D7;height:25px;" >
+
+      <a href="/">
+      <img class="brand" src="" width="190px" alt="MenuLogo" title="MenuLogo" id="menu_logo">
+      </a>
+      <div id="navbar" class="container nav-collapse tabbable"   style="background:#D0B9D7;background-color:#D0B9D7;height:25px;">
+        <ul class="nav nav-tabs" id="navbar_head" style="border-bottom-width:0px;border-bottom-color:white;">
+          <li><%= link_to "首页", root_path  %></li>
+          <li><%= link_to "邮件列表", categories_path if @FocusMail["Categories"] == 1 %></li>
+          <li><%= link_to "邮件模板", templates_path if @FocusMail["Templates"] == 1 %></li>
+          <li><%= link_to "发送设置", campaigns_path if @FocusMail["Campaigns"] == 1 %></li>
+        
+          <li><%= link_to "权限设定", useradmins_path if @FocusMail["Supers"] == 1 %></li>
+          <li><%= link_to "管理删除", {:controller => "delete",:action => "index" } if @FocusMail["Delete"] == 1 %></li>
+        
+        </ul>
+        <ul class="nav user-brand" >
+         <% if user_signed_in? %>
+         <li style="height:25px;padding-bottom:0px;color:black;margin-right:5px;margin-top:2px;"><%= current_user.email %></li>
+          <li>
+           <%= link_to "退出", destroy_user_session_path, :class=>"focus-link" , :method => :delete %>
+          </li>
+          <li>
+            <%= link_to '修改密码', "#edit_pwd", :"data-toggle" => "modal", :class=>"focus-link" , :remote => true %>
+          </li>
+          <% end %>
+         </ul>
+      </div><!--/.nav-collapse -->
+      
+    </div>
+  </div>
+</div>
+
+
+<div id="edit_pwd" class="modal fade">
+  <div class="modal-header header">
+   <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
+   <div class="header-font">修改密码</div>
+  </div>
+  <div class="modal-body body focus-center">
+   <%= render :template => "user/edit" %>
+   
+  </div>
+</div>
+<script>
+$(function(){
+ //根据域名，加载不同公司logo
+ var strhost = window.location.host;
+ if(strhost.indexOf('demo.online-edm.com')>=0){
+  $("#menu_logo").attr("src","/images/2nd/openfind-menu-logo.png");
+  $("#menu_logo").attr("alt","Openfind");
+  $("#menu_logo").attr("title","Openfind");
+ }else if(strhost.indexOf('edm.intfocus.com')>=0){
+  $("#menu_logo").attr("src","/images/2nd/mailhok-menu-logo.png");
+  $("#menu_logo").attr("alt","FocusMail");
+  $("#menu_logo").attr("title","FocusMail");
+ }else{
+  $("#menu_logo").attr("src","/images/2nd/mailhok-menu-logo.png");
+  $("#menu_logo").attr("alt","FocusMail");
+  $("#menu_logo").attr("title","FocusMail");
+ }
+})
+function check_user_password(){
+ var pwd = $("#user_password").val();
+ var pwd_comfirm = $("#user_password_confirmation").val();
+ if(pwd==pwd_comfirm&&pwd.length==6){
+  $("#edit_pwd_submit").trigger("click");
+ }else{
+  alert("修改密码失败\n可能原因：\n1、两次密码输入不一致\n2、密码位数不为6");
+ }
+}
+</script>

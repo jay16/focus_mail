@@ -1,0 +1,34 @@
+<div id="report_title" style="margin-bottom: 20px">
+ <% if @isCampare %>
+		<h2 style="display:inline"> Campaigns对比分析打开(tracks)数据： </h2>
+ <% else %>
+  <h2 style="display:inline"> <%= @report_track[0][0] %>打开(tracks)数据分析： </h2>
+ <% end %>
+		<div style="float:right">
+				  <a onclick="$('#track_form').fadeOut().html('');" class='btn btn-primary'>back</a>
+				</div>
+</div>
+
+<%= high_chart("chart_id1", @h) %>
+
+<table id="report_table" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Template</th>
+      <th>Members</th>
+      <th>Tracks</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <% @report_track.each do |report| %>
+      <tr>
+        <td><%= report[0] %></td>
+        <td><%= report[1] %></td>
+        <td><%= report[2] %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

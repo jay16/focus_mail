@@ -1,0 +1,258 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Description" content="A description of your site for Google here"/>
+    <meta name="keywords" content="Some, keywords, seperated, by, commas, here, max 10"/>
+    <meta name="viewport" content="width=300, target-densitydpi=150, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Metro UI template</title> 
+    
+        	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="css/layout.css" /><link rel="stylesheet" type="text/css" href="css/nav.css" /><link rel="stylesheet" type="text/css" href="css/tiles.css" /><link rel="stylesheet" type="text/css" href="themes/theme_default/theme.css" /><link rel="stylesheet" type="text/css" href="plugins/accordion/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/autozoom/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/lightbox/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/panels/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/plugintemplate/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/tileflip/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/tileslide/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/tileslidefx/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/tileslideshow/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/tiletemplate/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/tiletwitter/plugin.css" /><link rel="stylesheet" type="text/css" href="plugins/tileweather/plugin.css" /><style>
+html{background-color:#0F6D32;}
+
+		#bgImage { position:fixed; top:0; left:0; z-index:-4; min-width:115%;min-height:100%;
+					-webkit-transition:margin-left 450ms linear;
+			-moz-transition:margin-left 450ms linear;
+			-o-transition:margin-left 450ms;
+			-ms-transition:margin-left 450ms;
+			transition:margin-left 450ms;
+					}
+			.tile{
+	-webkit-transition-property: box-shadow, margin-left,  margin-top;
+	-webkit-transition-duration: 0.25s, 0.5s, 0.5s;
+	-moztransition-property: box-shadow, margin-left,  margin-top;
+	-moz-transition-duration: 0.25s, 0.5s, 0.5s;
+	-o-transition-property: box-shadow, margin-left,  margin-top;
+	-o-transition-duration: 0.25s, 0.5s, 0.5s;
+	-ms-transition-property: box-shadow, margin-left,  margin-top;
+	-ms-transition-duration: 0.25s, 0.5s, 0.5s;
+	transition-property: box-shadow, margin-left,  margin-top;
+	transition-duration: 0.25s, 0.5s, 0.5s;
+	}
+</style> 
+    <!--[if lt IE 9]>
+    <script type="text/javascript" language="javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/html5.js">
+	<![endif]-->
+	<!--[if gte IE 9]>
+    <script src="js/jquery-2.0.0b2.js"></script>
+    <script src="js/html5.js">
+	<![endif]-->
+    <!--[if !IE]>
+    <script src="js/jquery-2.0.0b2.js"></script>
+	<![endif]-->
+
+    <script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="js/jquery191.js"><\/script>')</script> 
+    <script type="text/javascript" language="javascript" src="js/plugins.js"></script>
+	<script>
+scale = 145;
+spacing = 10;
+theme = 'theme_default';
+$group.titles = ["Home","Download","Support"];
+$group.spacingFull = [4,4,4];
+$group.inactive.opacity = "1";
+$group.inactive.clickable = "1";
+$group.showEffect = 0;
+
+siteTitle = 'Metro UI template';
+siteTitleHome = 'Home';
+showSpeed = 400;
+hideSpeed = 300;
+scrollSpeed = 550;
+
+	scrollHeader = "1";
+	disableGroupScrollingWhenVerticalScroll = "";
+
+/*For background image*/
+bgMaxScroll= "130";
+bgScrollSpeed = "450";
+
+/*For responsive */
+autoRearrangeTiles = "1";
+autoResizeTiles = "1";
+rearrangeTreshhold = 3;
+hidePanelOnClick = '1';pageTitles=new Array();pageTitles['typography.php'] = 'Typography';pageTitles['changelog.php'] = 'Changelog and Bugs';pageTitles['features.php'] = 'Features';pageTitles['about.php'] = 'About';pageTitles['tutorials.php'] = 'Docs and Tutorials';pageTitles['contact.php'] = 'Contact';pageTitles['download.php'] = 'Download';pageTitles['buytemplate.php'] = 'Buy Template';</script><script type="text/javascript" src="plugins/accordion/plugin.js" /></script><script type="text/javascript" src="plugins/autozoom/plugin.js" /></script><script type="text/javascript" src="plugins/lightbox/plugin.js" /></script><script type="text/javascript" src="plugins/panels/desktop.js" /></script><script type="text/javascript" src="plugins/plugintemplate/plugin.js" /></script><script type="text/javascript" src="plugins/tileflip/plugin.js" /></script><script type="text/javascript" src="plugins/tilemedia/plugin.js" /></script><script type="text/javascript" src="plugins/tileslide/plugin.js" /></script><script type="text/javascript" src="plugins/tileslidefx/plugin.js" /></script><script type="text/javascript" src="plugins/tileslideshow/plugin.js" /></script><script type="text/javascript" src="plugins/tiletemplate/plugin.js" /></script><script type="text/javascript" src="plugins/tiletwitter/plugin.js" /></script><script type="text/javascript" src="plugins/tileweather/plugin.js" /></script><script type="text/javascript" src="js/functions.js" /></script><script type="text/javascript" src="js/main.js" /></script><script type="text/javascript" src="plugins/tilemedia/jquery.media.js" /></script><script type="text/javascript" src="plugins/tilemedia/jquery.metadata.js" /></script><script type="text/javascript" src="plugins/tileweather/jquery.simpleWeather-2.1.2.min.js" /></script>    <noscript><style>#tileContainer{display:block}</style></noscript>
+</head>
+<body class="full desktop">
+<img src='img/bg/metro_green.jpg' id='bgImage'/><header>
+	<div id="headerWrapper">
+		<div id="headerCenter">
+			<div id="headerTitles">
+				<h1><a href="#!">Vision BSC</a></h1>
+		   		<h2>集战略执行管理与战略绩效管理于一身的平衡计分卡管理软件</h2>
+		    </div>
+		    <nav>
+            	<a rel="group0">
+	<img src="img/icons/home.png"/>
+	Home
+</a>
+<a rel="group1">
+	<img src="img/icons/download_s.png"/>
+	Download
+ </a>
+<a rel="group2">
+	<img src="img/icons/questionmark.png"/>
+	Support
+</a>			</nav>
+		</div>
+    </div>
+    </header>
+<div id="wrapper">
+	<div id="centerWrapper">
+  		    	<div id="tileContainer" >
+        	<img id='arrowLeft' class="navArrows" src='themes/theme_default/img/primary/arrowLeft.png' onClick="javascript:$group.goLeft();"/>
+            <img id='arrowRight' class="navArrows" src='themes/theme_default/img/primary/arrowRight.png' onClick="javascript:$group.goRight();"/>
+       		     <a href="#&Home" id="groupTitle0" class="groupTitle" style="margin-left:0px; margin-top:0px" onclick="javascript:$group.goTo(0);"><h3>Home1</h3></a>
+        <a href="#&Download" id="groupTitle1" class="groupTitle" style="margin-left:620px; margin-top:0px" onclick="javascript:$group.goTo(1);"><h3>Download2</h3></a>
+        <a href="#&Support" id="groupTitle2" class="groupTitle" style="margin-left:1240px; margin-top:0px" onclick="javascript:$group.goTo(2);"><h3>Support3</h3></a>
+      	
+ <a  href='?p=about' class="tile group0 " style="
+    margin-top:45px; margin-left:0px;
+	width:300px; height:145px;
+	background:rgb(80, 150, 1);"  data-pos='45-0-300' > 
+    	<div class='tileTitle' style='margin-left:10px;'>关于</div>
+	<div class='tileDesc' style='margin-left:12px;'>这只是一个模板，供参考</div>
+     
+    </a>
+      	<a  class="tile tileFlip support3D group0 noClick" style="
+    margin-top:45px; margin-left:310px;
+	width:145px; height:145px;"  data-pos='45-310-145' > 
+    
+    <div class='flipContainer'>
+		<div class='flipFront' style="background:rgb(254, 46, 100);">
+        <div class='flipImgWrapper'>
+        <div class='flipImgCenterer'>
+        <img src="img/window_smaller.png" style="
+        width:147px;
+               "/>
+       </div>
+        </div>
+        </div>
+		<div class='flipBack' style="background:rgb(254, 46, 100);"><h4 style='color:#FFF;'>And see how the tiles move!</h4></div>
+        <div class='tileLabelWrapper top' style='border-top-color:rgb(204, 26, 70);'><div class='tileLabel top' >It's repsonive!</div></div>	</div>
+    </a>
+      	<a  href='?p=typography' class="tile group0 " style="
+    margin-top:200px; margin-left:0px;
+	width:145px; height:145px;
+	background:#11528f;"  data-pos='200-0-145' > 
+    <div style='line-height:30px; margin-top:5px;'>
+
+<div style='color:#FFF;font-size:43px;line-heigt:70px;'><strong>CHECK</strong></div>
+<span style='color:#FFF;font-size:32px;'><strong>OUT</strong></span><span style='color:#CCC;font-size:32px;'>THE</span>
+
+<div style='font-size:57px;line-height:30px;'>TYPO</div>
+<div style='font-size:37px;line-height:40px;'>GRAPHY</div>
+</div>        </a>
+      	<a  href='?p=features' class="tile group0 " style="
+    margin-top:200px; margin-left:155px;
+	width:300px; height:145px;
+	background:#FF8000;"  data-pos='200-155-300' > 
+    	<div class='tileTitle' style='margin-left:10px;'>功能</div>
+	<div class='tileDesc' style='margin-left:12px;'>Many tiles, slideshows, livetiles, many animations, works in all major browsers, SEO optimized, JS &amp; CSS compressing system, Mobile-ready.</div>
+     
+    </a>
+      	<a  href='?p=download' class="tile group1 " style="
+    margin-top:45px; margin-left:620px;
+	width:300px; height:145px;
+	background:#11528f;"  data-pos='45-620-300' > 
+        <img style='float:left; margin-top:15px;margin-left:15px;' 
+    src='img/icons/download_s.png' height="50" width="50"/>
+    	<div class='tileTitle' style='margin-left:75px;'>Get it now!</div>
+	<div class='tileDesc' style='margin-left:77px;'>Available in full and lite versions.</div>
+     
+    </a>
+      	<a  href='?p=changelog-and-bugs' class="tile tileSlide up group1 " style="
+    margin-top:200px; margin-left:620px;
+	width:145px; height:145px;
+	background:#00BFFF; padding:0;"  data-pos='200-620-145'  data-doslide="1"> 
+    
+    
+    <div class='slideText' style='
+            height:29px; width:100%;top:145px;'>For V4 Alpha 3    </div>
+    <div class="imageWrapper">
+    	<div class="imageCenterer" style="width:145px; height:145px;line-height:143px;">
+			<img src='img/bug.png' style="width:87px;" /> 
+        </div>
+		<div class='tileLabelWrapper bottom'><div class='tileLabel bottom' style='border-bottom-color:#11528f;'>Bugs & Changelog</div></div></div> 
+   
+    </a>
+      	<a  href='panels/credits.php' id="tileScroll1_1-1" class="tile tileScroll group1 " style="
+    margin-top:200px; margin-left:775px;
+	width:300px; height:145px;
+	background:#6950ab;"  data-pos='200-775-300' > 
+    	<div class='tileTitle' style='margin-left:10px;'>This project uses...</div>
+	<div class='divScroll' style='margin-left:12px;'>...jQuery</div>
+    <script>scrollTile("1_1-1",["...jQuery","...JSminPlus","...ACE editor"],2000,0)</script>
+        </a>
+      	<a  href='?p=docs-and-tutorials' class="tile group2 " style="
+    margin-top:45px; margin-left:1240px;
+	width:300px; height:145px;
+	background:#FF8000;"  data-pos='45-1240-300' > 
+    <div style='line-height:30px;margin-top:30px;padding:5px;margin-left:20px;'>
+	<span style='color:#EEE;font-size:42px;letter-spacing:0px;'>Tutorials</span> 
+	<span style='color:#FFF;font-size:24px;letter-spacing:0px;font-style:italic;'>info</span> 
+	<span style='color:#FFF;font-size:50px;letter-spacing:4px;font-weight:bold;'>DOCS</span> 
+	<span style='color:#CCC;font-size:36px;letter-spacing:0px;line-height:30px;'>Tips</span>
+	</div>    <div class='tileLabelWrapper top' style='border-top-color:rgb(205, 88, 0);'><div class='tileLabel top' >Get started or get further</div></div>    </a>
+      	<a  href='/forum/' class="tile tileFlip support3D group2 " style="
+    margin-top:200px; margin-left:1240px;
+	width:145px; height:145px;"  data-pos='200-1240-145' > 
+    
+    <div class='flipContainer'>
+		<div class='flipFront' style="background:#c82345;">
+        <div class='flipImgWrapper'>
+        <div class='flipImgCenterer'>
+        <img src="img/forum.png" style="
+        width:103.5px;
+               "/>
+       </div>
+        </div>
+        </div>
+		<div class='flipBack' style="background:#c82345;"><h3>Forum</h3></div>
+        	</div>
+    </a>
+      	<a  href='?p=contact' class="tile tileFlip support3D group2 " style="
+    margin-top:45px; margin-left:1550px;
+	width:145px; height:145px;"  data-pos='45-1550-145' > 
+    
+    <div class='flipContainer'>
+		<div class='flipFront' style="background:#dea317;">
+        <div class='flipImgWrapper'>
+        <div class='flipImgCenterer'>
+        <img src="img/icons/mail.png" style="
+        width:103.5px;
+               "/>
+       </div>
+        </div>
+        </div>
+		<div class='flipBack' style="background:#dea317;"><h3 style='font-size:20px;'>Contact me</h3></div>
+        	</div>
+    </a>
+      	<a  target='_blank' href='../' class="tile tileImg group1 bottom " style="
+    margin-top:45px; margin-left:930px;
+	width:145px; height:145px;
+	background:#509601;"   data-pos='45-930-145' > 
+    <img src='img/v3.png' width="145" style='margin-left:-72.5px; margin-top: -72.5px; max-height:145px;'/>
+    <div class='tileLabelWrapper bottom'><div class='tileLabel bottom' style='border-bottom-color:#509601;'>Template V3</div><div class='imgDesc' style='display:none;'>The old version of the template.</div>    </div>
+    </a>
+            </div> 
+            	<div id="contentWrapper" >   		    
+	   		            <div id="subNavWrapper"></div>
+            <div id="content">	        	
+					        </div>
+    	    		</div>
+            </div>
+	<footer>
+		© Thomas Verelst    </footer>
+    </div> 
+<div id="catchScroll"></div>
+<div id='panel' style='max-width:400px;right:-400px;background-color:#444;'>
+	<img id='panelArrow' src='themes/theme_default/img/panels/arrow.png' onClick='javascript:hidePanel();'>
+	<img id='panelLoader' src='themes/theme_default/img/panels/loader.gif'/>
+	<div id='panelContent'>
+	</div>
+	</div></body>
+</html>

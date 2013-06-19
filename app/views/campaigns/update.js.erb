@@ -1,0 +1,64 @@
+$("#<%= dom_id @campaign %>").replaceWith("<%= j render @campaign %>");
+<% @campaign = Campaign.new %>
+$("#form > form").replaceWith("<%= j render "form" %>");
+$("#new_campaign")[0].reset();
+var display_campaign_entries;
+
+$(function() {
+  return $('form #campaign_template_id').chosen().change(function() {
+    return display_campaign_entries("<%= @campaign.id %>", $("form #campaign_template_id").val());
+  });
+});
+
+display_campaign_entries = function(campaign_id, template_id) {
+  return $.ajax({
+    url: 'campaigns/template_entries/' + campaign_id + "/" + template_id,
+    type: 'GET',
+    dateType: 'script'
+  });
+};
+//
+$("#campaign_add_edit").html("新建发送主题")
+$("#campaign_form a").removeClass("disabled");
+hideLoading();
+
+$("#jsfs").click(function(){
+	$("#dtyyfs").addClass('hidden')
+});
+$("#yyfs").click(function(){
+	$("#dtyyfs").removeClass('hidden')
+});
+
+$("#datepicker").datepicker({
+	changeMonth: true,
+	changeYear: true
+});
+		
+$("#datepicker").datepicker( "option", "dateFormat", "yy-mm-dd" );
+$(".chzn-select-deselect").chosen({allow_single_deselect:true});
+
+//单选select 数据初始化
+function chose_set_ini(select, value){
+  	$(select).attr('value',value);
+	$(select).trigger("liszt:updated");
+}
+
+$("#datepicker").change(function(){
+	$("#campaign_from_time").val($(this).val() + " " + chose_get_value("#selecthour") + ":" + chose_get_value("#selectminute") + ":" + chose_get_value("#selectsecond"));
+});
+
+$("#selecthour").change(function(){
+	$("#campaign_from_time").val($("#datepicker").val() + " " + $(this).val() + ":" + chose_get_value("#selectminute") + ":" + chose_get_value("#selectsecond"));
+});
+
+$("#selectminute").change(function(){
+	$("#campaign_from_time").val($("#datepicker").val() + " " + chose_get_value("#selecthour") + ":" + $(this).val() + ":" + chose_get_value("#selectsecond"));
+});
+
+$("#selectsecond").change(function(){
+	$("#campaign_from_time").val($("#datepicker").val() + " " + chose_get_value("#selecthour") + ":" + chose_get_value("#selectminute") + ":" + $(this).val());
+});
+
+function chose_get_value(select){
+  	return $(select).val();
+}

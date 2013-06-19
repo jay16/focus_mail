@@ -1,0 +1,16 @@
+<footer>
+<p>&copy; Openfind 2012</p>
+</footer>
+<script>
+$(function(){
+ //根据域名，加载不同公司logo
+ var strhost = window.location.host;
+ if(strhost.indexOf('demo.online-edm.com')>=0){
+  $("footer p:first").html("&copy; Openfind");
+ }else if(strhost.indexOf('edm.intfocus.com')>=0){
+  $("footer p:first").html("&copy; IntFocus");
+ }else{
+  $("footer p:first").html("&copy; IntFocus");
+ }
+})
+</script>

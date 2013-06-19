@@ -1,0 +1,39 @@
+
+      <!--单条发送活动 -->
+      <div class="js-stream-item stream-item" id="new_campaign_<%= campaign_id %>" data-item-type="tweet" media="true"> 
+        <div class="stream-item-content tweet" id=<%="l-" + campaign_id.to_s %> data-is-reply-to="false" >
+         
+        <div class="focus-content">
+          <div class="tweet-row">
+         <span class="focus-name" style="color:#963EBA;">
+          <%= campaign.subject %>
+         </span>
+       </div>
+       
+       <div class="tweet-row">
+           <div class="tweet-text js-tweet-text">
+             <div>收件总数:<span>未保存</span></div>
+             <div>信件模板:<span><%= campaign.template.try(:name) %></span></div>
+             <div>创建时间:<span>未保存</span></div>
+           </div>
+           <div class="tweet-text js-tweet-text" style="margin-left:200px;margin-top:-45px;">
+             <div>发送类型:<span><%= campaign.from_time == nil ? '手工发送' : '预约发送' %></span></div>
+             <div>发送时间:<span style="color:red;">未保存<span></div>
+             
+             <div style="display:<%= campaign.from_time !=nil ? '' : 'none'%>">倒计时间:<span>未保存</span></div>
+             <div style="display:<%= (campaign.from_time ==nil) ? '' : 'none'%>">发送状态:<span>未保存</span></div>
+             
+           </div>
+       </div>
+       <div class="tweet-row" >
+         <%= link_to '修改', nil, :class => 'btn btn-mini', :remote => true, :style => "color: black;",:onclick=>"showLoading('加载中');" %>
+         <% link_to '删除',nil, :method => :delete,
+              :confirm => '不可恢复，确定要删除吗?', :class => 'btn btn-mini', :remote => true, :style => "color: black;"%>
+    
+         <%= link_to '保存', nil, :class => "btn btn-mini", :remote => true %>
+        </div>
+      </div>
+     </div>
+    </div>
+    <!--单条发送活动 结束-->       
+    

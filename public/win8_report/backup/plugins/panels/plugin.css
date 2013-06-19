@@ -1,0 +1,47 @@
+#panel{
+	position:fixed;
+	height:100%;
+	right:0;
+	top:0;
+	background-color:#555;
+	z-index:50;
+	color:#FFF;
+	padding:40px 10px 10px 10px;
+	display:none;
+	overflow:auto;
+}
+#panel h1,#panel h2,#panel h3,#panel h4,#panel h5,#panel h6{
+	color:#FFF;
+}
+#panel a:not(.tile){
+	color:#CCC;
+}
+#panel a:hover{
+	color:#FFF;
+}
+#panelArrow{
+	position:absolute;
+	left:10px;
+	top:10px;
+	opacity:0.5;
+	filter: alpha(opacity=50);
+	cursor:pointer;
+	transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+	-moz-transition: opacity 0.2s;
+	-o-transition: opacity 0.2s;
+	display:inline-block;
+	z-index:50;
+}
+#panelArrow:hover{
+	opacity:1;
+	filter: alpha(opacity=100);
+}
+#panelLoader{
+	display:inline-block;
+	position:absolute;
+	margin-left:20px;
+}
+.preloadedPanel{
+	display:none;
+}

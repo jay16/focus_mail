@@ -1,0 +1,258 @@
+<style type="text/css">     
+    .digitboard{font-size:16px;width:18px;height:28px;position:relative;display:inline-block;margin:0 2px;-webkit-text-size-adjust:none;}  
+    .digitboard{*display:inline;}  
+    .digitboard div{position: absolute;border-style:solid;}  
+    .digitboard .l,.digitboard .r,.digitboard .u,.digitboard .d{width:0;height:0;overflow:hidden;}  
+      
+    .digitboard .v{width:0;height:5em;border-width:0 0.5em;border-color:black;}  
+    .digitboard .v .u{border-style:dotted dotted solid dotted;border-width:0 0.5em 0.5em;border-color:transparent transparent black transparent;top:-0.5em;left:-0.5em;}  
+    .digitboard .v .d{border-style:solid dotted dotted dotted;border-width:0.5em 0.5em 0 0.5em;border-color:black transparent transparent transparent;left:-0.5em;bottom:-0.5em}  
+      
+    .digitboard .h{width:5.5em;height:0;border-width:0.5em 0;border-color:black;}  
+    .digitboard .h .l{border-style:dotted solid dotted dotted;border-width:0.5em 0.5em 0.5em 0;border-color:transparent black transparent transparent;top:-0.5em;left:-0.5em;}  
+    .digitboard .h .r{border-style:dotted dotted dotted solid;border-width:0.5em 0 0.5em 0.5em;border-color:transparent transparent transparent black;top:-0.5em;right:-0.5em;}  
+      
+    .digitboard .n1{left:0.5em;top:1.5em;}  
+    .digitboard .n2{left:0.5em;top:7.5em;}  
+    .digitboard .n4{left:7.5em;top:7.5em;}  
+    .digitboard .n5{left:7.5em;top:1.5em;}  
+      
+    .digitboard .n6{top:0.4em;left:1.8em;}  
+    .digitboard .n3{top:12.5em;left:1.8em;}  
+    .digitboard .n7{top:6.5em;left:1.8em;}  
+ 
+      
+    .c1 .n1,.c1 .n2,.c1 .n3,.c1 .n6,.c1 .n7,  
+    .c2 .n1,.c2 .n4,  
+    .c3 .n1,.c3 .n2,  
+    .c4 .n2,.c4 .n3,.c4 .n6,  
+    .c5 .n2,.c5 .n5,  
+    .c6 .n5,  
+    .c7 .n1,.c7 .n2,.c7 .n3,.c7 .n7,  
+    .c9 .n2,  
+    .c0 .n7{border-color:#eee;}  
+      
+    .c1 .n3 .l,.c1 .n3 .r,.c1 .n6 .l,.c1 .n6 .r,.c1 .n7 .l,.c1 .n7 .r,  
+    .c4 .n3 .l,.c4 .n3 .r,.c4 .n6 .l,.c4 .n6 .r,  
+    .c7 .n3 .l,.c7 .n3 .r,.c7 .n7 .l,.c7 .n7 .r,  
+    .c0 .n7 .l,.c0 .n7 .r{border-left-color:#eee;border-right-color:#eee;}  
+      
+    .c1 .n1 .u,.c1 .n1 .d,.c1 .n2 .u,.c1 .n2 .d,  
+    .c2 .n1 .u,.c2 .n1 .d,.c2 .n4 .u,.c2 .n4 .d,  
+    .c3 .n1 .u,.c3 .n1 .d,.c3 .n2 .u,.c3 .n2 .d,  
+    .c4 .n2 .u,.c4 .n2 .d,  
+    .c5 .n2 .u,.c5 .n2 .d,.c5 .n5 .u,.c5 .n5 .d,  
+    .c6 .n5 .u,.c6 .n5 .d,  
+    .c7 .n1 .u,.c7 .n1 .d,.c7 .n2 .u,.c7 .n2 .d,  
+    .c9 .n2 .u,.c9 .n2 .d{border-top-color:#eee;border-bottom-color:#eee;}  
+
+    .hide { display:none;}
+    .data-label {width: 1000px; }
+    </style>  
+    
+    
+<div class="main-content" style="width:540px;background:white;">
+     <div class="header">发送时间线
+      <small class="btn-group" id="time_line" style="float:right;margin-top:1px;"> 
+         <button class="btn btn-mini" href="javascript:void(0)" id="<%= (Time.now).strftime("%Y%m") %>" onclick="start_search('<%= (Time.now).strftime("%Y%m") %>');"> <%= (Time.now).strftime("%m月") %> </button>
+         <button class="btn btn-mini" href="javascript:void(0)" id="<%= (Time.now - 1.month).strftime("%Y%m") %>" onclick="start_search('<%= (Time.now - 1.month).strftime("%Y%m") %>');"> <%= (Time.now - 1.month).strftime("%m月") %> </button>
+         <button class="btn btn-mini" href="javascript:void(0)" id="<%= (Time.now - 2.month).strftime("%Y%m") %>" onclick="start_search('<%= (Time.now - 2.month).strftime("%Y%m") %>');"> <%= (Time.now - 2.month).strftime("%m月") %> </button>
+         <button class="btn btn-mini" href="javascript:void(0)" id="all" onclick="start_search('all');">全部</button>
+       </small>
+      <!--<span class="campaign-search"> 
+      <%= date_select("campaign", "date", :order => [:year,:month],:start_year => Time.now.year, :end_year => Time.now.year,
+      :use_month_numbers  => true, :start_month => Time.now.month-3, :end_mongth => Time.now.month) %>
+      <span class="btn btn-mini" onclick="start_search($('#campaign_date_1i').find('option:selected').text()+$('#campaign_date_2i').find('option:selected').text())">搜索</span>
+      </span>
+     -->
+    </div>
+    <div id="sel_mes" class="stream-content" style="display: block;border-radius: 0px 0px 5px 5px;padding-bottom:10px;">
+     <%= render 'cam_list'%>
+    </div>
+</div>
+<div class="dashboard" style="height:100%;padding:0px;margin-left:20px;">
+  <div class="databoard">
+    <div class="header">发送统计</div>
+    <div class="body">
+     <% @dashboard = get_dashboard_data %>
+     <p>
+       <div id="send_totle_digit">
+        <span class="data-label">邮件发送数&nbsp;&nbsp;</span>
+        <% 10.times do %> 
+        <span class="digitboard c0">  
+            <div class="v n1"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n2"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n3"><div class="l"></div><div class="r"></div></div>  
+            <div class="v n4"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n5"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n6"><div class="l"></div><div class="r"></div></div>  
+            <div class="h n7"><div class="l"></div><div class="r"></div></div>  
+        </span> 
+        <% end %> 
+       </div>
+     </p>
+     <p>
+      <div id="send_reach_digit">
+        <span class="data-label">邮件到达数&nbsp;&nbsp;</span>
+        <% 10.times do %> 
+        <span class="digitboard c0">  
+            <div class="v n1"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n2"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n3"><div class="l"></div><div class="r"></div></div>  
+            <div class="v n4"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n5"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n6"><div class="l"></div><div class="r"></div></div>  
+            <div class="h n7"><div class="l"></div><div class="r"></div></div>  
+        </span> 
+        <% end %> 
+       </div>
+     </p>
+    </div>
+  </div>
+  
+
+  <div class="databoard">
+    <div class="header">名单统计</div>
+    <div class="body">
+     <p>
+      <div id="list_num_digit">
+        <span class="data-label">名单总数量&nbsp;&nbsp;</span>
+        <% 10.times do %> 
+        <span class="digitboard c0">  
+            <div class="v n1"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n2"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n3"><div class="l"></div><div class="r"></div></div>  
+            <div class="v n4"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n5"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n6"><div class="l"></div><div class="r"></div></div>  
+            <div class="h n7"><div class="l"></div><div class="r"></div></div>  
+        </span> 
+        <% end %> 
+       </div>
+     </p>
+     <p>
+      <div id="list_valid_num_digit">
+        <span class="data-label">有效名单数&nbsp;&nbsp;</span>
+        <% 10.times do %> 
+        <span class="digitboard c0">  
+            <div class="v n1"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n2"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n3"><div class="l"></div><div class="r"></div></div>  
+            <div class="v n4"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n5"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n6"><div class="l"></div><div class="r"></div></div>  
+            <div class="h n7"><div class="l"></div><div class="r"></div></div>  
+        </span> 
+        <% end %> 
+       </div>
+     </p> 
+    </div>
+  </div>
+
+  <div class="databoard">
+    <div class="header">其他统计</div>
+    <div class="body">
+     <p>
+      <div id="open_num_digit">
+        <span class="data-label">邮件打开数&nbsp;&nbsp;</span>
+        <% 10.times do %> 
+        <span class="digitboard c0">  
+            <div class="v n1"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n2"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n3"><div class="l"></div><div class="r"></div></div>  
+            <div class="v n4"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n5"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n6"><div class="l"></div><div class="r"></div></div>  
+            <div class="h n7"><div class="l"></div><div class="r"></div></div>  
+        </span> 
+        <% end %> 
+       </div>
+     </p>
+     <p>
+      <div id="click_num_digit">
+        <span class="data-label">链接点击数&nbsp;&nbsp;</span>
+        <% 10.times do %> 
+        <span class="digitboard c0">  
+            <div class="v n1"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n2"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n3"><div class="l"></div><div class="r"></div></div>  
+            <div class="v n4"><div class="u"></div><div class="d"></div></div>  
+            <div class="v n5"><div class="u"></div><div class="d"></div></div>  
+            <div class="h n6"><div class="l"></div><div class="r"></div></div>  
+            <div class="h n7"><div class="l"></div><div class="r"></div></div>  
+        </span> 
+        <% end %> 
+       </div>
+     </p> 
+    </div>
+  </div>
+  
+</div>
+<!--   dashboard end   --> 
+
+<!--   details pane   --> 
+<div id="details-pane-outer">
+ <div class="details-pane-shell">
+  <div class="details-pane" id="details-pane" style="display: none; height: 270px; width: 360px; left: 552px; margin-top: 15px; -webkit-transition-property: none; ">
+   <div class="inner-pane active" style="margin:0 auto;">
+    <div class="pane-toolbar pane-built-in">
+     <a class="pane-close toolbar-control " rel="pane_close" href="javascript:void(0)">
+     <button class="focus-close" aria-hidden="true" data-dismiss="modal" type="button">&times;</button>
+     </a>
+     <br style="clear: both">
+    </div>
+    <div id="pane-load" style="height:250px;overflow-y:hidden;"><!--style="overflow-y:scroll;height: 526px ">-->
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+<!--   details pane  end --> 
+<script type="text/javascript">
+
+
+function setDigit(id,digit){
+  var Digit={  
+      size:1,  
+      handle:null,  
+      resize:function(){  
+          var digits=document.getElementById(id).children,i=0,k=digits.length;  
+          var fontsize=(this.size % 20)+"px",halfsize=(this.size++ % 20)+"px";  
+
+          for(;i<k-2;){  
+              digits[i++].style.fontSize=fontsize;  
+          }  
+          digits[i++].style.fontSize=halfsize;  
+          digits[i++].style.fontSize=halfsize;  
+      },  
+
+      setDigit:function(){   
+              var children=document.getElementById(id).children; 
+              //初始化，隐藏
+              var c_len=children.length;                  
+              for(var i=1;i<c_len;i++){
+               children[i].className="digitboard hide";
+              }
+              //设置数字显示
+              var d_len = digit.length
+              for(var j=0;j<d_len;j++){
+                var d_tmp=digit.charAt(j);
+                children[j+1].className="digitboard c"+d_tmp;
+                }
+              children[0].style.fontSize="10pt";  
+        }  
+    }  
+    
+Digit.resize(); 
+Digit.resize();  
+Digit.setDigit(); 
+  }
+
+ setDigit("send_totle_digit","123123"); 
+ setDigit("send_reach_digit","12312"); 
+ setDigit("list_num_digit","123132"); 
+ setDigit("list_valid_num_digit","12313"); 
+ setDigit("open_num_digit","123123"); 
+ setDigit("click_num_digit","12313"); 
+</script>
+ 

@@ -1,0 +1,150 @@
+
+    <%= csrf_meta_tags %>
+
+<body style="top:0px;left:0px;padding-top:0px;">
+
+   
+  <%= field_set_tag do %>
+  <%= (render :template => "report/templates/#{@c_id}").html_safe  if @c_id.to_i > 0 %>
+  <% end %>
+
+</body>
+
+<script type="text/javascript">
+$(function(){
+ //置邮件模板水平置中
+ var tmp_width = 0;
+ $("fieldset").children().each(function(){
+  if(parseInt($(this).attr("width")) >0){
+       tmp_width = $(this).attr("width");;
+        alert($(this).attr("width"));
+  }
+
+ });
+
+ if(tmp_width>500){
+   var w_w = $(window).width();
+ $("fieldset").css("margin-left",(w_w-tmp_width)/2);
+ }
+ 
+  clickinfo();
+   //默认显示所有点击提示
+  $("input[type=radio][name=optionsRadios][value='mailclick1']").attr("checked","checked");
+  $("#clickinfo-setting").addClass("hidden");
+  
+  //点击自定义显示排名时输入框可用
+  if($("input[value=mailclick3]").attr("checked"))
+    $("#msself").attr("disabled",false);
+  else
+    $("#msself").attr("disabled",true);
+    
+  $("input[type=radio][name=optionsRadios]").click(function(){
+    if($(this).attr("value")=="mailclick3"){
+      $("#msself").attr("disabled",false);
+    }else{
+      $("#msself").attr("disabled",true);
+    }
+  });
+
+});
+ function showLoading(info) {
+   if($("#clickinfo_loading").length>0){
+    $("#clickinfo_loading").html(info+"...");
+    $("#clickinfo_loading").innerHTML = info;
+    $("#clickinfo_loading").css("display","block");
+   }else{
+    $("<div id='clickinfo_loading' class='loadingtxt'></div>").insertAfter($("body"));
+    $("#clickinfo_loading").html(info+"...");
+    $("#clickinfo_loading").innerHTML = info;
+    $("#clickinfo_loading").css("display","block");
+   }
+ }
+ function hideLoading(){
+  $("#clickinfo_loading").css("display","none");
+ }
+ 
+ function tooltip_click(){
+  $('a[rel=tooltip]').tooltip('show');
+  
+  $(".tooltip").each(function(index){
+   $(this).children(".tooltip-inner").first()
+   .hover(function(){$(this).css("cursor","pointer")},
+          function(){$(this).css("cursor","wait")}).end()
+   .click(function(){
+    var c_id = window.location.search.split('=')[1];
+    var l_id = $("[rel=tooltip]").eq(index).attr("link-id");
+    trigger_clicks(c_id,l_id);
+    });
+  });
+ }
+ 
+ function trigger_clicks(c_id,l_id){
+   var strhost = window.location.host;
+   var strprotocol = window.location.protocol;
+   var strurl = strprotocol + "//" + strhost + "/clicks/detail?c_id="+String(c_id)+"&l_id="+String(l_id);
+   location.href=strurl;
+   //var win = window.open(strurl);
+   //win.focus();  
+ }
+ 
+ function apply(){
+   var moptional = $("input[type=radio][name=optionsRadios][checked]").val();
+   $("input[type=radio][name=optionsRadios]").each(function(){
+     if($(this).attr("checked")=="checked")
+       moptional = $(this).val();
+   });
+   var mstype;
+   switch(moptional){
+   case "mailclick1"://all
+     $('a[rel=tooltip]').tooltip('show');
+     break;
+   case "mailclick2"://gt0
+     $('a[zero=0]').tooltip('show');
+     break;
+   case "mailclick3":
+     var rank = $("#msself").attr("value");
+     $("a[rel=tooltip]").each(function(){
+      if($(this).attr("rank")<= rank)
+        $(this).tooltip("show")
+     });
+     break;
+   default:
+     mstype="all";break;
+   }
+ }
+ 
+ function clickinfo(){
+   var strhost = window.location.host;
+   var strprotocol = window.location.protocol;
+   var strurl = strprotocol + "//" + strhost + "/report/clickinfo";
+   var campaign_id = window.location.search.split('=')[1];
+   $("input[type=radio][name=optionsRadios][value='mailclick1']").attr("checked","checked");
+   $("#clickinfo-setting").addClass("hidden");
+   if(campaign_id > 0){
+    showLoading("加载数据中");
+   
+    $.ajax({
+     type: 'POST',
+     url: strurl,
+     contentType: 'multipart/form-data',
+     datatype: 'json',
+     data:{"campaign_id":campaign_id},
+     success:function(data)
+     {
+       $(".tooltip").remove();
+       $("fieldset").html(data);
+       hideLoading();
+       tooltip_click()
+       $("#clickinfo-setting").removeClass("hidden");
+     },
+     error:function(xhr,r,e)
+     {
+      hideLoading();
+      alert(e);
+     }
+    });
+   }else{
+    $("<div style='width:100%;text-align:center;'> <img width='500px' style='margin: 0 auto;' title='未找到活动ID' alt='未找到活动ID' src='/images/2nd/414.jpg'></div>").insertBefore($("body"));
+   }
+ }
+</script>

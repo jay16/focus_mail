@@ -1,0 +1,78 @@
+<% if @campaign.present? %>
+  <div class="header">
+   <%= @campaign.subject if @campaign.present? %>
+   <%= '未找到该活动' unless @campaign.present? %>
+  </div>
+  <table class="table">
+   <thead>
+    <th width="20%"></th>
+    <th width="20%">统计项目</th>
+    <th width="20%">数值</th>
+    <th width="20%">转化率</th>
+    <th width="20%">转化公式</th>
+   </thead>
+   <tbody>
+    <% warn_info = '数据尚未出炉'%>
+     <tr style="display:none;">
+     <td>A</td>
+     <td>名单总数量</td>
+     <td><%= @bi_over == true ? @report.member_num : warn_info %></td>
+     <td></td>
+    </tr>
+    <tr style="display:none;">
+     <td>B</td>
+     <td>名单有效数</td>
+     <td><%= @bi_over == true ? @report.member_unvalid: warn_info %></td>
+     <td></td>
+    </tr>
+    <tr>
+     <td>A</td>
+     <td>邮件发送数量</td>
+     <td><%= @bi_over == true ? @report.send_num: warn_info %></td>
+     <td></td>
+     <td></td>
+    </tr>
+    <tr>
+     <td>B</td>
+     <td>邮件送达数量</td>
+     <td><%= @bi_over == true ? @report.send_ok: warn_info %></td>
+     <td><%= @bi_over == true ? "#{((@report.send_ok.to_f/@report.send_num.to_f).round(3)*100).to_s[0..3]}%": warn_info %></td>
+     <td>B/A</td>
+    </tr>
+    <% real_data = get_campaign_data(@campaign.id) %>
+    <tr>
+     <td>C</td>
+     <td>开信次数</td>
+     <td><%= real_data[:open_num] %></td>
+     <td></td>
+     <td></td>
+    </tr>
+    <tr>
+     <td>D</td>
+     <td>开信人数</td>
+     <td><%= real_data[:open_peo] %></td>
+     <td><%= @bi_over == true ? "#{((real_data[:open_peo].to_f/@report.send_ok.to_f).round(3)*100).to_s[0..3]}%": warn_info %></td>
+     <td>D/B</td>
+    </tr>
+    <tr>
+    <td>E</td>
+     <td>点击次数</td>
+     <td><%=real_data[:click_num] %></td>
+     <td></td>
+     <td></td>
+    </tr>
+    <tr>
+     <td>F</td>
+     <td>点击人数</td>
+     <td><%= real_data[:click_peo] %></td>
+     <td><%= @bi_over == true ? "#{((real_data[:click_peo].to_f/@report.send_ok.to_f).round(3)*100).to_s[0..3]}%": warn_info %></td>
+     <td>F/B</td>
+    </tr>
+  
+   </tbody>
+  <table>
+<% else %>
+  <div style='width:100%;text-align:center;'> 
+      <img width='500px' style='margin: 0 auto;' title='未找到活动ID' alt='未找到活动ID' src='/images/2nd/414.jpg'>
+  </div>
+<% end %>

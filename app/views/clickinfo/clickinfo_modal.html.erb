@@ -1,0 +1,40 @@
+  <div class="modal hide fade" id="clickinfo_modal" style='max-width:800px;'>
+   <div class="modal-header header">
+    <button type="button" class="close focus-close" data-dismiss="modal" aria-hidden="true"
+    onclick="$('a[rel=tooltip]').tooltip('show');" >&times;</button>
+           设置面板
+   </div>
+   <div class="modal-body" style='max-width:800px;'>
+    <table><tr><td>
+      <label class="radio inline">
+             筛选条件:
+      </label>
+      <label class="radio inline">
+      <input type="radio" id="optionsRadios1" name="optionsRadios" value="mailclick1">
+               所有
+      </label>
+      <label class="radio inline">
+      <input type="radio" id="optionsRadios4" name="optionsRadios" value="mailclick2">
+              非0
+      </label>
+      <label class="radio inline">
+      <input type="radio" id="optionsRadios5" name="optionsRadios" value="mailclick3">
+      </label>
+      <span class="input-prepend">
+       <span class="add-on">前</span>
+       <input class="span1" id="msself" height=20 type="text" placeholder="名次" disabled="disabled">
+      </span>
+     </td><td>
+      <a class="btn btn-mini" data-dismiss="modal" aria-hidden="true" 
+      onclick='apply();'>应用</a>
+      </td></tr>
+     <tr><td>
+      <b>筛选条件过滤的数据</b>没有同步数据库中链接点击信息，查看最新数据点击 
+      </td><td>
+      <a class="btn btn-mini" data-dismiss="modal" aria-hidden="true"  
+       onclick="clickinfo()">刷新</a>
+      </label>
+     </td></tr></table>
+   </div>
+  </div>
+  

@@ -1,0 +1,11 @@
+<tr id="<%= dom_id entry %>">
+  <td><%= entry.name %></td>
+  <td><%= split_string(entry.default_value,43).html_safe %></td>
+  <td>
+    <%= link_to '编辑', edit_template_entry_url(entry.template, entry), :class => 'btn btn-mini', remote: true %>
+    <%= link_to '删除', [entry.template, entry], :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini', remote: true %>
+  </td>
+</tr>
+<tr id="<%= dom_id entry %>_edit" class="hidden">
+ <td colspan="3"></td>
+</tr>

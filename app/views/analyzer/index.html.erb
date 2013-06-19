@@ -1,0 +1,123 @@
+<style type="text/css">
+.tree_email {
+    background: url("/images/email_list.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    margin: 1px 1px 0 0;
+    padding: 1px 0 1px 15px;
+    background-position: 0 0px;
+}
+.tree_etype {
+    background: url("/images/email_list.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    margin: 0 1px 0 0;
+    padding: 1px 0 1px 15px;
+    background-position: 0 -119px;
+}
+ul li{
+    list-style-type:none;
+    margin-left:-10px;
+}
+</style>
+<div class="row" style="margin:20px;">
+ <div class="span4">
+   <div class="row">
+    <div class="span2">
+     <%= high_chart("origin_chart", pie(@etype_list,"origin")) %>
+    </div> 
+    <div class="span2" style="margin-top:20px;margin-left:-20px;">
+     <div><%= @etype_list.length %>种邮件类型</div>
+     <div><%= getEmailCount(@etype_list) %>封邮件</div>
+    </div>   
+   </div>
+   
+   <div class="row">
+    <div class="well" id='email_analyzer' style='height:400px;width:200px;overflow-y:auto;'>
+    </div>
+   </div>
+ </div>
+ 
+ <div class="span4">
+  <div class="row">
+   <div class="span4">
+    <div class="input-prepend">
+     <span class="add-on">@</span>
+     <input class="span3" style="margin-left:-5px;" id="analyzer_sub" type="text" placeholder="活动主题">
+     <button class="btn" style="margin-left:-5px;" type="button" onclick="analyzer($('#analyzer_sub').val())">分析</button>
+    </div>
+   </div>
+  </div>
+  
+  <div class="row" id="analyzer_pane">
+  </div>
+  
+ </div>
+</div>
+<script type="text/javascript">
+$(function(){
+ var tree_div,tree_span,tree_a,tree_ul,tree_li;
+ <% @etype_list.each do |hash| %>
+   tree_div=document.createElement("div");
+   tree_a=document.createElement("a");
+   tree_a.setAttribute("class","tree_etype");
+   tree_span=document.createElement("span");
+   tree_span.setAttribute("value","<%= hash[:type] %>");
+   tree_span.innerHTML="<%= hash[:type] %>(<%= hash[:num] %>)";
+   tree_div.appendChild(tree_a);
+   tree_div.appendChild(tree_span);
+   
+   tree_div.onmouseover=function(){ this.style.cursor="pointer"; }
+   tree_div.onclick=function(){
+    <% type_id = hash[:type].split('.').join('_') %>
+     var isShow=document.getElementById("<%= type_id %>").style.display;
+     if(document.getElementById("<%= type_id %>").style.display=="none")
+       document.getElementById("<%= type_id %>").style.display="block";
+     else
+       document.getElementById("<%= type_id %>").style.display="none";
+      }
+   tree_ul=document.createElement("ul");
+   tree_ul.setAttribute("id","<%= hash[:type].split('.').join('_') %>");
+   tree_ul.style.display = "none";
+   document.getElementById("email_analyzer").appendChild(tree_div);
+   document.getElementById("email_analyzer").appendChild(tree_ul);
+ <% end %>
+ 
+ <% @email_list.each do |row| %>
+   tree_li=document.createElement("li");
+   tree_a=document.createElement("a");
+   tree_a.setAttribute("class","tree_email");
+   tree_span=document.createElement("span");
+   tree_span.innerHTML="<%= row[0].split('@')[0] %>";
+   tree_li.appendChild(tree_a);
+   tree_li.appendChild(tree_span);
+   tree_li.setAttribute("id","<%= row[0].split('@').join('_') %>");
+   document.getElementById("<%= row[2].split('.').join('_') %>").appendChild(tree_li);
+ <% end %>
+});
+
+ function analyzer(analyzer_sub){
+   var strhost = window.location.host;
+   var strprotocol = window.location.protocol;
+   var strurl = strprotocol + "//" + strhost + "/analyzer/analyzer";
+
+   $.ajax({
+    type: 'POST',
+    url: strurl,
+    contentType: 'multipart/form-data',
+    datatype: 'json',
+    data:{'analyzer_sub':analyzer_sub},
+    success:function(data)
+    {
+      $("#analyzer_pane").html(data);
+    },
+    error:function(xhr,r,e)
+    {
+     alert(e);
+    }
+   });
+ }
+</script>
+

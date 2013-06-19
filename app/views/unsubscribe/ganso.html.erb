@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 TRANSITIONAL//EN">
+<HTML><HEAD>
+<meta charset="utf-8">
+<meta name=generator content="mshtml 8.00.6001.19393">
+<link rel="shortcut icon" type="image/x-icon" href="/images/2nd/web-icon.gif" media="screen" /> 
+<title>UnSubscribe - GANSO</title>
+<%= javascript_include_tag "application" %>
+<%= csrf_meta_tags %>
+
+<style>
+input.emphasize[type="submit"], input.emphasize[type="button"],
+ .general-button.emphasize, a.general-button.emphasize,
+ button.emphasize[type="submit"] {
+    display: inline-block;
+    min-width: 100px;
+    margin: 0px;
+    padding: 6px 10px;
+    border: 1px solid rgb(92, 152, 44);
+    height: auto;
+    width: auto;
+    background: -moz-linear-gradient(center top , rgb(111, 181, 54), rgb(95, 162, 41)) repeat-x scroll 0% 0% rgb(105, 173, 49);
+    float: none;
+    cursor: pointer;
+    line-height: 18px;
+    font-family: helvetica,arial,sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    text-decoration: none;
+    text-indent: 0px;
+    text-overflow: clip;
+    text-shadow: none;
+    text-transform: none;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    border-radius: 2px 2px 2px 2px;
+    box-shadow: 0px 0px 0px rgb(0, 0, 0);
+    -moz-user-select: -moz-none;
+}
+.panel {
+    display: inline-block;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(189, 189, 189);
+    padding: 32px;
+    position: relative;
+    z-index: 1;
+    margin-left: -5px;
+    width: 622px;
+}
+</style>
+</HEAD>
+<BODY leftmargin=0 topmargin=0 bgcolor=#ffffff marginheight="0" marginwidth="0">
+<TABLE border=0 cellspacing=0 cellpadding=0 width=700 align=center>
+  <TBODY>
+  <TR>
+    <TD>
+      <TABLE border=0 cellspacing=0 cellpadding=0 width="100%">
+        <TBODY>
+        <TR>
+          <TD><A href="http://www.ganso.com.cn/?l=1" 
+            target=_blank><IMG border=0 src="/unsubscribe/ganso/images/top1_01.gif" 
+            width=549 height=105 alt="元祖官网"></A></TD>
+		  <TD><A href="http://e.weibo.com/2043174307/profile?ref=edm" 
+            target=_blank><IMG border=0 src="/unsubscribe/ganso/images/sina-weibo.gif" 
+            width=151 height=105 alt="新浪微博官方帐号"></A></TD></TR></TBODY></TABLE></TD></TR>
+
+  <TR>
+    <TD style="font-family: '微软雅黑', arial; font-size: 14px" height=30 
+    align=left>
+		  <div class="panel">
+  		<% if @count == 0 %>
+  			<div style="border-bottom: 1px solid rgb(189, 189, 189);">
+  			  <h1>取消邮件订阅</h1>
+  			</div>
+
+    	<div  style="margin-top: 30px">
+   				<div class="settings-item">
+   				  <label for="current"><%= params[:email] %>将要取消订阅</label>
+   	              <div class="checkbox-list">
+   					<div class="checkbox-container">
+         <%= check_box_tag 'check_one','2',false%><label for="allmail" class="checkbox-text">所有元祖邮件</label>
+   						</div>
+   					<div class="checkbox-container">
+        <%= check_box_tag 'check_two','1',true%><label for="newsmail" class="checkbox-text">新闻、促销活动</label>
+   						</div>
+         <div>
+         <label class="ceckbox-text">建议</div>
+           <%= text_area_tag 'reason' %>
+         </div>
+   					</div>
+ 			  </div>
+
+			  <div style="margin-top: 30px">
+				<%= button_tag "取消订阅",:class=>"emphasize",:onclick=>"unsub_submit();" %>
+    </div>
+			</div>
+			
+			<% else %>
+			   <div style="border-bottom: 1px solid rgb(189, 189, 189);">
+     <h1>
+    取消邮件订阅成功</h1>
+   </div>
+
+
+   <div  style="margin-top: 30px">
+    <div class="settings-item">
+     </div>
+     </div>
+     <div style="margin-top: 30px">
+                           以后不会再给<%= params[:email] %>发送类似邮件！
+    </div>
+			<% end %>
+   </div>
+	</TD></TR>
+  <TR>
+	  </TBODY></TABLE><!-- end save for web slices -->
+<script>
+  function unsub_submit(){
+   var strhost = window.location.host;
+   var strprotocol = window.location.protocol;
+   var strurl = "http://edm.intfocus.com/unsubscribe/create";
+   var campaign_id = "<%= params[:cid] %>";
+   var email       = "<%= params[:email] %>";
+   var check_one = $("#check_one").attr("checked"),
+       check_two = $("#check_two").attr("checked"),
+       reason    = $("#reason").val();
+       if(check_one == "checked" || check_one == true){
+          check_one = "1";
+       }else{
+          check_one = "0";
+       }
+       if(check_two == "checked" || check_two == true){
+          check_two = "1";
+       }else{
+          check_two = "0";
+       }
+   var content = check_one+"-"+check_two+"-"+reason;
+   $.ajax({
+    type: 'POST',
+    url: strurl,
+    contentType: 'multipart/form-data',
+    datatype: 'json',
+    data:{"campaign_id":campaign_id,"email":email,"reason":content},
+    success:function(data)
+    {
+       window.location.reload();
+    },
+    error:function(xhr,r,e)
+    {
+       window.location.reload();
+    }
+   });
+ }
+</script>
+</body></HTML>
+

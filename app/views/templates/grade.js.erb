@@ -1,0 +1,21 @@
+
+$("#myModal4 .grade").html("<%= @grade %>");
+$("#myModal4 .info").html("<%= @templates_grade %>");
+ <% case @grade %>
+ <% when 90 %>
+ $("#myModal4 .grade").css({"font-size":"15px","color":"green"});
+ $("#myModal4 .info").css({"font-size":"15px","color":"green"});
+ <% when 60 %>
+ $("#myModal4 .grade").css({"font-size":"15px","color":"purple"});
+ $("#myModal4 .info").css({"font-size":"15px","color":"green"});
+ <% when 50 %>
+ <% when 40 %>
+ <% when 0 %>
+ $("#myModal4 .grade").css({"font-size":"15px","color":"yellow"});
+ $("#myModal4 .info").css({"font-size":"15px","color":"green"});
+ <% end %>
+ 
+ $("#myModal4 .grade").css({"font-size":"15px","color":"blue"});
+ $("#myModal4 .info").css({"font-size":"15px","color":"green"});
+$("#trigger").trigger("click");
+

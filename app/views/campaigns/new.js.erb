@@ -1,0 +1,79 @@
+$("#form > form").replaceWith("<%= j render "form" %>");
+
+var display_campaign_entries;
+
+$(function() {
+  return $('form #campaign_template_id').chosen().change(function() {
+    return display_campaign_entries("<%= @campaign && @campaign.id || 0 %>", $("form #campaign_template_id").val());
+  });
+});
+
+display_campaign_entries = function(campaign_id, template_id) {
+  return $.ajax({
+    url: 'campaigns/template_entries/' + campaign_id + "/" + template_id,
+    type: 'GET',
+    dateType: 'script'
+  });
+};
+  $("#campaign_add_edit").html("新建发送主题")
+  
+$("#jsfs").click(function(){
+	$("#dtyyfs").addClass('hidden')
+});
+$("#yyfs").click(function(){
+	$("#dtyyfs").removeClass('hidden')
+});
+var d = new Date();
+d = d.valueOf();
+d = d + 5*60*1000
+d = new Date(d);
+var vYear = d.getFullYear();
+if(vYear < 10){vYear = "0" + vYear;}
+var vMon = d.getMonth() + 1
+if(vMon < 10){vMon = "0" + vMon;}
+var vDay = d.getDate();
+if(vDay < 10){vDay = "0" + vDay;}
+var h = d.getHours();
+if(h < 10){h = "0" + h;}
+var m = d.getMinutes();
+if(m < 10){	m = "0" + m;}
+var se = d.getSeconds(); 
+if(se < 10){se = "0" + se;}
+$("#campaign_from_time").val(vYear+ "-" + vMon + "-" + vDay + " " + h + ":" + m + ":" + se);
+$("#datepicker").datepicker({
+	changeMonth: true,
+	changeYear: true
+});
+		
+$("#datepicker").datepicker( "option", "dateFormat", "yy-mm-dd" );
+$(".chzn-select-deselect").chosen({allow_single_deselect:true});
+$("#datepicker").val(vYear+ "-" + vMon + "-" + vDay);
+chose_set_ini("#selecthour", h);
+chose_set_ini("#selectminute", m);
+chose_set_ini("#selectsecond", se);
+
+//单选select 数据初始化
+function chose_set_ini(select, value){
+  	$(select).attr('value',value);
+	$(select).trigger("liszt:updated");
+}
+
+$("#datepicker").change(function(){
+	$("#campaign_from_time").val($(this).val() + " " + chose_get_value("#selecthour") + ":" + chose_get_value("#selectminute") + ":" + chose_get_value("#selectsecond"));
+});
+
+$("#selecthour").change(function(){
+	$("#campaign_from_time").val($("#datepicker").val() + " " + $(this).val() + ":" + chose_get_value("#selectminute") + ":" + chose_get_value("#selectsecond"));
+});
+
+$("#selectminute").change(function(){
+	$("#campaign_from_time").val($("#datepicker").val() + " " + chose_get_value("#selecthour") + ":" + $(this).val() + ":" + chose_get_value("#selectsecond"));
+});
+
+$("#selectsecond").change(function(){
+	$("#campaign_from_time").val($("#datepicker").val() + " " + chose_get_value("#selecthour") + ":" + chose_get_value("#selectminute") + ":" + $(this).val());
+});
+
+function chose_get_value(select){
+  	return $(select).val();
+}

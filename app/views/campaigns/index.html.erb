@@ -1,0 +1,187 @@
+<style>
+.focus-sign{
+  background: url("/images/2nd/glyphicons-halflings.png") no-repeat scroll 0 0 transparent;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  *margin-right: .3em;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+  margin-top: 1px;
+}
+.stream-items :hover {
+ cursor: default;
+}
+</style>
+<%- model_class = Campaign.new.class -%>
+	<div class="main-content" style="width:540px;background:white;">
+		<div class="header">
+      发送活动
+  </div>
+  <div id="sel_mes" class="stream-content" style="display: block; margin-bottom: 20px;">
+    <!--发送活动外包装 -->
+    <div class="stream-manager js-stream-manager-container">
+    	<div class="js-stream-manager" id="profile-stream-manager">
+    		<div class="stream-container">
+    			<div class="stream ">
+    				<div class="js-stream-items stream-items" id="stream-items-id">
+    				<% if @campaigns.present? %>
+    				<% @campaigns.each do |campaign| %>
+             <%= render campaign, :locals => { :lists => @lists } %>
+    		  		<% end %>
+    		  <% end %>
+    		  		</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <div class="focus-center">
+      <%= will_paginate @campaigns, :previous_label => '上一页 ', :next_label => '下一页 ' if @campaigns.present? %>
+    </div>
+   
+  </div>
+
+ </div> 
+<!--   dashboard start   --> 
+ <div class="dashboard" style="height:100%;padding:0px;margin-left:20px;">  	
+    <!--
+    	<div class="component"  style="width:100%;height:40px;">
+    		  <div style="float:right">
+           <%= link_to '新建发送主题', new_campaign_path, :class => 'btn btn-primary', remote: true, :style => 'color: white' %>
+        </div>
+     </div>
+    -->
+  <div class="databoard" style="height:450px;">
+    <div class="header" id="campaign_add_edit">
+     新建发送主题
+    </div>
+   	<div class="component">
+   	  	<div id="form">
+          <%= render :partial => 'form' %>
+       </div>
+     </div>
+  </div>
+  <div class="databoard" style="height:400px;">
+      <div class="component">
+          <%= render :template => "/docs/campaign.html.erb"%>
+       </div>  
+  </div>
+ </div>
+<!--   dashboard end   --> 
+<!--   details pane   --> 
+<div id="details-pane-outer">
+	<div class="details-pane-shell">
+		<div class="details-pane" id="details-pane" style="display: none; height: 585px; width: 415px; left: 530px; margin-top: 15px; -webkit-transition-property: none; ">
+			<div class="inner-pane active">
+				<div class="pane-toolbar pane-built-in">
+					<a class="pane-close toolbar-control " rel="pane_close" href="javascript:void(0)">
+						关闭 <span>×</span>
+					</a>
+					<br style="clear: both">
+				</div>
+				<div id="pane-load" style="overflow-y:scroll; ">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--   details pane  end --> 
+<script type="text/javascript">
+	$(function () {
+   		$("a[rel=pane_close]").click(function(e) {
+   			$("#details-pane").css("display","none");
+     	})
+	});
+</script>
+<script type="text/javascript">
+	var strhost = window.location.host;
+	var strprotocol = window.location.protocol;
+	
+	$(document).ready(function(){
+		$("#details-pane").css("height",$(window).height() - 70);
+		// 点击显示Pane_detail
+		//$(".stream-item-content").click(function(e) {
+		//    open_cam_pane($(this).attr("id").substring(2));
+		//})
+	});
+	function showpane(){
+		showLoading();
+		$("#details-pane").css("display","block");
+	    $(document).ready(function(){
+	    	$("#details-pane").css("height",$(window).height() - 70);
+		});
+	}	
+
+	function open_cam_pane(cam_id){
+		showpane();
+		var strurl = strprotocol + "//" + strhost + "/home/campaign";
+	   	$.ajax({
+			type: 'GET',
+		    url: strurl,
+		    data: {"cam_id":cam_id},
+		    contentType: 'multipart/form-data',
+		    datatype: 'json',
+		    success:function(data)
+		    {
+		    	//alert(data);
+		    	$("#pane-load").html(data);
+		    	hideLoading();
+		    },
+		    error:function(xhr,r,e)
+		    {
+		    	alert(e);
+		    	hideLoading();
+		    }
+		  });
+	}
+
+	//<!--   发送活动  search --> 
+	function start_search(f){
+		showLoading();
+		//var txtq = $("#str_month").val();
+		var strhost = window.location.host;
+		var strprotocol = window.location.protocol;
+		var strurl = strprotocol + "//" + strhost + "/home?f=" + f;
+		//alert(strurl);
+	    window.open(strurl,'_self');
+	};
+	//<!--   发送活动  search end -->
+</script>
+
+<script type="text/javascript">
+ //发送测试信
+	function mail_test(test){
+ 		var emailname = "#mailtest_email_" + test;
+ 		emailname = $(emailname).val();
+   if(emailname.indexOf("@")>0){
+   		var strhost = window.location.host;
+   		var strprotocol = window.location.protocol;
+   		var strurl = strprotocol + "//" + strhost + "/campaigns/mailtest";
+   		$.ajax({
+   			type: 'POST',
+   			url: strurl,
+   			data: {
+   				"emailname":emailname,
+   				"id":test
+   			},
+   			contentType: 'multipart/form-data',
+   			datatype: 'json'
+   		});
+   }else if(emailname.length==0){
+    alert("请输入测试邮箱！");
+   }else{
+    alert("测试邮箱有问题，请重试！");
+   }
+	}
+</script>
+<script type="text/javascript">
+ function campaign_report(campaign_id){
+  var strhost = window.location.host;
+  var strprotocol = window.location.protocol;
+  var strurl = strprotocol + "//" + strhost + "/report/index?c_id=" + String(campaign_id);
+  var win = window.open(strurl);
+  win.focus();
+ }
+</script>

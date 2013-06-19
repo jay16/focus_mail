@@ -1,0 +1,16 @@
+
+<%= form_for [@template, @entry], remote: true, :html => { :style => 'margin:0px;' } do |f| %>
+  <fieldset>
+    <%= render :partial => "common/form_error", :locals => { model: @entry } %>
+
+    <%= f.text_field :name, :class => 'span1' %>
+
+  <%= f.text_field :default_value, :class => 'span4' %>
+
+   <span style="float:right;margin-right:12px;">
+   <%= f.submit "保存", :class => 'btn btn-mini',:style=>"color:black;" %>
+   <a onclick="$('#<%= dom_id @entry %>_edit').addClass('hidden');$('#<%= dom_id @entry %>').removeClass('hidden');", class='btn btn-mini',style="color:black;">取消</a>
+   </span>
+  </fieldset>
+<% end %>
+

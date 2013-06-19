@@ -1,0 +1,13 @@
+<<<<<<< HEAD
+*.class
+*.pyc
+*.pyo
+=======
+/.bundle
+/db/*.sqlite3
+/log/*.log
+/tmp
+/config/database.yml
+/.sass-cache
+/dump.rdb
+>>>>>>> 1aeea4fbec08df575c783f8db0eefd8906c9da77

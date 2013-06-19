@@ -1,0 +1,44 @@
+<html>
+<head>
+<script language="javascript" type="text/javascript" src="../js/jquery-1.4.2.js"> </script>
+<script type="text/javascript">
+        $(document).ready(function(){
+        $("#ctl00_ContentPlaceHolder1_EmailUser").click(function(){
+        alert("aaa");
+        if($(this).attr("Checked"))
+        {
+        alert("bbbb");
+        }
+        });
+        }); 
+ </script>
+</head>
+<body>
+<table>
+<tr style="color: #333333">
+                                        <td style="width: 20px; height: 34px; background-color: white" align="left">
+                                            <asp:Label ID="lblUserType" runat="server" Width="100px"><% =  GetLocalResourceObject("UserType.Text").ToString()%></asp:Label>
+                                        </td>
+                                        <td style="width: 171px; height: 34px; background-color: white">
+                                            <asp:CheckBox ID="ReportUser" runat="server" Checked="True" Text="报表用户"></asp:CheckBox>
+                                            <asp:CheckBox ID="EmailUser" runat="server"  Text="邮件用户" ></asp:CheckBox>
+                                        </td>
+                                    </tr>
+                                    <tr style="color: #333333;" >
+                                        <td style="width: 20px; height: 34px; background-color: white" align="left">
+                                            <asp:Label ID="LaReportType" runat="server" Width="100px"><% =  GetLocalResourceObject("ReportType.Text").ToString()%></asp:Label>
+                                        </td>
+                                        <td style="width: 171px; height: 34px; background-color: white">
+                                            <asp:CheckBoxList ID="CheckBoxList1" runat="server">
+                                                <asp:ListItem>
+                                        a
+                                                </asp:ListItem>
+                                                <asp:ListItem>
+                                        b
+                                                </asp:ListItem>
+                                            </asp:CheckBoxList>
+                                        </td>
+                                    </tr>
+</table>
+</body>
+</html>

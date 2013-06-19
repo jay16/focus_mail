@@ -1,0 +1,110 @@
+<style>
+.tooltip-inner {
+ font-size:14px;
+}
+</style>  
+ <%= field_set_tag do %>
+    <% if @tname.present? %>
+    
+    <%= (render :template => "report/templates/#{@tname}").html_safe %>
+    <% else %>
+    <div style="text-align:center;">没有找到该发送主题所使用的模板！</div>
+    <% end %>
+  <% end %>
+
+<script type="text/javascript">
+
+$(function(){
+   //$("fieldset").css("margin","0 auto");
+   //resize_filedset();
+  //处理超链接a
+  $("a").each(function(){
+    var url = parseURL($(this).attr("href"));
+    <% if @rank_clicks.present? %>
+    <% @rank_clicks.each do |hlink| %>
+      if(String(url.params['l']) == "<%= hlink[:link_id] %>")
+       $(this).attr({"rel":"tooltip","title":"<%= hlink[:click_info] %>","data-trigger":"click","data-placement":"top",
+       "href":"javascript:void(0);","campaign-id":"<%= hlink[:campaign_id] %>","link-id":"<%= hlink[:link_id] %>",
+       "zero":"<%= hlink[:zero] %>","rank":"<%= hlink[:rank] %>"});
+    <% end %>
+    <% end %>
+  });
+  
+ $("[rel=tooltip]").tooltip('show');
+ 
+  
+ //处理map area定位的超链接
+  $("area").each(function(){
+   $area = $(this);
+   var url = parseURL($area.attr("href"));
+   var coords = $(this).attr("coords").split(",");
+   var aleft  = parseInt(coords[0]);//(parseInt(coords[2])-parseInt(coords[0]))/2;
+   var atop   = parseInt(coords[1]);//(parseInt(coords[3])-parseInt(coords[1]))/2;
+   
+   <% @rank_clicks.each do |hlink| %>
+   if(String(url.params['l']) == "<%= hlink[:link_id] %>"){
+     $area.attr({"rel":"tooltip","title":"<%= hlink[:click_info] %>","data-trigger":"click",
+     "href":"javascript:void(0);","campaign-id":"<%= hlink[:campaign_id] %>","link-id":"<%= hlink[:link_id] %>",
+     "zero":"<%= hlink[:zero] %>","rank":"<%= hlink[:rank] %>"});
+     usemap = "#"+$(this).parent().attr("name");
+     $("img").each(function(){
+       if($(this).attr("usemap")==usemap){
+        //alert($(this).attr("src"));
+        var offset = $(this).offset();
+        var ileft = offset.left;
+        var itop  = offset.top;
+        var left = parseInt(ileft)+parseInt(aleft);
+        var top  = parseInt(itop)+parseInt(atop)+7;
+        var tooltip = '<div onclick="trigger_click(<%= hlink[:campaign_id]%>,<%= hlink[:link_id] %>)" class="tooltip fade top in" style="left:'+left+';top:'+top+';display:block;position:absolute;cursor:hand;" >';
+        tooltip += '<div class="tooltip-arrow"></div><div class="tooltip-inner">'+"<%= hlink[:click_info] %>"+'</div></div>'
+        $(tooltip).insertAfter($("body"));
+        }
+     });
+    }
+    <% end %>
+  });
+});
+ function resize_filedset(){
+   //置邮件模板水平置中
+   var tmp_width = 0;
+   $("fieldset").children().each(function(){
+    if(parseInt($(this).attr("width")) >tmp_width){
+         tmp_width = $(this).attr("width");;
+    }
+  
+   });
+  
+   if(tmp_width>500){
+     var w_w = $(window).width();
+   $("fieldset").css("margin-left",(w_w-tmp_width)/2);
+   }
+ }
+ function parseURL(url) {
+   var a =  document.createElement('a');
+   a.href = url;
+   return {
+   source: url,
+   protocol: a.protocol.replace(':',''),
+   host: a.hostname,
+   port: a.port,
+   query: a.search,
+   params: (function(){
+      var ret = {},
+          seg = a.search.replace(/^\?/,'').split('&'),
+          len = seg.length, i = 0, s;         
+          //alert(typeof(ret));
+      for (;i<len;i++) {
+          if (!seg[i]) { continue; }
+          s = seg[i].split('=');
+          ret[s[0]] = s[1].split('/')[0];
+      }
+      return ret;
+   })(),
+   file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],
+   hash: a.hash.replace('#',''),
+   path: a.pathname.replace(/^([^\/])/,'/$1'),
+   relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
+   segments: a.pathname.replace(/^\//,'').split('/')
+   };
+ } 
+</script>

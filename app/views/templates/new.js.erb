@@ -1,0 +1,20 @@
+
+$("#templates_form").html("<%= j render :partial => 'form' %>");
+$("#templates_form > form").addClass("box");
+$("#fjzip").click(function(){
+	if($(this).text() == "zip上传")
+	{
+		$("#htmlsource").addClass("hidden");
+		$("#zipfile").removeClass("hidden");
+		$(this).text("内容填写");
+	}
+	else
+	{
+		$("#htmlsource").removeClass("hidden");
+		$("#zipfile").addClass("hidden");
+		$(this).text("zip上传");
+	}
+});
+
+hideLoading();
+$("#template_add_edit").html("新建邮件模板")

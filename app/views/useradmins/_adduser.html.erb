@@ -1,0 +1,13 @@
+<%=form_tag "/useradmins/saveuser", :class => 'form-horizontal', :remote => true do %>
+<%= render :partial => "common/form_error", :locals => { model: @user } %>
+  <div class="control-group">
+    <%= label_tag 'uemail', '用户名称', :class => 'control-label' %>
+    <div class="controls">
+      <%= text_field_tag 'uemail', nil, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= submit_tag "保存", :class => 'btn btn-primary' %>
+    <a onclick="$('#form').addClass('hidden');$('#add_user').removeClass('hidden');return false;", class='btn'>Cancel</a>
+  </div>
+<% end %>

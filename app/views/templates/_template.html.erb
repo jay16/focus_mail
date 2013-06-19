@@ -1,0 +1,66 @@
+<!--单条模板-->
+<div class="js-stream-item stream-item" id="<%= dom_id template %>" data-item-type="tweet" media="true"> 
+	<div class="stream-item-content tweet" id=<%="l-" + template.id.to_s %> data-is-reply-to="false" >
+		<div class="focus-content">
+			<div class="tweet-row">
+			    <div class="focus-name" style="color:green;"><%= template.name %></div>
+			    <div class="btn-group" data-toggle="buttons-radio" style="float:left; display:none" >
+					<button class="btn btn-mini btn-primary <%= template.img_url.to_i == 1 ? 'active' : ''%>" onclick= "imgurl('<%= template.id%>_1');">img</button>
+					<button class="btn btn-mini btn-primary <%= template.img_url.to_i == 2 ? 'active' : ''%>" onclick="imgurl('<%= template.id%>_2');">url</button>
+				</div>
+			</div>
+			<div class="tweet-row">
+  			  <a data-toggle="modal" href="#myModal1<%= template.id %>" class='btn btn-mini', style='color: black'>参数列表</a>
+		      <a data-toggle="modal" href="#myModal2<%= template.id %>" class='btn btn-mini hidden', style='color: black;display:none;'>模板代码</a>
+		      <a data-toggle="modal" href="#myModal3<%= template.id %>" class='btn btn-mini hidden', style='color: black;display:none;'>预览</a>
+		      <a data-toggle="modal" onclick="preview(<%= template.id %>)" class='btn btn-mini', style='color: black'>预览</a>
+		      <%= link_to '修改', edit_template_path(template), :class => 'btn btn-mini', remote: true, :style => 'color: black',:onclick=>"showLoading('加载中');" %>
+		      <%= link_to '新增参数', new_template_entry_path(template.id), :class => 'btn btn-mini', :style => 'display:none;color: black', remote: true %>
+		      <%= link_to '删除', template_path(template), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini', remote: true, :style => 'color: black' %>
+        <%= link_to '评分', templates_grade_path(template.id), :class => 'btn btn-mini', remote: true, :style => 'color: black' %>
+			</div><!--tweet-row-->
+  </div><!--focus-content-->
+	</div>
+	<!---->
+  <div id="myModal1<%= template.id %>" class="modal fade hidden">
+    <div class="modal-header header">
+      <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
+      <%= template.name %>
+    </div>
+    <div class="modal-body">
+      <div class="sz entries_info">
+      <% has_entries = template.entries && template.entries.present? %>
+        <table class="table" style="display:<%= has_entries ? 'table' : 'none' %>">
+          <thead class="focus-thead">
+            <tr>
+              <th>参数名</th>
+              <th>值</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render template.entries if has_entries %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div id="myModal2<%= template.id %>" class="modal fade hidden">
+    <div class="modal-header header">
+      <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
+      <%= template.name %>
+    </div>
+    <div class="modal-body">
+      <div class="source">
+        <pre>
+         <% source_path = Rails.root.join('lib/emails', "#{template.file_name}.html.erb") %>
+         <%= IO.readlines(source_path).join("").strip if File.exist?(source_path) %>
+         </pre>
+      </div>
+    </div>
+  </div>
+  <div class="template_form"></div>
+	<!---->
+</div>
+<!--单条模板 结束-->       
+

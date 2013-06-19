@@ -1,0 +1,21 @@
+<!--css modify-->
+<% @user = current_user %>
+<%= form_for(@user, :url => { :action => "update_password", :controller => "user" } ) do |f| %>
+	<div class="field">
+	 <a class"body-font" style="margin-left:20px;">新密码：</a>
+		<%= f.password_field :password, :autocomplete => "off"  %>
+	</div>
+	<div class="field">
+  <a class"body-font" style="margin-left:3px;">重复新密码:</a>
+	  	<%= f.password_field :password_confirmation %>
+	</div>
+	<div class="field" style="display: none">
+	  	<%= f.label :user_org %>
+  		<%= f.text_field :user_org, :value => '111' %>
+	</div>
+	<div class="focus-center">
+	<%= f.submit "保存", :class => "btn",:id=> "edit_pwd_submit",:style=>"display:none" %>
+	<input class="btn" type="button" value="保存" onclick="check_user_password();">
+ <a href="#" class="btn" data-dismiss="modal">取消</a>
+ </div>
+<% end %>

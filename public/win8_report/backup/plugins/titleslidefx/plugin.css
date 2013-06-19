@@ -1,0 +1,147 @@
+.tileSlideFx>.slideText {
+	width: 30%; /*area available for text */
+}
+.tileSlideFx .s2, 
+.tileSlideFx .s3,
+.tileSlideFx .s4 {
+	margin-left:75px;
+}
+.tileSlideFx .s1 {
+	background-position: 0px 0px;
+}
+.tileSlideFx .s2 {
+	background-position: -75px 0px;
+}
+.tileSlideFx .s3 {
+	background-position: -150px 0px;
+}
+.tileSlideFx .s4 {
+	background-position: -225px 0px;
+}
+/* DO NOT CHANGE */
+.tileSlideFx{
+	-moz-perspective: 500px;
+}
+.tileSlideFx.hovered{
+	-webkit-perspective: 500px;
+	-moz-perspective: 500px;
+	-o-perspective: 500px;
+	-ms-perspective: 500px;
+	perspective: 500px;
+	overflow:visible;
+}
+.tileSlideFx .slice{
+	width: 75px;
+	height: 100%;
+	z-index: 10;	
+	outline: 1px solid transparent;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	
+}
+.tileSlideFx.hovered .slice{
+	-webkit-transform-origin: left center;
+	-moz-transform-origin: left center;
+	-o-transform-origin: left center;
+	-ms-transform-origin: left center;
+	transform-origin: left center;	
+	-ms-transition: -ms-transform 200ms;	
+	-webkit-transition: -webkit-transform 200ms;	
+	-o-transition: -o-transform 200ms;	
+	-moz-transition: -moz-transform 200ms;	
+	transition: transform 200ms;
+}
+.tileSlideFx>.slideText {
+	position: absolute;
+	right: 0;	height: 100%;
+	display: block;
+	float: right;
+	padding: 5px 20px 5px;
+	text-align: right;
+	font-size: 16px;
+	z-index: 0;
+}
+.tileSlideFx .overlay {
+	width: 75px; 
+	height: 100%;
+	opacity: 0;
+	position: absolute;	
+}
+.tileSlideFx:hover .overlay {
+	opacity: 1;
+}
+.tileSlideFx>.imgWrapper{
+	position:relative;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+.tileSlideFx img {
+	position: absolute;
+	z-index:1;
+}
+.tileSlideFx .overlay{
+	-webkit-transition: opacity 200ms;
+	-moz-transition: opacity 200ms;
+	-o-transition: opacity 200ms;
+	-ms-transition: opacity 200ms;
+	transition: opacity 200ms;
+}
+.tileSlideFx.hovered:hover .s2{
+	z-index:101;
+	margin-left:74px;
+	-webkit-transform: rotate3d(0,1,0,-63deg);
+	-moz-transform:  rotate3d(0,1,0,-63deg);
+	-o-transform:  rotate3d(0,1,0,-63deg);
+	-ms-transform:  rotate3d(0,1,0,-63deg);
+	transform:  rotate3d(0,1,0,-63deg);
+}
+.tileSlideFx.hovered:hover .s3{
+	z-index:101;
+	margin-left:74px;
+	-webkit-transform:  rotate3d(0,1,0,126deg);
+	-moz-transform:  rotate3d(0,1,0,126deg);
+	-o-transform:  rotate3d(0,1,0,126deg);
+	-ms-transform:  rotate3d(0,1,0,126deg);
+	transform:  rotate3d(0,1,0,126deg);
+}
+.tileSlideFx.hovered:hover .s4{
+	z-index:101;
+	margin-left:74px;
+	-webkit-transform:  rotate3d(0,1,0,-126deg);
+	-moz-transform:  rotate3d(0,1,0,-126deg);
+	-o-transform:  rotate3d(0,1,0,-126deg);
+	-ms-transform:  rotate3d(0,1,0,-126deg);
+	transform:  rotate3d(0,1,0,-126deg);
+}
+.tileSlideFx.hovered .s1 > .overlay {
+	background: -moz-linear-gradient(right, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
+	background: -webkit-linear-gradient(right, rgba(0,0,0,0.05) 0%,rgba(0,0,0,0) 100%);
+	background: -o-linear-gradient(right, rgba(0,0,0,0.05) 0%,rgba(0,0,0,0) 100%);
+	background: -ms-linear-gradient(right, rgba(0,0,0,0.05) 0%,rgba(0,0,0,0) 100%);
+	background: linear-gradient(right, rgba(0,0,0,0.05) 0%,rgba(0,0,0,0) 100%);
+}
+.tileSlideFx.hovered .s2 > .overlay {
+	background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.2) 100%);
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.2) 100%);
+	background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.2) 100%);
+	background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.2) 100%);
+	background: linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.2) 100%);
+}
+.tileSlideFx.hovered .s3 > .overlay {
+	background: -moz-linear-gradient(right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+	background: -webkit-linear-gradient(right, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 100%);
+	background: -o-linear-gradient(right, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 100%);
+	background: -ms-linear-gradient(right, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 100%);
+	background: linear-gradient(right, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 100%);
+}
+.tileSlideFx.hovered .s4 > .overlay {
+	background: -moz-linear-gradient(left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+	background: -webkit-linear-gradient(left, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0) 100%);
+	background: -o-linear-gradient(left, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0) 100%);
+	background: -ms-linear-gradient(left, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0) 100%);
+	background: linear-gradient(left, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0) 100%);
+}

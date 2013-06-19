@@ -1,0 +1,212 @@
+
+
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "focusmore" %>
+    
+<style>
+body{
+ padding: 0px;
+}
+.tooltip {
+   z-index: 100;
+}
+.tooltip-inner {
+  max-width: 200px;
+  min-width: 20px;
+  background-color: gray;
+}
+.tooltip.top .tooltip-arrow {
+  border-top: 5px solid gray;
+}
+.input-prepend .add-on,
+.input-append .add-on {
+  display: inline-block;
+  width: auto;
+  height: 18px;
+  min-width: 16px;
+  padding: 4px 5px;
+  font-weight: normal;
+  line-height: 18px;
+  text-align: center;
+  text-shadow: 0 1px 0 #ffffff;
+  vertical-align: middle;
+  background-color: #eeeeee;
+  border: 1px solid #ccc;
+}
+.input-prepend input,
+.input-append input {
+  display: inline-block;
+  width: auto;
+  height: 28px;
+  min-width: 16px;
+  line-height: 28px;
+  border: 1px solid #ccc;
+}
+  html, body {
+    background-color: white;/*#C0DEED;#FBFBFB;/*/
+    background-position: 0 261px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #333;
+    font-family: 微软雅黑;
+    padding-bottom:5px;
+  }
+  body {
+    padding-top: 60px; /* 40px to make the container go all the way to the bottom of the topbar */
+  }
+  .container > footer p {
+    text-align: center; /* center align it with the container */
+  }
+  /* The white background content wrapper */
+  .container > .content {
+    background: transparent;/*rgba(218, 236, 244, 0.9);*/
+    font-family: 微软雅黑;
+    padding: 0 0 0 0;
+    margin: 0; 
+  }
+  .main-content{
+   padding: auto 10px;
+  }
+</style>
+<style>
+.navbar .brand {
+    display: block;
+    float: left;
+    height:25px;
+    line-height:25px;
+    margin-left: 2px;
+    padding: 5px 10px 6px
+}
+.navbar .nav .active > a,
+.navbar .nav .active > a:hover {
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top:2px;
+}
+.navbar .nav > li > a {
+    color: black;
+    float: none;
+    text-decoration: none;
+    margin-top:2px;
+}
+
+#navbar_head,#navbar_head > li:hover,
+#navbar_head > li > a:hover{
+ color: black;
+ cursor: pointer;
+}
+.navbar .nav > li > a {
+ text-shadow: none;
+  margin-top:2px;
+}
+
+
+#navbar .nav-tabs > li > a,
+#navbar .nav-tabs > li > a:hover{
+  font-family: verdana,arial,helvetica,sans-serif;
+  color: black;
+  border-color: transparent;
+  cursor: pointer;
+    margin-top:2px;
+}
+
+
+#navbar .nav-tabs > .active > a,
+#navbar .nav-tabs > .active > a:hover,
+.navbar .nav .active > a,
+.navbar .nav .active > a:hover {
+  border-radius: 0px;
+  background: transparent;
+  cursor: pointer;
+  color: green;
+  border-bottom:3.5px solid green;
+  height:13px;
+}
+ footer p{
+  margin:10px auto;
+  text-align: center;
+  color: black;
+ }
+</style>
+    <title><%= params[:c_id] == nil ? "FocusMail" :campaign_subject(params[:c_id])  %></title>
+     <link rel="shortcut icon" type="image/x-icon" href="/images/2nd/web-icon.gif" media="screen" /> 
+  <%= hidden_field_tag 'controller_head', params[:controller]%>
+  <%= hidden_field_tag 'action_head', params[:action]%>
+  
+<div class="navbar navbar-fixed-top"  style="background:#D0B9D7;background-color:#D0B9D7;"><!--rgb(201,135,191);-->
+  <div class="navbar-inner"  style="background:#D0B9D7;background-color:#D0B9D7;">
+    <div class="container"   style="background:#D0B9D7;background-color:#D0B9D7;" >
+
+      
+      <img class="brand" src="" width="190px" alt="MenuLogo" title="MenuLogo" id="menu_logo">
+      
+      <div id="navbar" class="container nav-collapse tabbable"   style="background:#D0B9D7;background-color:#D0B9D7;">
+        <ul class="nav nav-tabs" id="navbar_head" style="border-bottom-width:0px;border-bottom-color:white;">
+          <li><%= link_to "点击分析", {:controller => :clickinfo ,:c_id=> params[:c_id] }  %></li>
+          <li><%= link_to "开信清单", {:controller => :tracks ,:c_id => params[:c_id] } %></li>
+          <li><%= link_to "点击清单", {:controller => :clicks ,:c_id => params[:c_id] } %></li>
+          <li><%= link_to "综合报告", {:controller => :clickinfo, :action => :report ,:c_id => params[:c_id] } %></li>
+        
+        </ul>
+      </div><!--/.nav-collapse -->
+      
+    </div>
+  </div>
+</div>
+
+  <div class="container">
+    <div style="display: none;">
+     <%= flash[:notice] %>
+     </div>
+   <div class="content">
+     <div class="row">
+       <!--<%= render 'layouts/sidebar' %>-->
+       <div class="span12">
+         <%= yield %>
+       </div>
+     </div><!--/row-->
+   </div><!--/content-->
+
+   <%= render 'layouts/footer' %>
+   
+<script type="text/javascript">
+ $(document).ready(function(){
+  var head_num = 0;
+  $("#navbar_head li").each(function(){
+   $(this).removeClass('active');
+  })
+  
+  var head_name = $("#controller_head").val();
+  var path = window.location.pathname;
+  ///clicks/details?...
+  path_arr = path.split("/");
+  var pathname = path_arr[1];
+  switch(pathname){
+   case 'map-data': head_num = 0; break;
+   case 'tracks': head_num = 1; break;
+   case 'clicks': head_num = 2; break;
+   case 'report': head_num = 3; break;
+   default:head_num = 0;
+  }
+  $("#navbar_head li:eq(" + head_num + ")").addClass('active')
+
+ //根据域名，加载不同公司logo
+ var strhost = window.location.host;
+ if(strhost.indexOf('demo.online-edm.com')>=0){
+  $("#menu_logo").attr("src","/images/2nd/openfind-menu-logo.png");
+  $("#menu_logo").attr("alt","Openfind");
+  $("#menu_logo").attr("title","Openfind");
+ }else if(strhost.indexOf('edm.mailhok.com')>=0){
+  $("#menu_logo").attr("src","/images/2nd/mailhok-menu-logo.png");
+  $("#menu_logo").attr("alt","FocusMail");
+  $("#menu_logo").attr("title","FocusMail");
+ }else{
+  $("#menu_logo").attr("src","/images/2nd/openfind-menu-logo.png");
+  $("#menu_logo").attr("alt","Openfind");
+  $("#menu_logo").attr("title","Openfind");
+ }
+});
+</script>

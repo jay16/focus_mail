@@ -1,0 +1,13 @@
+<tr id="<%= dom_id list %>">
+  <td><%= link_to list.name, list_path(list) %></td>
+  <td><%= list.members.size %></td>
+  <td><%= list.created_at.strftime("%F %T") %></td>
+  <td>
+    <%= link_to '导入名单', members_imexport_path(list.id), :class => 'btn btn-mini' %>
+    <%= link_to '添加名单', new_list_member_path(list.id), :class => 'btn btn-mini' %>
+    <%= link_to '名单成员', list_path(list), :class => 'btn btn-mini' %>
+    <%= link_to '编辑名单', edit_list_path(list), :class => 'btn btn-mini', :remote => true %>
+    <%= link_to '删除名单', list_path(list), :method => :delete,
+      :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger', :remote => true %>
+  </td>
+</tr>

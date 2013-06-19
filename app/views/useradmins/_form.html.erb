@@ -1,0 +1,43 @@
+<%= form_tag "/useradmins/saveupdate", :class => 'form-horizontal', :remote => true do %>
+<%= render :partial => "common/form_error", :locals => { model: @user } %>
+<table class="table">
+   <thead class="focus-thead">
+   <tr>
+    <th>会员邮箱</th>
+    <th>样本管理</th>
+    <th>管理发送</th>
+    <th>报表查询</th>
+    <th>邮件列表</th>
+    <th>权限列表</th>
+    <th></th>
+    <!--<% @useradmin.each do |useradmin| %>
+    <td>
+     <%= label_tag useradmin.asset_type.downcase, useradmin.asset_type %>
+    </td>
+    <% end %>
+    -->
+   </tr>
+   </thead>
+    <tr>
+     <td>
+      <% if @user.email.length > 17 %>
+        <a class="focus-rel" rel="tooltip" data-original-title="<%= @user.email %>"><%= @user.email[0..15].concat('...') %></a>
+      <% else %>
+        <%= label_tag 'uemail', @user.email %> 
+      <% end %> 
+      <%= hidden_field_tag "userid", @user.id, :class => 'text_field' %>
+     </td>
+     <% @useradmin.each do |useradmin| %>
+     <td>
+      <a class="focus-icon <%= useradmin.type_user == 1 ? 'add-icon':'remove-icon'%>" id="<%= useradmin.asset_type.downcase %><%= dom_id @user %>statu"></a>|
+      <%= button_tag  useradmin.type_user == 1 ? '禁用':'启用', :type => 'button', :class => 'btn btn-mini', :id => "btn#{useradmin.asset_type.downcase}#{dom_id @user}", :onclick => "buntf('#btn#{useradmin.asset_type.downcase}#{dom_id @user}', '##{useradmin.asset_type.downcase}#{dom_id @user}','##{useradmin.asset_type.downcase}#{dom_id @user}statu')" %>
+      <%= hidden_field_tag useradmin.asset_type.downcase, useradmin.type_user, :class => 'text_field', :id => "#{useradmin.asset_type.downcase}#{dom_id @user}" %>
+     </td>
+     <% end %>
+    </tr>
+  </table>
+  <div class="focus-center">
+    <%= submit_tag "保存", :class => 'btn' %>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+  </div>
+<% end %>

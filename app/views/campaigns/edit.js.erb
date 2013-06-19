@@ -1,0 +1,108 @@
+$("#form > form").replaceWith("<%= j render "form" %>");
+
+var display_campaign_entries;
+
+$(function() {
+  return $('form #campaign_template_id').chosen().change(function() {
+    return display_campaign_entries("<%= @campaign.id %>", $("form #campaign_template_id").val());
+  });
+});
+
+display_campaign_entries = function(campaign_id, template_id) {
+  return $.ajax({
+    url: 'campaigns/template_entries/' + campaign_id + "/" + template_id,
+    type: 'GET',
+    dateType: 'script'
+  });
+};
+
+  $("#campaign_add_edit").html("[<span style='color:purple;'>修改</span>][<%= @campaign.subject.length>15 ? @campaign.subject[0..15]+"..." : @campaign.subject %>]");
+  
+  hideLoading();
+
+
+<%= @campaign.from_time == nil ? "$('#dtyyfs').addClass('hidden')" : "$('#dtyyfs').removeClass('hidden')" %>
+var ftime = $("#campaign_from_time").val();
+ftime=ftime.toString();
+ftime =  ftime.replace(/-/g,"/");
+var fDate = new Date(ftime);
+$("#yyfs").click(function(){
+	$("#dtyyfs").removeClass('hidden');
+	if(<%= @campaign.from_time == nil ? true : false %>)
+	{
+		fDate = new Date();
+		var vYear = fDate.getFullYear();
+		var vMon = fDate.getMonth() + 1
+		if(vMon < 10){vMon = "0" + vMon}
+		var vDay = fDate.getDate();
+		if(vDay < 10){vDay = "0" + vDay;}
+		var h = fDate.getHours();
+		if(h < 10){h = "0" + h;}
+		var m = fDate.getMinutes();
+		if(m < 10){m = "0" + m;}
+		var se = fDate.getSeconds(); 
+		if(se < 10){se = "0" + se;}
+		var fdate = vYear+ "-" + vMon + "-" + vDay;
+		$("#datepicker").val(fdate);
+		chose_set_ini("#selecthour", h);
+		chose_set_ini("#selectminute", m);
+		chose_set_ini("#selectsecond", se);
+	}
+	
+});
+
+var vYear = fDate.getFullYear();
+var vMon = fDate.getMonth() + 1
+if(vMon < 10){vMon = "0" + vMon}
+var vDay = fDate.getDate();
+if(vDay < 10){vDay = "0" + vDay;}
+var h = fDate.getHours();
+if(h < 10){h = "0" + h;}
+var m = fDate.getMinutes();
+if(m < 10){m = "0" + m;}
+var se = fDate.getSeconds(); 
+if(se < 10){se = "0" + se;}
+var fdate = vYear+ "-" + vMon + "-" + vDay
+
+$("#datepicker").datepicker({
+	changeMonth: true,
+	changeYear: true
+});
+		
+$("#datepicker").datepicker( "option", "dateFormat", "yy-mm-dd" );
+$(".chzn-select-deselect").chosen({allow_single_deselect:true});
+$("#datepicker").val(fdate);
+chose_set_ini("#selecthour", h);
+chose_set_ini("#selectminute", m);
+chose_set_ini("#selectsecond", se);
+
+//单选select 数据初始化
+function chose_set_ini(select, value){
+  	$(select).attr('value',value);
+	$(select).trigger("liszt:updated");
+}
+
+$("#datepicker").change(function(){
+	$("#campaign_from_time").val($(this).val() + " " + chose_get_value("#selecthour") + ":" + chose_get_value("#selectminute") + ":" + chose_get_value("#selectsecond"));
+});
+
+$("#jsfs").click(function(){
+	$("#dtyyfs").addClass('hidden');
+	$("#campaign_from_time").val('');
+});
+
+$("#selecthour").change(function(){
+	$("#campaign_from_time").val($("#datepicker").val() + " " + $(this).val() + ":" + chose_get_value("#selectminute") + ":" + chose_get_value("#selectsecond"));
+});
+
+$("#selectminute").change(function(){
+	$("#campaign_from_time").val($("#datepicker").val() + " " + chose_get_value("#selecthour") + ":" + $(this).val() + ":" + chose_get_value("#selectsecond"));
+});
+
+$("#selectsecond").change(function(){
+	$("#campaign_from_time").val($("#datepicker").val() + " " + chose_get_value("#selecthour") + ":" + chose_get_value("#selectminute") + ":" + $(this).val());
+});
+
+function chose_get_value(select){
+  	return $(select).val();
+}

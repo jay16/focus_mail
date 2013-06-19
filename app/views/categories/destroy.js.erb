@@ -1,0 +1,33 @@
+window.location.reload();
+
+////删除之前，取得兄弟节点第一个
+//var next_br = $("#<%= dom_id @list %>").siblings().eq(0).attr("id");
+//
+////移除当前删除列表
+//$("#<%= dom_id @list %>").remove();
+//
+////右侧显示当前删除列表下面的第一个列表
+//var next_id = next_br.split("_")[1];
+//var jud_str = next_br.split("_")[0];
+//
+//var str = "";
+////判断该兄弟id是否是dom_id生成的字符串，有误判的可能。
+//if(jud_str=="list"){
+// src = "/lists/"+next_id+"/members";
+//}
+////加载对应名单列表的名单
+//$('#list_member').attr("src",src);
+//
+////删除名单列表选择下拉框中信息
+//var select = document.getElementById("lists_all");
+//var option = select.options;
+//var node = select.childNodes;
+//for(var i=option.length-1;i>=0;i--){
+// if(option[i].value==next_id){
+//  select.removeChild(option[i]);
+//  select.removeChild(node[i]);
+//  alert(i);
+//  alert(option[i].value);
+// }
+//}
+

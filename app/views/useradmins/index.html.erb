@@ -1,0 +1,49 @@
+
+<div class="main-content" style="width:100%;background:white;">
+ <%- model_class = Useradmin.new.class -%>
+ <div class="header">
+    权限设置
+ </div>
+ <div style="float:right" id = 'add_user' class="hidden">
+   <%= link_to 'Add a User', new_useradmin_path, :class => 'btn', remote: true %>
+ </div>
+ <div id="form"></div>
+ 
+ <!--css-modify-->
+ <div class="modal hide fade" id="adminset_form" style="max-width:600px;width:600px;">
+  <div class="body-header">
+    <div class="header">
+     <button type="button" class="focus-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+     <div>修改权限</div>
+     </div>
+   </div>
+  <div class="modal-body">hello</div>
+ </div>
+ <a href="#adminset_form" id="adminset_btn" role="button" class="hidden" data-toggle="modal"></a>
+ 
+ <table class="table table-striped" id="lists" style="background:white;">
+   <thead class="focus-thead">
+     <tr>
+       <th>会员邮箱</th>
+       <th>样本管理</th>
+       <th>管理发送</th>
+       <th>报表查询</th>
+       <th>邮件列表</th>
+       <th>权限列表</th>
+       <th>群组名称</th>
+       <th></th>
+     </tr>
+   </thead>
+   <tbody>
+     <% @useradmins.each do |useradmin| %>
+       <%= render useradmin %>
+     <% end %>
+   </tbody>
+ </table>
+ <div class='focus-center'>
+   <%= will_paginate @useradmins, :previous_label => '上一页 ', :next_label => '下一页 ' %>
+ </div>
+
+</div>
+
+   

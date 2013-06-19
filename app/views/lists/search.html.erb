@@ -1,0 +1,85 @@
+<%= javascript_include_tag "application" %>
+<%= csrf_meta_tags %>
+<%= stylesheet_link_tag "application", :media => "all" %>
+<%= stylesheet_link_tag "focusmore" %>
+<style>
+body{
+ padding-top: 0px;
+}
+</style>
+ <div class="main-content" style="width:100%;height:100%;">
+  <!--
+  <div class="page-header hidden">
+    <table style="width:100%"><tr><td><h2><%= @list.name %> <small>成员共：<%= @list.members.size %></small></h2></td>
+     <td style="float:right">
+       <div style="float:right;margin-top:12px;">
+                <%= link_to '添加名单', new_list_member_path(@list.id), :class => 'btn', :style => 'color: black' %>
+                <%= link_to '批量导入', members_imexport_path(@list.id), :class => 'btn', :style => 'color: black' %>
+              </div>
+     </td></tr></table>
+   </div>-->
+   <div class="header">
+    <%= @list.name %>
+   </div>
+   <div class="focus-center" style="background:transparent;height:35px;padding-top:5px;">
+    <table><tr><td>
+     <input id="search_input" type="text" placeholder="关键字搜索" name="name"  class="text_field span3" style="height:28px;">
+    </td><td>
+     <button type="submit" class="btn" onclick="members_search(<%= @list.id %>,$('#search_input').val());">名单搜索</button>
+    </td></tr><table>
+    </div>
+    
+    <div  style="padding:0px;">
+     <div id="form"></div>
+     <div id="sel_mes" class="stream-content" style="display: block;">
+          <!--发送活动外包装 -->
+    <table class="table table-striped">
+     <thead class="focus-thead">
+      <tr>
+        <th></th>
+        <th>名称</th>
+        <th>邮件地址</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <% @index = 1 if @members %>
+      <%= render @members if @members %>
+
+    </table>
+
+    <%= will_paginate @members, :inner_window => 2, :outer_window =>1, :prev_label => '上一页 ', :next_label => '下一页 ' %>
+
+        </div>
+
+    </div> 
+
+</div>
+
+<script>
+ function members_search(listid,keyword){
+  alert(keyword);
+  var strhost = window.location.host;
+  var strprotocol = window.location.protocol;
+  var strurl = strprotocol + "//" + strhost + "/lists/search"
+  alert(strurl);
+  showLoading();
+  $.ajax({
+   type: 'GET',
+   url: strurl,
+   data: {"listid":listid,"keyword":keyword},
+   contentType: 'multipart/form-data',
+   datatype: 'json',
+   success:function(data)
+   {
+    alert(data)
+    hideLoading();
+   },
+   error:function(xhr,r,e)
+   {
+    alert(e);
+    hideLoading();
+   }
+   });
+ }
+</script>
+

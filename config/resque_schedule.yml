@@ -1,0 +1,59 @@
+JobQQMvscp:
+  every: 5m
+  class: Job_QQ_mvscp
+  args: 
+  description: JobQQMvscp
+
+Job126Mvscp:
+  every: 5m
+  class: Job_126_mvscp
+  args: 
+  description: Job126Mvscp
+
+Job163Mvscp:
+  every: 5m
+  class: Job_163_mvscp
+  args: 
+  description: Job163Mvscp
+
+JobSinaMvscp:
+  every: 5m
+  class: Job_sina_mvscp
+  args: 
+  description: JobSinaMvscp
+
+JobSohuMvscp:
+  every: 5m
+  class: Job_sohu_mvscp
+  args: 
+  description: JobSohuMvscp
+
+JobTomMvscp:
+  every: 5m
+  class: Job_tom_mvscp
+  args: 
+  description: JobTomMvscp
+
+JobYahooMvscp:
+  every: 5m
+  class: Job_yahoo_mvscp
+  args: 
+  description: JobYahooMvscp
+
+JobGmailMvscp:
+  every: 5m
+  class: Job_gmail_mvscp
+  args: 
+  description: JobGmailMvscp
+
+JobHotmailMvscp:
+  every: 5m
+  class: Job_hotmail_mvscp
+  args: 
+  description: JobHotmailMvscp
+
+JobOtherMvscp:
+  every: 5m
+  class: Job_other_mvscp
+  args: 
+  description: JobOtherMvscp

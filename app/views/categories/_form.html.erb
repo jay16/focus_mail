@@ -1,0 +1,9 @@
+<%= hidden_field_tag 'org_id', @category.org_id %>
+<span>
+  <%= label_tag 'name', '列表名称', :class=>"hidden" %>
+  <%= text_field_tag 'name', @category.name, :class => 'text_field span3',:placeholder => "名单列表名称",:id=>"category_form_name" %>
+
+  <a class="btn" type="button" id="category_submit">新建列表</a>
+</span>
+
+

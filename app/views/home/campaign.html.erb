@@ -1,0 +1,262 @@
+
+<!--发送活动外包装 -->
+<script src="/assets/application.js" type="text/javascript"></script>
+<div class="stream-manager js-stream-manager-container">
+	<div class="js-stream-manager" id="profile-stream-manager">
+		<div class="stream-title">
+			
+		</div>
+		<div class="stream-container">
+			<div class="stream ">
+				<div class="js-stream-items stream-items" id="stream-items-id">
+					<table border="1"  bordercolor="#FFFFFF" width="100%">
+
+                                                <% if @cam_list.present? %>
+						<thead style="background: #B0ADD0">
+							<tr>
+								<td><font size="1">项次</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">数量</font></td>
+								<td><font size="1">百分比</font></td>
+							</tr>
+						</thead>
+						<tbody style="background: #E4E5F9">
+							<tr style="background: #CFC9F0">
+								<td colspan="3">总发信量</font></td>
+								<td><font size="1"><%= @cam_list.effective_operand_address%></font></td>
+								<td><font size="1">100%</font></td>
+							</tr>
+							<tr>
+								<td colspan="3">送达邮件</font></td>
+								<td><font size="1"><%= @cam_list.effective_operand_address %></font></td>
+								<td><font size="1"><%= ((@cam_list.effective_operand_address / @cam_list.total_address_number).round(2) * 100).to_i %>%</font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1">已开信</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"><%= @cam_list.open_number %></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">重复点击相同链接</font></td>
+								<td><font size="1"><%=@cam_list.click_many_count%></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">重复点击多个链接</font></td>
+								<td><font size="1"><%=@cam_list.click_many_counts%></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">仅点击单一链接</font></td>
+								<td><font size="1"><%=@cam_list.click_one_count%></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">开信次数</font></td>
+								<td><font size="1"><%=@cam_list.track_no_click_count%></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1">未开信</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"><%= @cam_list.effective_operand_address - @cam_list.open_number %></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">一周以上</font></td>
+								<td><font size="1"><%= @cam_list.sevenlast%></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">三天以上</font></td>
+								<td><font size="1"><%= @cam_list.threedaylast%></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">一天以上</font></td>
+								<td><font size="1"><%= @cam_list.onedaylast%></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">一天以内</font></td>
+								<td><font size="1"><%= @cam_list.oneday%></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">已转发</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">20,000</font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">转发后已点击</font></td>
+								<td><font size="1">5,000</font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">转发后未点击</font></td>
+								<td><font size="1">5,000</font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">转发后未开信</font></td>
+								<td><font size="1">10,000</font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1">开信后未点击</font></td>
+								<td><font size="1">90,000</font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td colspan="3"><font size="1">软弹邮件</font></td>
+								<td><font size="1">20,000</font></td>
+								<td><font size="1">2%</font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">空间已满</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">邮件过大</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">网络连接超时</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">垃圾邮件退回</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">重送过期</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">其他</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td colspan="3"><font size="1">硬弹邮件</font></td>
+								<td><font size="1">170,000</font></td>
+								<td><font size="1">17%</font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">域名解析错误</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">邮件域名不存在</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td colspan="3"><font size="1">账号错误</font></td>
+								<td><font size="1">200,000</font></td>
+								<td><font size="1">20%</font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">邮件后缀错误</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">邮件账号不存在</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td colspan="3"><font size="1">其他原因</font></td>
+								<td><font size="1">20,000</font></td>
+								<td><font size="1">2%</font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">暂时性弹回</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+							<tr style="display: none">
+								<td><font size="1"></font></td>
+								<td><font size="1">取消订阅</font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+								<td><font size="1"></font></td>
+							</tr>
+                                                </tbody>
+                                                <% else %>
+                                                        <tbody>
+                                                        <tr><td>该发送活动未发送邮件，暂无发送信息！</td></tr>
+                                                        </tbody>
+                                                <% end %>
+					</table>
+		  		</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	var strhost1 = window.location.host;
+	var strprotocol1 = window.location.protocol;
+	
+</script>

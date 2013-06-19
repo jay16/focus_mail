@@ -1,0 +1,7 @@
+readfile: /mailgates/mqueue/log/mgmailerd.log
+readzg: /mailgates/log_archive/
+sendmail: /mailgates/mqueue/wait/
+sendip: 210.14.76.206
+sendport: 80
+reply: adm@online-edm.com
+mgtest: /home/work/focus_mail/lib/gm_test/

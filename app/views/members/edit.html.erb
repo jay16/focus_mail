@@ -1,0 +1,144 @@
+<%= javascript_include_tag "application" %>
+<%= csrf_meta_tags %>
+<%= stylesheet_link_tag "application", :media => "all" %>
+
+    <style type="text/css">
+      /* Override some defaults */
+      html, body {
+        background-color: #C0DEED;
+        background-position: 0 261px;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        color: #333;
+      }
+      body {
+        padding-top: 0px; /* 40px to make the container go all the way to the bottom of the topbar */
+      }
+      .container-fluid {
+      	padding-right: 0px;
+        padding-left: 0px;
+      }
+      .container > footer p {
+        text-align: center; /* center align it with the container */
+      }
+      /* The white background content wrapper */
+      .container > .content {
+        background: rgba(218, 236, 244, 0.9);
+        padding: 0 0 0 0;
+        margin: 0; /* -20px;  negative indent the amount of the padding to maintain the grid system */
+        -webkit-border-radius: 5px 5px 6px 6px;
+           -moz-border-radius: 5px 5px 6px 6px;
+                border-radius: 5px 5px 6px 6px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.5);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.5);
+                box-shadow: 0 1px 2px rgba(0,0,0,.5);
+      }
+
+
+      .topbar .btn {
+        border: 0;
+      }
+
+    </style>
+
+	<div class="main-content" style="width:100%; height:1369px;">
+		<div class="page-header">
+		  <table style="width:100%"><tr><td><h2>修改名单</h2></td>
+		  	<td style="float:right">
+		  	  <div style="float:right">
+              </div>
+		  	</td></tr></table>
+
+
+        </div>
+    <div  style="padding: 20px 20px 20px 20px">
+        <div id="form"></div>
+        <div id="sel_mes" class="stream-content" style="display: block;">
+          <!--发送活动外包装 -->
+<%= render 'form' %>
+        </div>
+
+    </div> 
+
+</div>
+<!--   dashboard end   --> 
+<!--   details pane   --> 
+<div id="details-pane-outer">
+	<div class="details-pane-shell">
+		<div class="details-pane" id="details-pane" style="display: none; height: 585px; width: 415px; left: 530px; margin-top: 15px; -webkit-transition-property: none; ">
+			<div class="inner-pane active">
+				<div class="pane-toolbar pane-built-in">
+					<a class="pane-close toolbar-control " rel="pane_close" href="javascript:void(0)">
+						关闭 <span>×</span>
+					</a>
+					<br style="clear: both">
+				</div>
+				<div id="pane-load" style="overflow-y:scroll; ">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--   details pane  end --> 
+<script type="text/javascript">
+	$(function () {
+   		$("a[rel=pane_close]").click(function(e) {
+   			$("#details-pane").css("display","none");
+     	})
+	});
+</script>
+<script type="text/javascript">
+	var strhost = window.location.host;
+	var strprotocol = window.location.protocol;
+	
+	$(document).ready(function(){
+		$("#details-pane").css("height",$(window).height() - 70);
+		// 点击显示Pane_detail
+		//$(".stream-item-content").click(function(e) {
+		//    open_cam_pane($(this).attr("id").substring(2));
+		//})
+	});
+	function showpane(){
+		showLoading();
+		$("#details-pane").css("display","block");
+	    $(document).ready(function(){
+	    	$("#details-pane").css("height",$(window).height() - 70);
+		});
+	}	
+
+	function open_cam_pane(cam_id){
+		showpane();
+		var strurl = strprotocol + "//" + strhost + "/home/campaign";
+	   	$.ajax({
+			type: 'GET',
+		    url: strurl,
+		    data: {"cam_id":cam_id},
+		    contentType: 'multipart/form-data',
+		    datatype: 'json',
+		    success:function(data)
+		    {
+		    	//alert(data);
+		    	$("#pane-load").html(data);
+		    	hideLoading();
+		    },
+		    error:function(xhr,r,e)
+		    {
+		    	alert(e);
+		    	hideLoading();
+		    }
+		  });
+	}
+
+	//<!--   发送活动  search --> 
+	function start_search(f){
+		showLoading();
+		//var txtq = $("#str_month").val();
+		var strhost = window.location.host;
+		var strprotocol = window.location.protocol;
+		var strurl = strprotocol + "//" + strhost + "/home?f=" + f;
+		//alert(strurl);
+	    window.open(strurl,'_self');
+	};
+	//<!--   发送活动  search end -->
+</script>
+

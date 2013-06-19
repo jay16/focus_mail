@@ -1,0 +1,6 @@
+//window.location.reload();
+//$('#list_member').attr("src","/lists/<%= session[:list_id] %>/members");
+
+$("#orglist<%= params[:id] %>").html("<%= @lupdate.name %>");
+$('#orglist<%= params[:id] %>').css('display','block'); 
+$("#editlist<%= params[:id] %>").addClass('hidden');

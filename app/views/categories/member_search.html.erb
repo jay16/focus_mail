@@ -1,0 +1,33 @@
+<%= javascript_include_tag "application" %>
+<%= csrf_meta_tags %>
+<%= stylesheet_link_tag "application", :media => "all" %>
+<%= stylesheet_link_tag "focusmore" %>
+<style>
+body{
+ padding: 0px;
+ -webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;
+ margin:0px;
+}
+</style>
+
+ <div style="border: solid 2px lightgray;-moz-border-radius:10px; border-radius:10px;margin:3px 0 3px 10px;padding-top:10px;width:350px;height:25px;">
+     <span style="float:left;margin-left:5px;">搜索关键字:[<span style="color:green;"><%= @keyword.length>15 ? "#{@keyword[0..15]}..." : @keyword %></span>] 结果: [<span style="color:green;"><%= @members.count %></span>]条</span>
+ </div>
+ <!--搜索 结果列表-->
+ <table class="table table-striped" style="margin-left:0px;">
+  <thead class="focus-thead">
+   <tr>
+     <th style="width:15%;">序号</th>
+     <th style="width:30%;">名称</th>
+     <th style="width:40%;">邮件地址</th>
+     <th style="width:15%;">操作</th>
+   </tr>
+   </thead>
+   <% @index = params[:page].to_i >= 1 ? ((params[:page].to_i - 1) * params[:per_page ].to_i + 1 ) : 1 %>
+   <%= render @members if @members %>
+ </table>
+
+ <div class="focus-center">
+   <%= will_paginate @members,:inner_window => 0,:outer_window => 0,:previous_label => '上一页 ', :next_label => '下一页 ' %>
+ </div>
+</div>

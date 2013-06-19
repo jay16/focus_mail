@@ -1,0 +1,71 @@
+<%= form_for @template, remote: true, :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
+  <fieldset>
+    <%= render :partial => "common/form_error", :locals => { model: @template } %>
+    <%= f.hidden_field :org_id %>
+    <%= f.hidden_field :fname %>
+
+   <div style="height:350px;"> 
+      <%= f.label :name, "模板名称：" %>      
+      <%= f.text_field :name, :class => 'span4', :placeholder => '模板名称' %>
+    <div class="control-group" id="htmlsource">     
+      <%= f.label :source, "网页源码：" %>
+        <%= f.text_area :source, :class => 'text_area span4', :rows => 10, :disabled => (@template.id != nil),
+        :placeholder => "邮件模板网页源代码写在这里..." %>
+    </div>
+    <div class=" hidden" id="zipfile">
+     <%= f.label :zip_url, "附件样板："%>
+        <%= f.file_field :zip_url, :class => 'text_field' %>
+    </div>
+    
+    <div class="control-group">
+     <table>
+      <tr>
+       <td>
+        <%= button_tag "zip上传", :type => 'button', :class => 'btn btn-mini', :id => 'fjzip', :disabled => (@template.id != nil) %>
+       </td>
+       <td>
+       <a class="focus-link">点击这里下载zip档范例，以及规范说明</a>
+       </td>
+      </tr>
+    </table>
+     
+    </div>
+   </div>
+
+   <div id="template_form">
+      <%= f.submit "保存", :class => 'btn', :style=>"display:none;",:id=>"template_submit" %>
+      <a id="template_submit_trigger" class="btn">保存</a>
+      <%= link_to '重置', new_template_path, :class => 'btn', remote: true ,:style=> "color:black;",:id=>"template_form_reset"%>
+  </div>
+
+  </fieldset>
+<% end %>
+
+<script>
+ //此处script必须在_form.html.erb中，因为reset后，会重新加载_form,对提交按钮的操作会失败
+  //新建模板，提交按钮
+ $("#template_submit_trigger").click(function(){
+  var name = $.trim($("#template_name").val());
+  var source = $.trim($("#template_source").val());
+  var zip = $.trim($("#template_zip_url").val());
+  var errInfo = "模板创建失败：\n原因：\n";
+  var canCreate = true;
+  if(name.length==0){
+    errInfo = errInfo + "模板名称为空\n";
+    canCreate = false;
+  }
+  if(source.length==0&&zip.length==0){
+    errInfo = errInfo + "网页源代码为空并且zip文件没有上传\n";
+    canCreate = false;
+  }
+  
+  if(canCreate==false)
+   alert(errInfo);
+  else{
+   $("#template_submit").trigger("click");
+   showLoading('保存中...');
+   $('#template_form a').addClass('disabled');
+  }
+ });
+</script>
+

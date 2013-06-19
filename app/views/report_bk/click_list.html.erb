@@ -1,0 +1,37 @@
+<div id="report_title" style="margin-bottom: 20px">
+		<h2 style="display:inline"> <%= @clicks[0].CampaignName %>点击用户名单： </h2>
+		<div style="float:right">
+				  <a onclick="$('#click_form').fadeOut().html('');" class='btn btn-primary'>导出</a>
+				</div>
+</div>
+
+<table class="table table-striped" id="campaigns">
+  <thead>
+    <tr>
+      <th>MemName</th>
+      <th>MemEmail</th>
+      <th>ClickUrl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @clicks.each do |click| %>
+      <tr>
+        <td><%= click.MemName  %></td>
+        <td><%= click.MemEmail %></td>
+        <td><%= click.LinkUrl %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @clicks, :render => 'WillPaginate::LinkRender' %>
+
+<script>
+$(function() {
+  $(".pagination a").live("click", function() {
+    $(".pagination").html("data is loading...");
+    $.get(this.href, null, null, "script");
+    return false;
+  });
+});
+</script>
