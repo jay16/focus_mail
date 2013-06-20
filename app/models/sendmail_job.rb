@@ -46,8 +46,8 @@ class Sendmail_Job
     
     #生成位置 - base_dir/org_name/campaign_id/+email_domain+
     #此处为共用地址 base_dir/org_name/campaign_id
-    filepath = readfile["sendmail"].to_s
-    filepath = File.join(filepath,user_org_name,id.to_s)
+    basepath = readfile["sendmail"].to_s
+    basepath = File.join(basepath,user_org_name,id.to_s)
     
     for i in 0...1 do
       if members.count > 0 then
@@ -62,7 +62,7 @@ class Sendmail_Job
             domain_str = find_toemailname(to_email_downcase)
             #生成位置 - base_dir/org_name/campaign_id/email_domain
             #生成信文本信息在FocusMail::TemplateEmail中操作
-            filepath   = File.join(filepath,domain_str)
+            filepath   = File.join(basepath,domain_str)
             
             to_name    = members[0].name
             sl = Smtplist.offset(slid).limit(1).first
@@ -96,7 +96,7 @@ class Sendmail_Job
   
               #生成位置 - base_dir/org_name/campaign_id/email_domain
               #生成信文本信息在FocusMail::TemplateEmail中操作
-              filepath = File.join(filepath,domain_str)
+              filepath = File.join(basepath,domain_str)
               FileUtils.mkdir_p(filepath) unless File.exist?(filepath)
               
               to_name = m.name
