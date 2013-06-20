@@ -2,7 +2,11 @@
 *.class
 *.pyc
 *.pyo
-=======
+*.out
+*~
+*.lock
+======
+/lib/emails
 /.bundle
 /db/*.sqlite3
 /log/*.log
