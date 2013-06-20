@@ -35,13 +35,3 @@ Go to `http://localhost:3000/resque/` to see Resque status.
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
-
-    					<%#= high_chart("chart" + @c_summery[:id].to_s , @c_summery[:pie]) %>
-		      					<%#= image_tag("/images/2nd/pix01.gif",:style=>"width:90%;height:90%;",:alt => "Chart") %>
-		      					 <div class="top" style="width:100px;height:100px;background:url(/images/2nd/loudou.png);background-position: -13px -9px;">
-                <div class="logo" style="padding:2px 0 0 10px;">总数: <%=h @c_summery[:isGetData] ? @c_summery[:send_totle] : "" %></div>
-                <div class="logo" style="padding:8px 0 0 20px;">送达: <%=h @c_summery[:isGetData] ? @c_summery[:send_reach] : "" %></div>
-                <div class="logo" style="padding:8px 0 0 30px;">打开: <%=h @c_summery[:isGetData] ? @c_summery[:open_num] : "" %></div>
-                <div class="logo" style="padding:8px 0 0 35px;">点击: <%=h @c_summery[:isGetData] ? @c_summery[:click_num] : "" %></div>     
-              </div>
