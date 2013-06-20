@@ -11,14 +11,15 @@ class Sendmail_Job
   @queue = "job_mail_producer"
   def self.perform(id,user_id)
     user_org_id,user_org_name = FocusMail::ListUserorg::userorg(user_id)
-    @campaign = Campaign.find(id.to_i)
-    from_name = @campaign.from_name
-    from_email = @campaign.from_email
-    from = from_name.present? ? %{"#{from_name}" <#{from_email}>} : from_email
-    subject = @campaign.subject
-    template_name = @campaign.template.file_name
+    @campaign        = Campaign.find(id.to_i)
+    from_name        = @campaign.from_name
+    from_email       = @campaign.from_email
+    from             = from_name.present? ? %{"#{from_name}" <#{from_email}>} : from_email
+    subjects         = @campaign.subject.split("|$$|")
+    subject_num      = subjects.length
+    template_name    = @campaign.template.file_name
     template_img_url = @campaign.template.img_url
-    
+
     memberarray = Array.new
     @campaign.lists.collect(&:members).flatten.each do |member|
       typeemails = [1,4,5]
@@ -32,31 +33,38 @@ class Sendmail_Job
     readfile = YAML.load_file('config/readfile.yml')
 
     slnum = Smtplist.count(:conditions => "domain like '%163%'")
-    #ips = ["210.14.76.206","210.14.76.208","3524152526","3524152528","m3.intfocus.com","m4.intfocus.com","m7.intfocus.com","m8.intfocus.com"]
     ips = readfile["ips"].to_s.split(",")
     strdomain = ["intfocus.com","stnc.cn","online-edm.com"]
-    slid = 0
-    ipid = 0
-    domainid = 0
-    slen = ""
-    slpwd = ""
-    ipstr = ""
+    
+    slid      = 0
+    ipid      = 0
+    domainid  = 0
+    slen      = ""
+    slpwd     = ""
+    ipstr     = ""
     domainstr = ""
-
+    
+    #生成位置 - base_dir/org_name/campaign_id/+email_domain+
+    #此处为共用地址 base_dir/org_name/campaign_id
+    filepath = readfile["sendmail"].to_s
+    filepath = File.join(filepath,user_org_name,id.to_s)
+    
     for i in 0...1 do
       if members.count > 0 then
         if members.count == 1 then
-          to_email = members[0].email          
+          to_email = members[0].email
+          subject  = subjects[0]    
           #检测邮箱地址
           if to_email.split("@").length == 2  
+            
             to_email_downcase = to_email.split("@")[1].downcase
-            
             #重用查找对应邮箱域名的文件夹名的代码
-            filename = find_toemailname(to_email_downcase)
+            domain_str = find_toemailname(to_email_downcase)
+            #生成位置 - base_dir/org_name/campaign_id/email_domain
+            #生成信文本信息在FocusMail::TemplateEmail中操作
+            filepath   = File.join(filepath,domain_str)
             
-            filepath = readfile["sendmail"].to_s + filename
-            FileUtils.mkdir(filepath) unless File.exist?(filepath)
-            to_name = members[0].name
+            to_name    = members[0].name
             sl = Smtplist.offset(slid).limit(1).first
             begin
               email_smtp = sl.email_smtp
@@ -67,9 +75,6 @@ class Sendmail_Job
               email_pwd = sl.email_pwd
               domainstr = strdomain[1]
               ipstr = ips[0]
-
-              #使用nohup运行resque，puts会写在nohup.out
-              puts "#{index}-to_emai-"+to_email+"-"+ipstr
                 
               FocusMail::TemplateEmail.email_with_template_job(from_email, from, to_email, to_name, members[0].id, subject, @campaign.id, @campaign.template.id, @campaign.template.img_url,user_id,email_smtp,email_port,email_domain,login_name,email_pwd,email_name,ipstr,domainstr,filepath)
             rescue
@@ -80,18 +85,20 @@ class Sendmail_Job
           end
         else
           members.each_with_index do |m,index|
+            subject  = subjects[index%subject_num]
             to_email = m.email
-
             #检测邮箱地址
             if to_email.split("@").length == 2  
               to_email_downcase = to_email.split("@")[1].downcase
-                          
+
               #重用查找对应邮箱域名的文件夹名的代码
-              filename = find_toemailname(to_email_downcase)
-              
-              readfile = YAML.load_file('config/readfile.yml')
-              filepath = File.join(readfile["sendmail"].to_s,user_org_name,id,filename)
+              domain_str = find_toemailname(to_email_downcase)
+  
+              #生成位置 - base_dir/org_name/campaign_id/email_domain
+              #生成信文本信息在FocusMail::TemplateEmail中操作
+              filepath = File.join(filepath,domain_str)
               FileUtils.mkdir_p(filepath) unless File.exist?(filepath)
+              
               to_name = m.name
               if slid < slnum then
                 sl = Smtplist.where(["domain like :d", {:d => "%163%"} ]).offset(slid).limit(1).first
@@ -123,9 +130,6 @@ class Sendmail_Job
                 login_name   =   sl.login_name
                 email_name   =   sl.email_name
                 email_pwd    =   sl.email_pwd
-                
-                #使用nohup运行resque，puts会写在nohup.out
-                puts "#{index}-to_emai-"+to_email+"-"+ipstr
                             
                 FocusMail::TemplateEmail.email_with_template_job(from_email, from, to_email, to_name, m.id, subject, @campaign.id, @campaign.template.id, @campaign.template.img_url,user_id,email_smtp,email_port,email_domain,login_name,email_pwd,email_name,ipstr,domainstr,filepath)
             end

@@ -11,6 +11,7 @@ class Campaign < ActiveRecord::Base
 
   validates_presence_of :name, :template_id, :from_email, :from_name, :subject
 
+  
   after_save :save_entry
   def save_entry
     if self.entry

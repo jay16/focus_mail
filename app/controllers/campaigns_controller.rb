@@ -1,15 +1,10 @@
 #encoding : utf-8
 require 'resque'
 require 'mail'
-rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
-Dir[File.join(rails_root,'app','jobs','*.rb')].each { |file| require file }
+
 class CampaignsController < ApplicationController
   # GET /campaigns
   # GET /campaigns.json
-  def test_job
-    Sendmail_Job(140,current_user.id)
-    render :text => "sendmail job"
-  end
   
   def index
     require 'will_paginate/array'

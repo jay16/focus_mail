@@ -128,7 +128,9 @@
 $(function(){
  //此处script必须在_form.html.erb中，因为reset后，会重新加载_form,对提交按钮的操作会失败
  //新建模板，提交按钮
- $("#campaign_form_submit").click(function(){
+ $("#campaign_form_submit").click(function(event){
+   event.preventDefault();
+   
    var subject = $.trim($("#campaign_subject").val());
    var from_name = $.trim($("#campaign_from_name").val());
    var from_email = $.trim($("#campaign_from_email").val());
@@ -160,29 +162,29 @@ $(function(){
      canCreate = false;
    }
 
-   if(canCreate == false)
+   //合并多主题
+    var inputs = $("input[type=text][name=add_campaign_subject]");
+    if(inputs.length > 0){
+      tt_array = new Array();
+      inputs.each(function(){
+        $input = $(this);
+        var tt = $.trim($input.val());
+        if(tt.length>0){
+         tt_array.push(tt);
+        }
+      });
+      var new_subjects = tt_array.join("|$$|");
+      $("#campaign_subject").val(subject+"|$$|"+new_subjects);
+    }
+    
+   if(canCreate == false){
     alert(errInfo);
-   else{
+    return false
+   }else{
     $(this).submit();
-    //合并多主题
-     var inputs = $("input[type=text][name=add_campaign_subject]");
-     alert(inputs.length);
-     if(inputs.length > 0){
-       tt_array = new Array();
-       inputs.each(function(){
-         $input = $(this);
-         var tt = $.trim($input.val());
-         if(tt.length>0){
-          tt_array.push(tt);
-         }
-       });
-       var new_subjects = tt_array.join("|$$|");
-       alert(new_subjects);
-       $("#campaign_subject").val(subject+"|$$|"+new_subjects);
-     }
-   
-    showLoading('保存中...');
+    ading('保存中...');
     $('#campaign_form a').addClass('disabled');
+    return true
    }
  });
  

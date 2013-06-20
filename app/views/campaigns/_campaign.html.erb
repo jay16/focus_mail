@@ -115,9 +115,12 @@
          <label for="subject">收件人:
          <%= text_field_tag :subject, nil, :disabled => true ,:class => 'span4' , :placeholder => "#{list_str}"%>
          </label>
-         <label for="subject">主&nbsp;&nbsp;&nbsp;题:
-        <%= text_field_tag :from_email,nil,:disabled => true, :class => 'span4',:placeholder => "#{campaign.subject}" %>
-         </label>
+         <% campaign.subject.split("|$$|").each_with_index do |subject,index| %>
+           <label for="subject">主&nbsp;&nbsp;&nbsp;题<%= index > 0 ? (index+1) : '' %>:
+            <%= text_field_tag :from_email,nil,:disabled => true, :class => 'span4',:placeholder => "#{subject}" %>
+           </label>
+         <% end %>
+         
          <label for="subject">模&nbsp;&nbsp;&nbsp;板:
         <%= text_field_tag :from_email,nil,:disabled => true, :class => 'span4',:placeholder => "#{campaign.template.try(:name)}" %>
          </label>

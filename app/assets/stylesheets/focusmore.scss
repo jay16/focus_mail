@@ -359,6 +359,28 @@ textarea {
   cursor: pointer;
   background-color: transparent;
 }
+//名单有效性
+.focus-icon.member-valid-icon{
+  background-position: -72px -96px;
+}
+.focus-icon.member-valid-icon:hover{
+  cursor: pointer;
+  background-color: transparent;
+}
+.focus-icon.member-unvalid-icon{
+  background-position: -48px -96px;
+}
+.focus-icon.member-unvalid-icon:hover{
+  cursor: pointer;
+  background-color: transparent;
+}
+.focus-icon.member-warnning-icon{
+  background-position: -24px -96px;
+}
+.focus-icon.member-warnning-icon:hover{
+  cursor: pointer;
+  background-color: transparent;
+}
 //首页数据显示面板
 .databoard{
    visibility: visible;
