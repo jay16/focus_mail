@@ -1,0 +1,42 @@
+--- 
+sohu.com: 
+  :is_valid: 1
+  :update: 1374472397
+  :strftime: 13-07-22 13:53:17
+  :mx: 
+  - :preference: 5
+    :exchange: sohumx2.sohu.com
+  - :preference: 10
+    :exchange: sohumx.h.a.sohu.com
+  - :preference: 5
+    :exchange: sohumx1.sohu.com
+sohu.cm: 
+  :is_valid: 1
+  :update: 1374475760
+  :strftime: 13-07-22 14:49:20
+  :mx: 
+  - :preference: 10
+    :exchange: mail.sohu.cm
+sohu.net: 
+  :is_valid: 1
+  :update: 1374476944
+  :strftime: 13-07-22 15:09:04
+  :mx: 
+  - :preference: 10
+    :exchange: mx.mail.sohu.net
+vip.sohu.com: 
+  :is_valid: 1
+  :update: 1374481081
+  :strftime: 13-07-22 16:18:01
+  :mx: 
+  - :preference: 10
+    :exchange: mx.vip.sohu.com
+vip.sohu.net: 
+  :is_valid: 1
+  :update: 1374481117
+  :strftime: 13-07-22 16:18:37
+  :mx: 
+  - :preference: 0
+    :exchange: mx.vip.sohu.net
+  - :preference: 10
+    :exchange: mx.vip.sohu.net

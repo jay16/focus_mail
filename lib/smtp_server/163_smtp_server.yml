@@ -1,0 +1,30 @@
+--- 
+163.com: 
+  :is_valid: 1
+  :update: 1374472398
+  :strftime: 13-07-22 13:53:18
+  :mx: 
+  - :preference: 10
+    :exchange: 163mx01.mxmail.netease.com
+  - :preference: 10
+    :exchange: 163mx02.mxmail.netease.com
+  - :preference: 10
+    :exchange: 163mx03.mxmail.netease.com
+  - :preference: 50
+    :exchange: 163mx00.mxmail.netease.com
+vip.163.com: 
+  :is_valid: 1
+  :update: 1374481082
+  :strftime: 13-07-22 16:18:02
+  :mx: 
+  - :preference: 10
+    :exchange: vip163mx01.mxmail.netease.com
+  - :preference: 50
+    :exchange: vip163mx00.mxmail.netease.com
+sh163.net: 
+  :is_valid: 1
+  :update: 1374485958
+  :strftime: 13-07-22 17:39:18
+  :mx: 
+  - :preference: 10
+    :exchange: mx.sh163.net

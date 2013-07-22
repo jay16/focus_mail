@@ -1,5 +1,9 @@
 require 'zip/zip'
 require 'zip/zipfilesystem'
+require 'uri'
+require 'nokogiri'
+require 'cgi'
+
 class Template < ActiveRecord::Base
   after_create :dog_logger
   attr_accessible :file_name, :name,:img_url, :source, :zip_url, :zip_name, :org_id, :user_email, :grade, :fname
@@ -45,15 +49,15 @@ class Template < ActiveRecord::Base
   
   @astr = "nil"
 
-  #处理直接贴html代码
   def source= (val)
-    if val != "" && val != nil then   
-      
-      #分析html代码，读取href,image地址 
-      val = deal_html(val)
-      
+    #p Rails.configuration.splitor_start
+    #p Rails.configuration.splitor_end
+    if val != "" && val != nil then    
+
+       #分析html代码，读取href,image地址 
+       val = deal_html(val) 
+
       File.open(Rails.root.join("lib/emails", "#{self.fname}.html.erb"), 'wb'){ |f| f.write(val) }
-      #puts @astr
       else
         File.open(Rails.root.join("lib/emails", "#{self.fname}.html.erb"), 'wb')
     end
@@ -89,7 +93,7 @@ class Template < ActiveRecord::Base
         end
         if FileTest::exist?(File.join(zipfile_path, "index.html")) then
           val = File.open(File.join(zipfile_path, "index.html")).read
-          
+
           #分析html代码，读取href,image地址 
           val = deal_html(val) 
 
@@ -112,82 +116,67 @@ class Template < ActiveRecord::Base
     #修改上传文件的权限
     #system 'chown -R webmail:webmail /home/work/focus_mail/public/files'
   end
-  
-  #分析html代码，读取href,image地址
+
+#分析html代码，读取href,image地址
   #zip上传、html代码共用代码
   def deal_html(val)
-    val = val.gsub(/Dear \$\|NAME\|\$ <br\/>/, "")
-    val = val.gsub(/from \$\|EMAIL\|\$ <br\/>/, "")
+    #allow to use $|.|$ in template source code
+    #val = val.gsub(/Dear \$\|NAME\|\$ <br\/>/, "")
+    #val = val.gsub(/from \$\|EMAIL\|\$ <br\/>/, "")
 
     val = val.chomp.strip
-    #if(val.include? "$|")
-    #  val = val.lstrip 
-    #else
-    if val then
-      #hval : href val 
-      #ival : image val
-      hval = val.scan(/<a[^>]*?href=(['"\s]?)(([^'"\s])*)[^>]*?>/)
-      hval += val.scan(/<a[^>]*?HREF=(['"\s]?)(([^'"\s])*)[^>]*?>/)
-      hval += val.scan(/<A[^>]*?href=(['"\s]?)(([^'"\s])*)[^>]*?>/)
-      hval += val.scan(/<A[^>]*?HREF=(['"\s]?)(([^'"\s])*)[^>]*?>/)
-      iival = val.scan(/<img[^>]*?src=(['"\s]?)(([^'"\s])*)[^>]*?>/)
-      iival += val.scan(/<img[^>]*?SRC=(['"\s]?)(([^'"\s])*)[^>]*?>/)
-      iival += val.scan(/<IMG[^>]*?src=(['"\s]?)(([^'"\s])*)[^>]*?>/)
-      iival += val.scan(/<IMG[^>]*?SRC=(['"\s]?)(([^'"\s])*)[^>]*?>/)
+    return val unless val
+    
+    @astr = Array.new(){Array.new(2,0)}
+    @gi = 0
+    #hval : href val #ival : image val
+    hval = Array.new
+    ival = Array.new
+    
+    doc = Nokogiri::HTML(val)
+    doc.css("img").each_with_index do |img, index|
+      img_src = img.attr("src")
+      #image src以http或https开头不存入库，跳过
+     #不在此处过滤，会虚增@astr空间
+      next if %r{^(http|https)://(.*)}.match(img_src)
       
-      ival = Array.new
-      hh   = Array.new
-      iival.each do |i1|
-       #image src以http或https开头不存入库，跳过
-       #不在此处过滤，会虚增@astr空间
-       hh.push(i1) if %r{^(http|https)://(.*)}.match(i1[1])
+      ival.push(img_src)
+      img["src"] = "$|img#{@gi}|$"
+      if img_src != "" && img_src != nil then
+          srcs     = img_src.split("/")
+          img_src  = srcs[srcs.length-1]
       end
-      
-      ival = iival - hh
-      
-      num = hval.length+ival.length
-      @astr = Array.new(num){Array.new(2,0)}
-
-      #href image的index坐标
-      @m = 0
-      #href部分
-      hvala = Array.new()
-      hval.each do |hl|
-        hvala.push hl[1]
-      end
-      hvala = hvala.sort.reverse
-      slist = hvala.clone  
-      for i in 0..(slist.length - 1)
-        for j in 0..(slist.length - i - 2)
-          if ( slist[j + 1].size <=> slist[j].size ) == -1
-            slist[j], slist[j + 1] = slist[j + 1], slist[j]
-          end
-        end
-      end
-      #html部分
-      num = slist.length-1
-      for n in 0..num
-        val = val.gsub(Regexp.new(slist[num-n].to_s.gsub(/\?/,'\?').gsub(/\$/,'\$')), "$|href" + @m.to_s + "|$")
-        @astr[@m][0] = "href" + @m.to_s
-        @astr[@m][1] = slist[num-n].to_s
-        @m += 1
-      end
-      #img部分
-      ival.each do |i1|
-        val = val.gsub(Regexp.new(i1[1]), "$|img" + @m.to_s + "|$")
-        @astr[@m][0] = "img" + @m.to_s
-        urlimg = i1[1].to_s
-        if urlimg != "" && urlimg != nil then
-          urlimgs = urlimg.split("/")
-          uinum = urlimgs.length
-          urlimg = urlimgs[uinum-1]
-        end
-        @astr[@m][1] = urlimg.to_s
-        @m += 1
-
-      end
-      val = val.lstrip 
+      @astr[@gi] = ["img#{@gi}",img_src]
+      @gi += 1
     end
+    
+    doc.css("a").each_with_index do |hyper, index|
+      hyper_href = hyper.attr("href")
+      unsub_url = "http://220.248.30.60/unsubscribe".gsub("/","\/")
+      
+      uri = URI.parse(hyper_href)
+      if uri.scheme then
+        #为每个Href添加l=timestamp进行唯一标识
+        #to_i精确到秒s,同一秒处理的链接也有重合
+        hyper_href << (uri.query ? "&" : "?" )
+        hyper_href << "l=#{Time.now.to_i}#{index}"
+      else
+        hyper_href = "javascript:void(0);l=#{Time.now.to_i}#{index}"
+      end
+      #新拼接的href写回源代码
+      #退订链接特殊处理：数据库仅存链接，模板上保留?cid=$|CID|$&email=$|EMAIL|$
+      if hyper_href =~ /#{unsub_url}/ then
+        hyper["href"] = "$|href#{@gi}|$&cid=$|CID|$&email=$|EMAIL|$"
+      else
+        hyper["href"] = "$|href#{@gi}|$"
+      end
+      hval.push(hyper_href)
+      @astr[@gi] = ["href#{@gi}",hyper_href]
+      @gi += 1
+    end
+    
+
+   return CGI.unescape(doc.to_s)
   end
-  
+
 end

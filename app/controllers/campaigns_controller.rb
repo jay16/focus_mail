@@ -254,6 +254,14 @@ class CampaignsController < ApplicationController
   end
   
   def mailtest
+    campaign_id = params[:id]
+    test_emails = params[:emails]
+    user_id     = current_user.id
+    FocusAgent::InnerTest.perform(test_emails.uniq,campaign_id,user_id)
+    
+  end
+  #旧测试信代码 
+  def mailtest_bk
     @campaign = Campaign.find(params[:id])
     from_name = @campaign.from_name
     from_email = @campaign.from_email
@@ -272,6 +280,15 @@ class CampaignsController < ApplicationController
   def deliver
     Resque.enqueue(Sendmail_Job, params[:id], current_user.id)
     user_action_log(params[:id],params[:controller],"deliver")
+  end
+  
+  def record
+    campaign_id = params[:campaign_id]
+    @record = FocusServer.where("campaign_id = #{campaign_id}").order("created_at desc").first
+    
+    respond_to do |format|
+      format.js
+    end
   end
 
   def template_entries

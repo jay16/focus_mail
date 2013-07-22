@@ -31,6 +31,8 @@ zh-CN:
       blank: '密码为空.'
   devise:
     failure:
+      user:
+        not_found_in_database: '该用户不存在'
       already_authenticated: '您已经登录.'
       unauthenticated: '继续操作前请注册或者登录.'
       unconfirmed: '继续操作前请先激活您的帐号.'

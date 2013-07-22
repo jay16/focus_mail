@@ -8,7 +8,10 @@
 							    <span class="" style="color:#963EBA;">
 							     <%= campaign.name %>
 							    </span>
-						 	</div>
+							    <span class="" style="float:right">
+            <%= link_to "record",campaigns_record_path(campaign.id),:remote => true %>
+           </span>
+						   	</div>
 							<div class="tweet-row">
 							 <div>
            活动主题:
@@ -46,18 +49,46 @@
            </div>
 							</div>
 							<div class="tweet-row" >
-							 <!--手工发送-->
-							 <%= link_to '发送', "#deliver_sure_#{campaign.id}", :class => 'btn btn-mini', :"data-toggle" => "modal",:style => "color: black; display:#{(is_deliver == false and campaign.from_time == nil) ? '' : 'none'}" %>
-				  		<!--预约发送-->
-				  		<%= link_to '发送', nil , :class => "btn btn-mini", :remote => true, :onclick => "alert('已设定预约时间,若要手工发送请修改发送设置！');",:href => 'javascript:void(0);',
-				  		  :style => "color: black; display:#{(is_deliver == false and campaign.from_time != nil) ? '' : 'none'}" , :disabled =>"disabled" %>
-						   <%= link_to '修改', edit_campaign_path(campaign), :class => 'btn btn-mini', :remote => true, :style => "color: black;display:#{is_deliver ? 'none' : ''}",:onclick=>"showLoading('数据加载中');" %>
-							  <%= link_to '删除', campaign_path(campaign), :method => :delete,
-						        :confirm => '不可恢复，确定要删除吗?', :class => 'btn btn-mini', :remote => true, :style => "color: black;display:#{is_deliver ? 'none' : ''}"%>
-         <%= link_to '发送测试', "#mailtest_#{campaign.id}", :class => 'btn btn-mini', :"data-toggle" => "modal", :remote => true,:style => "display:#{is_deliver ? 'none' : ''}" %>
-         <%= link_to '复制', copies_campaign_path(campaign.id), :class => "btn btn-mini", :remote => true %>
-         
-         <button onclick = "campaign_report(<%= campaign.id%>)" class = 'btn btn-mini', style="color: black;; display:<%= is_deliver ? '' : 'none' %>">发送报告</button>
+							 <% if is_deliver %>
+							     <div class="btn-toolbar">
+							        <div class="btn-group">
+                  <%= link_to '复制', copies_campaign_path(campaign.id), :class => "btn btn-mini", :style=>"border-radius: 4px;", :remote => true %>
+                  <button onclick = "campaign_report(<%= campaign.id%>)" class = 'btn btn-mini', style="color: black;margin-left:7px;border-radius: 4px;">发送报告</button>
+      					     </div>
+      					     <% if is_super == 1 then %>
+    					       <div class="btn-group">
+                   <a data-toggle="dropdown" href="javascript:void(0);" class="btn btn-mini dropdown-toggle" >
+                                                        管理
+                     <span class="caret"></span>
+                   </a>
+                   <ul class="dropdown-menu" style="min-width: 50px;">
+                      <li>
+                        <%= link_to '编辑', edit_campaign_path(campaign), :remote => true, :style => "color: black;",:onclick=>"showLoading('数据加载中');" %>
+                      </li>
+                      <li>
+                        <%= link_to '发送', "#deliver_sure_#{campaign.id}", :"data-toggle" => "modal",:style => "color: black;" %>
+                      </li>
+                      <li>
+                        <%= link_to '发送测试', "#mailtest_#{campaign.id}", :"data-toggle" => "modal", :remote => true %>
+                      </li>
+                   </ul>
+                </div>
+                <% end %>
+             </div>
+            
+					  	<% else %>
+            <!--手工发送-->
+            <%= link_to '发送', "#deliver_sure_#{campaign.id}", :class => 'btn btn-mini', :"data-toggle" => "modal",:style => "color: black; display:#{(is_deliver == false and campaign.from_time == nil) ? '' : 'none'}" %>
+            <!--预约发送-->
+            <%= link_to '发送', nil , :class => "btn btn-mini", :remote => true, :onclick => "alert('已设定预约时间,若要手工发送请修改发送设置！');",:href => 'javascript:void(0);',
+              :style => "color: black; display:#{(is_deliver == false and campaign.from_time != nil) ? '' : 'none'}" , :disabled =>"disabled" %>
+             <%= link_to '修改', edit_campaign_path(campaign), :class => 'btn btn-mini', :remote => true, :style => "color: black;display:#{is_deliver ? 'none' : ''}",:onclick=>"showLoading('数据加载中');" %>
+             <%= link_to '删除', campaign_path(campaign), :method => :delete,
+                  :confirm => '不可恢复，确定要删除吗?', :class => 'btn btn-mini', :remote => true, :style => "color: black;display:#{is_deliver ? 'none' : ''}"%>
+             <%= link_to '发送测试', "#mailtest_#{campaign.id}", :class => 'btn btn-mini', :"data-toggle" => "modal", :remote => true,:style => "display:#{is_deliver ? 'none' : ''}" %>
+             <%= link_to '复制', copies_campaign_path(campaign.id), :class => "btn btn-mini", :remote => true %>
+             <button onclick = "campaign_report(<%= campaign.id%>)" class = 'btn btn-mini', style="color: black;; display:<%= is_deliver ? '' : 'none' %>">发送报告</button>
+					  	<% end %>
 					  	</div>
 				  </div>
 					</div>
@@ -65,7 +96,7 @@
 				<!--单条发送活动 结束-->       
 				
     <!--mail test-->
-				<% if is_deliver == false %>
+				<% if is_deliver or is_super %>
        <div id="mailtest_<%= campaign.id %>" class="modal fade">
          <div class="modal-header header">
           <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
@@ -83,8 +114,13 @@
            <%= text_field_tag :from_email,nil,:disabled => true, :class => 'span4',:placeholder => "#{campaign.template.try(:name)}" %>
             </label>
             <label for="email_name<%= campaign.id %>">收件箱:
-             <input class="span4" id="mailtest_email_<%= campaign.id %>" type="text" placeholder="<%= current_user.email %>">
+             
+             <input class="span4" id="mailtest_email_<%= campaign.id %>" name="test_email" type="text" placeholder="<%= current_user.email %>">
+            
+                          <%= link_to 'add',nil,:class=>"focus-link",:href=>"javascript:void(0)",:onclick => "add_test_email(#{campaign.id});",
+             :style=>"margin-left:0px;padding-left:0px;","data-placement"=>"bottom","data-content"=>"同时测试多封邮件", :rel=>"popover", "data-original-title"=>"添加测试邮件" %>
             </label>
+            <div class="add_test_email_tag" style="display:none;"></div>
           </fieldset>
 
          </div>

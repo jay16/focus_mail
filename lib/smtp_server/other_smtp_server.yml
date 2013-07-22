@@ -1,0 +1,1029 @@
+--- 
+googlemail.com: 
+  :is_valid: 1
+  :update: 1374472311
+  :strftime: 13-07-22 13:51:51
+  :mx: 
+  - :preference: 5
+    :exchange: gmail-smtp-in.l.google.com
+  - :preference: 10
+    :exchange: alt1.gmail-smtp-in.l.google.com
+  - :preference: 20
+    :exchange: alt2.gmail-smtp-in.l.google.com
+  - :preference: 30
+    :exchange: alt3.gmail-smtp-in.l.google.com
+  - :preference: 40
+    :exchange: alt4.gmail-smtp-in.l.google.com
+msn.com: 
+  :is_valid: 1
+  :update: 1374472452
+  :strftime: 13-07-22 13:54:12
+  :mx: 
+  - :preference: 5
+    :exchange: mx3.hotmail.com
+  - :preference: 5
+    :exchange: mx4.hotmail.com
+  - :preference: 5
+    :exchange: mx1.hotmail.com
+  - :preference: 5
+    :exchange: mx2.hotmail.com
+ujs.edu.cn: 
+  :is_valid: 1
+  :update: 1374472506
+  :strftime: 13-07-22 13:55:06
+  :mx: 
+  - :preference: 5
+    :exchange: mail.ujs.edu.cn
+nbdeli.net: 
+  :is_valid: 1
+  :update: 1374472527
+  :strftime: 13-07-22 13:55:27
+  :mx: 
+  - :preference: 20
+    :exchange: mail.nbdeli.net
+live.com: 
+  :is_valid: 1
+  :update: 1374472553
+  :strftime: 13-07-22 13:55:53
+  :mx: 
+  - :preference: 5
+    :exchange: mx1.hotmail.com
+  - :preference: 5
+    :exchange: mx2.hotmail.com
+  - :preference: 5
+    :exchange: mx3.hotmail.com
+  - :preference: 5
+    :exchange: mx4.hotmail.com
+21cn.com: 
+  :is_valid: 1
+  :update: 1374472574
+  :strftime: 13-07-22 13:56:14
+  :mx: 
+  - :preference: 10
+    :exchange: mta.21cn.com
+edatapower.com: 
+  :is_valid: 0
+  :update: 1374472641
+  :strftime: 13-07-22 13:57:21
+  :mx: []
+
+139.com: 
+  :is_valid: 1
+  :update: 1374472669
+  :strftime: 13-07-22 13:57:49
+  :mx: 
+  - :preference: 5
+    :exchange: mx1.mail.139.com
+  - :preference: 10
+    :exchange: mx2.mail.139.com
+  - :preference: 20
+    :exchange: mx3.mail.139.com
+nottingham.edu.cn: 
+  :is_valid: 1
+  :update: 1374472715
+  :strftime: 13-07-22 13:58:35
+  :mx: 
+  - :preference: 20
+    :exchange: mail.nottingham.edu.cn
+  - :preference: 10
+    :exchange: mx.nottingham.edu.cn
+hz.cn: 
+  :is_valid: 1
+  :update: 1374472753
+  :strftime: 13-07-22 13:59:13
+  :mx: 
+  - :preference: 2
+    :exchange: mx1.hz.cn
+  - :preference: 1
+    :exchange: mx.hz.cn
+live.cn: 
+  :is_valid: 1
+  :update: 1374472784
+  :strftime: 13-07-22 13:59:44
+  :mx: 
+  - :preference: 5
+    :exchange: mx2.hotmail.com
+  - :preference: 5
+    :exchange: mx3.hotmail.com
+  - :preference: 5
+    :exchange: mx4.hotmail.com
+  - :preference: 5
+    :exchange: mx1.hotmail.com
+foxmail.com: 
+  :is_valid: 1
+  :update: 1374472849
+  :strftime: 13-07-22 14:00:49
+  :mx: 
+  - :preference: 20
+    :exchange: mx2.qq.com
+  - :preference: 30
+    :exchange: mx1.qq.com
+  - :preference: 10
+    :exchange: mx3.qq.com
+yeah.net: 
+  :is_valid: 1
+  :update: 1374472899
+  :strftime: 13-07-22 14:01:39
+  :mx: 
+  - :preference: 50
+    :exchange: yeahmx00.mxmail.netease.com
+  - :preference: 10
+    :exchange: yeahmx01.mxmail.netease.com
+sogou.com: 
+  :is_valid: 1
+  :update: 1374473055
+  :strftime: 13-07-22 14:04:15
+  :mx: 
+  - :preference: 10
+    :exchange: mx.sogou.com
+kozzu.cn: 
+  :is_valid: 1
+  :update: 1374473076
+  :strftime: 13-07-22 14:04:36
+  :mx: 
+  - :preference: 5
+    :exchange: mx.xinnetvip.com
+grasp.com.cn: 
+  :is_valid: 1
+  :update: 1374473097
+  :strftime: 13-07-22 14:04:57
+  :mx: 
+  - :preference: 5
+    :exchange: 61.139.77.221
+vangotech.com: 
+  :is_valid: 1
+  :update: 1374473192
+  :strftime: 13-07-22 14:06:32
+  :mx: 
+  - :preference: 10
+    :exchange: mail.vangotech.com
+chinaacc.com: 
+  :is_valid: 1
+  :update: 1374473244
+  :strftime: 13-07-22 14:07:24
+  :mx: 
+  - :preference: 20
+    :exchange: mail.chinaacc.com
+  - :preference: 10
+    :exchange: smtp.chinaacc.com
+vsmtech.com: 
+  :is_valid: 1
+  :update: 1374473289
+  :strftime: 13-07-22 14:08:09
+  :mx: 
+  - :preference: 20
+    :exchange: mx5x02.east.net
+  - :preference: 10
+    :exchange: mx5x01.east.net
+outlook.com: 
+  :is_valid: 1
+  :update: 1374473332
+  :strftime: 13-07-22 14:08:52
+  :mx: 
+  - :preference: 10
+    :exchange: mx4.hotmail.com
+  - :preference: 10
+    :exchange: mx1.hotmail.com
+  - :preference: 10
+    :exchange: mx2.hotmail.com
+  - :preference: 10
+    :exchange: mx3.hotmail.com
+deppon.com: 
+  :is_valid: 1
+  :update: 1374473354
+  :strftime: 13-07-22 14:09:14
+  :mx: 
+  - :preference: 30
+    :exchange: mx3.deppon.com
+  - :preference: 15
+    :exchange: mx1.deppon.com
+  - :preference: 20
+    :exchange: mx2.deppon.com
+188.com: 
+  :is_valid: 1
+  :update: 1374473401
+  :strftime: 13-07-22 14:10:01
+  :mx: 
+  - :preference: 10
+    :exchange: 188mx01.mxmail.netease.com
+  - :preference: 50
+    :exchange: 188mx00.mxmail.netease.com
+189.cn: 
+  :is_valid: 1
+  :update: 1374473422
+  :strftime: 13-07-22 14:10:22
+  :mx: 
+  - :preference: 10
+    :exchange: mta-189.21cn.com
+petrochina.com.cn: 
+  :is_valid: 1
+  :update: 1374473545
+  :strftime: 13-07-22 14:12:25
+  :mx: 
+  - :preference: 10
+    :exchange: mx1.petrochina.com.cn
+  - :preference: 10
+    :exchange: mx2.petrochina.com.cn
+china.com.cn: 
+  :is_valid: 1
+  :update: 1374473567
+  :strftime: 13-07-22 14:12:47
+  :mx: 
+  - :preference: 10
+    :exchange: eqmanager2.china.org.cn
+  - :preference: 30
+    :exchange: eqmanager1.china.org.cn
+centaline.com.cn: 
+  :is_valid: 1
+  :update: 1374473588
+  :strftime: 13-07-22 14:13:08
+  :mx: 
+  - :preference: 10
+    :exchange: mx01.centaline.com.cn
+eyou.com: 
+  :is_valid: 1
+  :update: 1374473645
+  :strftime: 13-07-22 14:14:05
+  :mx: 
+  - :preference: 20
+    :exchange: mx.eyou.com
+  - :preference: 20
+    :exchange: mx2.eyou.com
+citiz.net: 
+  :is_valid: 1
+  :update: 1374473682
+  :strftime: 13-07-22 14:14:42
+  :mx: 
+  - :preference: 10
+    :exchange: mx.citiz.net
+pg.com: 
+  :is_valid: 1
+  :update: 1374473755
+  :strftime: 13-07-22 14:15:55
+  :mx: 
+  - :preference: 10
+    :exchange: cluster8.us.messagelabs.com
+  - :preference: 20
+    :exchange: cluster8a.us.messagelabs.com
+bjaction.com: 
+  :is_valid: 1
+  :update: 1374473806
+  :strftime: 13-07-22 14:16:46
+  :mx: 
+  - :preference: 4
+    :exchange: mail.bjaction.com
+  - :preference: 1
+    :exchange: mail.bjaction.com
+minjie100.com: 
+  :is_valid: 1
+  :update: 1374473828
+  :strftime: 13-07-22 14:17:08
+  :mx: 
+  - :preference: 10
+    :exchange: mxxinmail.xinnetdns.com
+  - :preference: 5
+    :exchange: mxxinmail.xinnetdns.com
+mail.china.com: 
+  :is_valid: 0
+  :update: 1374473989
+  :strftime: 13-07-22 14:19:49
+  :mx: []
+
+ahut.edu.cn: 
+  :is_valid: 1
+  :update: 1374474010
+  :strftime: 13-07-22 14:20:10
+  :mx: 
+  - :preference: 25
+    :exchange: mails.ahut.edu.cn
+earnest.hk: 
+  :is_valid: 1
+  :update: 1374474032
+  :strftime: 13-07-22 14:20:32
+  :mx: 
+  - :preference: 10
+    :exchange: mx.corpease.net
+swip.ac.cn: 
+  :is_valid: 1
+  :update: 1374474053
+  :strftime: 13-07-22 14:20:53
+  :mx: 
+  - :preference: 20
+    :exchange: mx02.swip.ac.cn
+  - :preference: 10
+    :exchange: mx01.swip.ac.cn
+ubou-china.com: 
+  :is_valid: 1
+  :update: 1374474161
+  :strftime: 13-07-22 14:22:41
+  :mx: 
+  - :preference: 5
+    :exchange: mxw.idccenter.net
+  - :preference: 10
+    :exchange: mx01.idccenter.net
+ceeg.cn: 
+  :is_valid: 1
+  :update: 1374474188
+  :strftime: 13-07-22 14:23:08
+  :mx: 
+  - :preference: 5
+    :exchange: mail.ceeg.cn
+jlonline.com: 
+  :is_valid: 1
+  :update: 1374474209
+  :strftime: 13-07-22 14:23:29
+  :mx: 
+  - :preference: 10
+    :exchange: mta.bnet.cn
+adtfm.com: 
+  :is_valid: 1
+  :update: 1374474289
+  :strftime: 13-07-22 14:24:49
+  :mx: 
+  - :preference: 10
+    :exchange: mx108c.chinaemail.cn
+  - :preference: 5
+    :exchange: mxa108c.chinaemail.cn
+ypi.edu.cn: 
+  :is_valid: 1
+  :update: 1374474311
+  :strftime: 13-07-22 14:25:11
+  :mx: 
+  - :preference: 10
+    :exchange: mail.ypi.edu.cn
+lenovo.com: 
+  :is_valid: 1
+  :update: 1374474350
+  :strftime: 13-07-22 14:25:50
+  :mx: 
+  - :preference: 10
+    :exchange: cluster9.us.messagelabs.com
+  - :preference: 20
+    :exchange: cluster9a.us.messagelabs.com
+dlpu.edu.cn: 
+  :is_valid: 1
+  :update: 1374474372
+  :strftime: 13-07-22 14:26:12
+  :mx: 
+  - :preference: 5
+    :exchange: mx.dlpu.edu.cn
+nbyz.gov.cn: 
+  :is_valid: 1
+  :update: 1374474395
+  :strftime: 13-07-22 14:26:35
+  :mx: 
+  - :preference: 10
+    :exchange: mail.nbyz.gov.cn
+bankofshanghai.com: 
+  :is_valid: 1
+  :update: 1374474461
+  :strftime: 13-07-22 14:27:41
+  :mx: 
+  - :preference: 10
+    :exchange: mail.bankofshanghai.com
+  - :preference: 10
+    :exchange: service.bankofshanghai.com
+semi.ac.cn: 
+  :is_valid: 1
+  :update: 1374474499
+  :strftime: 13-07-22 14:28:19
+  :mx: 
+  - :preference: 10
+    :exchange: mx.cstnet.cn
+mail.chinaships.com: 
+  :is_valid: 0
+  :update: 1374474535
+  :strftime: 13-07-22 14:28:55
+  :mx: []
+
+hysec.com: 
+  :is_valid: 1
+  :update: 1374474540
+  :strftime: 13-07-22 14:29:00
+  :mx: 
+  - :preference: 10
+    :exchange: smtp1.hysec.com
+  - :preference: 3
+    :exchange: smtp0.hysec.com
+  - :preference: 5
+    :exchange: smtp.hysec.com
+cri.cn: 
+  :is_valid: 1
+  :update: 1374474566
+  :strftime: 13-07-22 14:29:26
+  :mx: 
+  - :preference: 10
+    :exchange: mail.chinabroadcast.cn
+gsta.com: 
+  :is_valid: 1
+  :update: 1374474587
+  :strftime: 13-07-22 14:29:47
+  :mx: 
+  - :preference: 10
+    :exchange: smtp.gsta.com
+cn.tsuneishi.co.jp: 
+  :is_valid: 0
+  :update: 1374474635
+  :strftime: 13-07-22 14:30:35
+  :mx: []
+
+zte.com.cn: 
+  :is_valid: 1
+  :update: 1374474640
+  :strftime: 13-07-22 14:30:40
+  :mx: 
+  - :preference: 20
+    :exchange: mx10.zte.com.cn
+  - :preference: 10
+    :exchange: mx5.zte.com.cn
+  - :preference: 10
+    :exchange: mx6.zte.com.cn
+  - :preference: 20
+    :exchange: mx9.zte.com.cn
+qnpc.cn: 
+  :is_valid: 0
+  :update: 1374474714
+  :strftime: 13-07-22 14:31:54
+  :mx: []
+
+optech.net.cn: 
+  :is_valid: 1
+  :update: 1374474719
+  :strftime: 13-07-22 14:31:59
+  :mx: 
+  - :preference: 10
+    :exchange: mxbiz2.qq.com
+  - :preference: 5
+    :exchange: mxbiz1.qq.com
+jsafc.net: 
+  :is_valid: 1
+  :update: 1374474821
+  :strftime: 13-07-22 14:33:41
+  :mx: 
+  - :preference: 10
+    :exchange: mail.jsafc.net
+yzcn.net: 
+  :is_valid: 1
+  :update: 1374474905
+  :strftime: 13-07-22 14:35:05
+  :mx: 
+  - :preference: 1
+    :exchange: mail.yzcn.net
+msn.cn: 
+  :is_valid: 1
+  :update: 1374474933
+  :strftime: 13-07-22 14:35:33
+  :mx: 
+  - :preference: 10
+    :exchange: 70731977.pamx1.hotmail.com
+ymail.com: 
+  :is_valid: 1
+  :update: 1374474998
+  :strftime: 13-07-22 14:36:38
+  :mx: 
+  - :preference: 10
+    :exchange: mta6.am0.yahoodns.net
+  - :preference: 10
+    :exchange: mta7.am0.yahoodns.net
+  - :preference: 10
+    :exchange: mta5.am0.yahoodns.net
+zj165.com: 
+  :is_valid: 1
+  :update: 1374475043
+  :strftime: 13-07-22 14:37:23
+  :mx: 
+  - :preference: 10
+    :exchange: mx.zj165.com
+zjtjyj.com: 
+  :is_valid: 1
+  :update: 1374475066
+  :strftime: 13-07-22 14:37:46
+  :mx: 
+  - :preference: 10
+    :exchange: mail.zjtjyj.com
+alibaba.com.cn: 
+  :is_valid: 1
+  :update: 1374475139
+  :strftime: 13-07-22 14:38:59
+  :mx: 
+  - :preference: 10
+    :exchange: mxw.mxhichina.com
+  - :preference: 5
+    :exchange: mxn.mxhichina.com
+39203.com: 
+  :is_valid: 1
+  :update: 1374483491
+  :strftime: 13-07-22 16:58:11
+  :mx: 
+  - :preference: 10
+    :exchange: mxdomain.qq.com
+chukoh.com.cn: 
+  :is_valid: 1
+  :update: 1374483621
+  :strftime: 13-07-22 17:00:21
+  :mx: 
+  - :preference: 2
+    :exchange: mxn.mxhichina.com
+  - :preference: 10
+    :exchange: mxw.mxhichina.com
+cmbc.com.cn: 
+  :is_valid: 1
+  :update: 1374483641
+  :strftime: 13-07-22 17:00:41
+  :mx: 
+  - :preference: 10
+    :exchange: apt.cmbc.com.cn
+nbjlmy.cn: 
+  :is_valid: 1
+  :update: 1374483732
+  :strftime: 13-07-22 17:02:12
+  :mx: 
+  - :preference: 5
+    :exchange: smtp.zmail.net.cn
+me.com: 
+  :is_valid: 1
+  :update: 1374483797
+  :strftime: 13-07-22 17:03:17
+  :mx: 
+  - :preference: 10
+    :exchange: mx6.me.com.akadns.net
+  - :preference: 10
+    :exchange: mx1.me.com.akadns.net
+  - :preference: 10
+    :exchange: mx2.me.com.akadns.net
+  - :preference: 10
+    :exchange: mx3.me.com.akadns.net
+  - :preference: 10
+    :exchange: mx4.me.com.akadns.net
+  - :preference: 10
+    :exchange: mx5.me.com.akadns.net
+mail.zjxu.edu.cn: 
+  :is_valid: 1
+  :update: 1374483870
+  :strftime: 13-07-22 17:04:30
+  :mx: 
+  - :preference: 10
+    :exchange: 210.33.28.239
+  - :preference: 10
+    :exchange: mail.zjxu.edu.cn
+siemens.com: 
+  :is_valid: 1
+  :update: 1374483977
+  :strftime: 13-07-22 17:06:17
+  :mx: 
+  - :preference: 10
+    :exchange: hephaistos.siemens.com
+  - :preference: 30
+    :exchange: balduin.siemens.com
+  - :preference: 10
+    :exchange: hylas.siemens.com
+  - :preference: 10
+    :exchange: zetes.siemens.com
+  - :preference: 10
+    :exchange: meleagros.siemens.com
+ningfang.com: 
+  :is_valid: 1
+  :update: 1374484001
+  :strftime: 13-07-22 17:06:41
+  :mx: 
+  - :preference: 10
+    :exchange: mail.ningfang.com
+alipay.com: 
+  :is_valid: 1
+  :update: 1374484190
+  :strftime: 13-07-22 17:09:50
+  :mx: 
+  - :preference: 10
+    :exchange: gateway.alibaba-inc.com
+21cn.net: 
+  :is_valid: 1
+  :update: 1374484211
+  :strftime: 13-07-22 17:10:11
+  :mx: 
+  - :preference: 10
+    :exchange: mta.21cn.net
+fiberhome.com.cn: 
+  :is_valid: 1
+  :update: 1374484296
+  :strftime: 13-07-22 17:11:36
+  :mx: 
+  - :preference: 20
+    :exchange: mxuc.fiberhome.com.cn
+  - :preference: 10
+    :exchange: mxtc.fiberhome.com.cn
+free.zj.com: 
+  :is_valid: 0
+  :update: 1374484402
+  :strftime: 13-07-22 17:13:22
+  :mx: []
+
+huawei.com: 
+  :is_valid: 1
+  :update: 1374484407
+  :strftime: 13-07-22 17:13:27
+  :mx: 
+  - :preference: 10
+    :exchange: mx1.huawei.com
+  - :preference: 15
+    :exchange: mx2.huawei.com
+  - :preference: 20
+    :exchange: mx3.huawei.com
+  - :preference: 20
+    :exchange: mx4.huawei.com
+flyring.com.cn: 
+  :is_valid: 1
+  :update: 1374484440
+  :strftime: 13-07-22 17:14:00
+  :mx: 
+  - :preference: 5
+    :exchange: mx.xinnetvip.com
+starsea.com: 
+  :is_valid: 1
+  :update: 1374484461
+  :strftime: 13-07-22 17:14:21
+  :mx: 
+  - :preference: 10
+    :exchange: mx.starsea.com
+tmeic-cn.com: 
+  :is_valid: 1
+  :update: 1374484486
+  :strftime: 13-07-22 17:14:46
+  :mx: 
+  - :preference: 10
+    :exchange: mx01.263xmail.com
+chinahrd.net: 
+  :is_valid: 1
+  :update: 1374484529
+  :strftime: 13-07-22 17:15:29
+  :mx: 
+  - :preference: 5
+    :exchange: mxbiz1.qq.com
+  - :preference: 10
+    :exchange: mxbiz2.qq.com
+hw.ac.uk: 
+  :is_valid: 1
+  :update: 1374484556
+  :strftime: 13-07-22 17:15:56
+  :mx: 
+  - :preference: 3
+    :exchange: mail-r.hw.ac.uk
+pub.nt.jsinfo.net: 
+  :is_valid: 1
+  :update: 1374484580
+  :strftime: 13-07-22 17:16:20
+  :mx: 
+  - :preference: 10
+    :exchange: mta.bnet.cn
+ehdc.com.cn: 
+  :is_valid: 1
+  :update: 1374484662
+  :strftime: 13-07-22 17:17:42
+  :mx: 
+  - :preference: 10
+    :exchange: mail.ehdc.com.cn
+glsc.com.cn: 
+  :is_valid: 1
+  :update: 1374484836
+  :strftime: 13-07-22 17:20:36
+  :mx: 
+  - :preference: 20
+    :exchange: mxmail2.glsc.com.cn
+  - :preference: 10
+    :exchange: mail.glsc.com.cn
+com.cn: 
+  :is_valid: 0
+  :update: 1374484896
+  :strftime: 13-07-22 17:21:36
+  :mx: []
+
+hatmail.com: 
+  :is_valid: 1
+  :update: 1374484901
+  :strftime: 13-07-22 17:21:41
+  :mx: 
+  - :preference: 0
+    :exchange: ""
+nuaa.edu.cn: 
+  :is_valid: 1
+  :update: 1374484989
+  :strftime: 13-07-22 17:23:09
+  :mx: 
+  - :preference: 1
+    :exchange: mx01.nuaa.edu.cn
+  - :preference: 2
+    :exchange: mx02.nuaa.edu.cn
+super-ibuilding.com: 
+  :is_valid: 1
+  :update: 1374485026
+  :strftime: 13-07-22 17:23:46
+  :mx: 
+  - :preference: 10
+    :exchange: mxbiz2.qq.com
+  - :preference: 5
+    :exchange: mxbiz1.qq.com
+hsbank.com.cn: 
+  :is_valid: 1
+  :update: 1374485104
+  :strftime: 13-07-22 17:25:04
+  :mx: 
+  - :preference: 20
+    :exchange: mail.hsbank.com.cn
+picc.com.cn: 
+  :is_valid: 1
+  :update: 1374485130
+  :strftime: 13-07-22 17:25:30
+  :mx: 
+  - :preference: 10
+    :exchange: piccmail2.picc.com.cn
+  - :preference: 10
+    :exchange: piccmail4.picc.com.cn
+cbmi.com.cn: 
+  :is_valid: 1
+  :update: 1374485167
+  :strftime: 13-07-22 17:26:07
+  :mx: 
+  - :preference: 1
+    :exchange: mail01.cbmi.com.cn
+  - :preference: 5
+    :exchange: mail03.cbmi.com.cn
+  - :preference: 9
+    :exchange: mail02.cbmi.com.cn
+mail.seastar.com.cn: 
+  :is_valid: 0
+  :update: 1374485237
+  :strftime: 13-07-22 17:27:17
+  :mx: []
+
+jci.com: 
+  :is_valid: 1
+  :update: 1374485283
+  :strftime: 13-07-22 17:28:03
+  :mx: 
+  - :preference: 300
+    :exchange: jci.com.s8b1.psmtp.com
+  - :preference: 400
+    :exchange: jci.com.s8b2.psmtp.com
+  - :preference: 100
+    :exchange: jci.com.s8a1.psmtp.com
+  - :preference: 200
+    :exchange: jci.com.s8a2.psmtp.com
+duratec.cn: 
+  :is_valid: 1
+  :update: 1374485352
+  :strftime: 13-07-22 17:29:12
+  :mx: 
+  - :preference: 10
+    :exchange: mx7.chinaemail.cn
+  - :preference: 5
+    :exchange: mxa7.chinaemail.cn
+kblzelec.com: 
+  :is_valid: 1
+  :update: 1374485390
+  :strftime: 13-07-22 17:29:50
+  :mx: 
+  - :preference: 10
+    :exchange: smx2.cn4e.com
+chinaren.com: 
+  :is_valid: 1
+  :update: 1374485420
+  :strftime: 13-07-22 17:30:20
+  :mx: 
+  - :preference: 10
+    :exchange: mx.chinaren.com
+zoho.com: 
+  :is_valid: 1
+  :update: 1374485441
+  :strftime: 13-07-22 17:30:41
+  :mx: 
+  - :preference: 20
+    :exchange: mx2.zohomail.com
+  - :preference: 50
+    :exchange: mx3.zohomail.com
+  - :preference: 10
+    :exchange: mx.zohomail.com
+ganso.net: 
+  :is_valid: 1
+  :update: 1374485479
+  :strftime: 13-07-22 17:31:19
+  :mx: 
+  - :preference: 1
+    :exchange: spam.ganso.net
+zj.com: 
+  :is_valid: 1
+  :update: 1374485500
+  :strftime: 13-07-22 17:31:40
+  :mx: 
+  - :preference: 10
+    :exchange: mx.zj.com
+zj139.com: 
+  :is_valid: 1
+  :update: 1374485521
+  :strftime: 13-07-22 17:32:01
+  :mx: 
+  - :preference: 30
+    :exchange: mx.zj139.com
+sisu.edu.cn: 
+  :is_valid: 1
+  :update: 1374485706
+  :strftime: 13-07-22 17:35:06
+  :mx: 
+  - :preference: 10
+    :exchange: mail.sisu.edu.cn
+  - :preference: 15
+    :exchange: email.sisu.edu.cn
+swu.edu.cn: 
+  :is_valid: 1
+  :update: 1374485728
+  :strftime: 13-07-22 17:35:28
+  :mx: 
+  - :preference: 10
+    :exchange: smtp.swu.edu.cn
+lingrui.com: 
+  :is_valid: 1
+  :update: 1374485766
+  :strftime: 13-07-22 17:36:06
+  :mx: 
+  - :preference: 10
+    :exchange: mail.lingrui.com
+xdf.cn: 
+  :is_valid: 1
+  :update: 1374485804
+  :strftime: 13-07-22 17:36:44
+  :mx: 
+  - :preference: 20
+    :exchange: mx2.xdf.cn
+  - :preference: 10
+    :exchange: mx.xdf.cn
+snda.com: 
+  :is_valid: 1
+  :update: 1374485842
+  :strftime: 13-07-22 17:37:22
+  :mx: 
+  - :preference: 10
+    :exchange: mx3.snda.com
+nederman.com.cn: 
+  :is_valid: 1
+  :update: 1374485862
+  :strftime: 13-07-22 17:37:42
+  :mx: 
+  - :preference: 5
+    :exchange: mxa7.chinaemail.cn
+  - :preference: 10
+    :exchange: mx7.chinaemail.cn
+netease.com: 
+  :is_valid: 1
+  :update: 1374485884
+  :strftime: 13-07-22 17:38:04
+  :mx: 
+  - :preference: 50
+    :exchange: yeahmx00.mxmail.netease.com
+  - :preference: 10
+    :exchange: yeahmx01.mxmail.netease.com
+homail.com: 
+  :is_valid: 0
+  :update: 1374485953
+  :strftime: 13-07-22 17:39:13
+  :mx: []
+
+tianbi.com.cn: 
+  :is_valid: 1
+  :update: 1374485980
+  :strftime: 13-07-22 17:39:40
+  :mx: 
+  - :preference: 10
+    :exchange: mail.tianbi.com.cn
+powecn.com: 
+  :is_valid: 1
+  :update: 1374486017
+  :strftime: 13-07-22 17:40:17
+  :mx: 
+  - :preference: 10
+    :exchange: mx93r.chinaemail.cn
+  - :preference: 5
+    :exchange: mxa93r.chinaemail.cn
+sh.chinamobile.com: 
+  :is_valid: 1
+  :update: 1374486177
+  :strftime: 13-07-22 17:42:57
+  :mx: 
+  - :preference: 10
+    :exchange: mta.sh.chinamobile.com
+jiangnan.edu.cn: 
+  :is_valid: 1
+  :update: 1374486198
+  :strftime: 13-07-22 17:43:18
+  :mx: 
+  - :preference: 10
+    :exchange: coremail.jiangnan.edu.cn
+framedia.net: 
+  :is_valid: 1
+  :update: 1374486220
+  :strftime: 13-07-22 17:43:40
+  :mx: 
+  - :preference: 1
+    :exchange: mailx.framedia.net
+jnpc.com.cn: 
+  :is_valid: 1
+  :update: 1374486241
+  :strftime: 13-07-22 17:44:01
+  :mx: 
+  - :preference: 10
+    :exchange: gateway.jnpc.com.cn
+orientgroup.com: 
+  :is_valid: 1
+  :update: 1374486361
+  :strftime: 13-07-22 17:46:01
+  :mx: 
+  - :preference: 10
+    :exchange: mxcom.263xmail.com
+  - :preference: 5
+    :exchange: mxwcom.263xmail.com
+16.com: 
+  :is_valid: 0
+  :update: 1374486383
+  :strftime: 13-07-22 17:46:23
+  :mx: []
+
+m-3g.cn: 
+  :is_valid: 0
+  :update: 1374486421
+  :strftime: 13-07-22 17:47:01
+  :mx: []
+
+mail.ustc.edu.cn: 
+  :is_valid: 1
+  :update: 1374486427
+  :strftime: 13-07-22 17:47:07
+  :mx: 
+  - :preference: 10
+    :exchange: smtp.ustc.edu.cn
+  - :preference: 10
+    :exchange: smtp2.ustc.edu.cn
+  - :preference: 5
+    :exchange: smtp1.ustc.edu.cn
+hotmil.com: 
+  :is_valid: 1
+  :update: 1374486513
+  :strftime: 13-07-22 17:48:33
+  :mx: 
+  - :preference: 0
+    :exchange: ""
+ddd.com: 
+  :is_valid: 1
+  :update: 1374486550
+  :strftime: 13-07-22 17:49:10
+  :mx: 
+  - :preference: 10
+    :exchange: mail.perth.ddd.com
+fmmu.edu.cn: 
+  :is_valid: 1
+  :update: 1374486609
+  :strftime: 13-07-22 17:50:09
+  :mx: 
+  - :preference: 10
+    :exchange: webmail.fmmu.edu.cn
+smmail.cn: 
+  :is_valid: 1
+  :update: 1374486635
+  :strftime: 13-07-22 17:50:35
+  :mx: 
+  - :preference: 10
+    :exchange: mx.smmail.cn
+naver.com: 
+  :is_valid: 1
+  :update: 1374486657
+  :strftime: 13-07-22 17:50:57
+  :mx: 
+  - :preference: 10
+    :exchange: mx-1.naver.com
+  - :preference: 10
+    :exchange: mx2.naver.com
+  - :preference: 10
+    :exchange: mx3.naver.com
+max-comm.com: 
+  :is_valid: 1
+  :update: 1374486768
+  :strftime: 13-07-22 17:52:48
+  :mx: 
+  - :preference: 10
+    :exchange: mx.ym.163.com
+hb165.com: 
+  :is_valid: 1
+  :update: 1374486805
+  :strftime: 13-07-22 17:53:25
+  :mx: 
+  - :preference: 10
+    :exchange: mx.hb165.com
+hotmal.com: 
+  :is_valid: 0
+  :update: 1374486825
+  :strftime: 13-07-22 17:53:45
+  :mx: []
+
+sjtu.edu.cn: 
+  :is_valid: 1
+  :update: 1374486830
+  :strftime: 13-07-22 17:53:50
+  :mx: 
+  - :preference: 5
+    :exchange: mx.sjtu.edu.cn

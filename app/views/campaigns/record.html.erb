@@ -1,0 +1,18 @@
+<table class="table">
+  <tbody>
+    <% if @record.nil? %>
+      No Records
+    <% else %>
+      <tr>
+       <td><%= @record.campaign_id %></td>
+       <td><%= @record.file_name %></td>
+       <td><%= @record.info %></td>
+      </tr>
+      <% @record.campaign_records.each do |record| %>
+        <tr>
+          <td><%= record.info_json %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

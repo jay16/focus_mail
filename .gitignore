@@ -5,6 +5,9 @@
 *.out
 *~
 *.lock
+*.eml
+*.csv
+
 ======
 /lib/emails
 /.bundle

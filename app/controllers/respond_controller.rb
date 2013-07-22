@@ -1,6 +1,7 @@
 class RespondController < ActionController::Base
   include ApplicationHelper
-
+  require 'uri'
+  
   def index
     filter_time = params[:f]
     @where = ''
@@ -82,7 +83,9 @@ class RespondController < ActionController::Base
       redirect_to link.url.to_s + "#{member.parameter1}.html"
     #邮件中退订邮件订阅链接，特殊处理
     elsif cid.to_i > 0 and email then
-      redirect_to link.url+"?cid=#{cid}&email=#{email}"
+      uri = URI.parse(link.url)
+      unsub = link.url + (uri.query ? "&" : "?" )
+      redirect_to unsub+"cid=#{cid}&email=#{email}"
     else
       redirect_to link.url
     end

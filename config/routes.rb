@@ -42,6 +42,7 @@ FocusMail::Application.routes.draw do
   match 'campaigns/:id/copies/', controller: 'campaigns', action: 'copies', as: 'copies_campaign'
   #match 'campaigns/:id/mailtest/', controller: 'campaigns', action: 'mailtest', as: 'mailtest_campaign'
 
+  match 'campaigns/:campaign_id/record' => 'campaigns#record', :as => :campaigns_record
   match 'members/export/:list_id' => 'members#export', :as => :members_export
   get 'members/import_template'
   

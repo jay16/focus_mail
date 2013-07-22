@@ -1,9 +1,20 @@
 $("#add_btn").trigger("click");
 
-<% if @save_state %>
+alert("<%= @save_state.to_s %>");
+
+<% if @save_state[:m_state] == 1 %>
 $('#list_member').attr("src","/lists/" + "<%= @list.id %>" + "/members");
 var org_mc = parseInt($("#list_<%= @list.id %>_mc").html());
 $("#list_<%= @list.id %>_mc").html(org_mc+1);
+<% elsif @save_state[:m_state] == 0 %>
+  <% if @save_state[:l_state] == 1 %>
+    alert("名单存在,lm创建成功");
+  <% elsif @save_state[:l_state] == 0 %>
+    alert("名单存在,lm存在,未做变动");
+  <% else %>
+    
+    alert("名单存在,list创建失败");
+  <% end %>
 <% else %>
 alert("名单创建失败..")
 <% end %>

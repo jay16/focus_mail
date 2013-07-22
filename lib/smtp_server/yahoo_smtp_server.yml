@@ -1,0 +1,39 @@
+--- 
+yahoo.cn: 
+  :is_valid: 1
+  :update: 1374472398
+  :strftime: 13-07-22 13:53:18
+  :mx: 
+  - :preference: 10
+    :exchange: mx1.mail.cnh.yahoo.com
+  - :preference: 15
+    :exchange: mx1.mail.cnb.yahoo.com
+yahoo.com.cn: 
+  :is_valid: 1
+  :update: 1374472419
+  :strftime: 13-07-22 13:53:39
+  :mx: 
+  - :preference: 10
+    :exchange: mx1.mail.cnb.yahoo.com
+yahoo.com: 
+  :is_valid: 1
+  :update: 1374473054
+  :strftime: 13-07-22 14:04:14
+  :mx: 
+  - :preference: 1
+    :exchange: mta5.am0.yahoodns.net
+  - :preference: 1
+    :exchange: mta6.am0.yahoodns.net
+  - :preference: 1
+    :exchange: mta7.am0.yahoodns.net
+yahoo.com.au: 
+  :is_valid: 1
+  :update: 1374478468
+  :strftime: 13-07-22 15:34:28
+  :mx: 
+  - :preference: 10
+    :exchange: mta7.am0.yahoodns.net
+  - :preference: 10
+    :exchange: mta5.am0.yahoodns.net
+  - :preference: 10
+    :exchange: mta6.am0.yahoodns.net

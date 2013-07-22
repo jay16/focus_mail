@@ -1,0 +1,43 @@
+--- 
+qq.com: 
+  :is_valid: 1
+  :update: 1374472396
+  :strftime: 13-07-22 13:53:16
+  :mx: 
+  - :preference: 10
+    :exchange: mx3.qq.com
+  - :preference: 20
+    :exchange: mx2.qq.com
+  - :preference: 30
+    :exchange: mx1.qq.com
+vip.qq.com: 
+  :is_valid: 1
+  :update: 1374472477
+  :strftime: 13-07-22 13:54:37
+  :mx: 
+  - :preference: 30
+    :exchange: mx1.qq.com
+  - :preference: 10
+    :exchange: mx3.qq.com
+  - :preference: 20
+    :exchange: mx2.qq.com
+qq.com.cn: 
+  :is_valid: 1
+  :update: 1374477832
+  :strftime: 13-07-22 15:23:52
+  :mx: 
+  - :preference: 10
+    :exchange: mx3.qq.com
+qq.comqq: 
+  :is_valid: 0
+  :update: 1374477887
+  :strftime: 13-07-22 15:24:47
+  :mx: []
+
+qq.cm: 
+  :is_valid: 1
+  :update: 1374478121
+  :strftime: 13-07-22 15:28:41
+  :mx: 
+  - :preference: 10
+    :exchange: mail.qq.cm

@@ -7,7 +7,27 @@ require 'base64'
 
 module FocusMail
   module TemplateEmail
-    def self.email_with_template_job(hfrom, from, to_email, to_name, member_id, subject, campaign_id, template_id, img_url,user_id,email_smtp,email_port,email_domain,login_name,email_pwd,email_name,ipstr,domainstr,filepath)
+    def self.email_with_template_job(options)
+      hfrom        = options[:hfrom]
+      from         = options[:from]
+      to_email     = options[:to_email]
+      to_name      = options[:to_name] 
+      member_id    = options[:member_id] 
+      subject      = options[:subject] 
+      campaign_id  = options[:campaign_id]
+      template_id  = options[:template_id] 
+      img_url      = options[:img_url]
+      user_id      = options[:user_id]
+      email_smtp   = options[:email_smtp] 
+      email_port   = options[:email_port]
+      email_domain = options[:email_domain] 
+      login_name   = options[:login_name]
+      email_pwd    = options[:email_pwd]
+      email_name   = options[:email_name]
+      ipstr        = options[:ipstr]
+      domainstr    = options[:domainstr]
+      filepath     = options[:filepath]
+      
       readfile = YAML.load_file('config/readfile.yml')
       readip = readfile["sendip"]
       readport = readfile["sendport"]

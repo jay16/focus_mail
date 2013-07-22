@@ -3,8 +3,8 @@
     <td>
        <div id="<%= member.id %>_name">
           <a class="focus-rel" rel="tooltip" data-original-title="<%= member.name %>">
-             <% if member.name.present? and member.name.length > 5  %>
-                  <%= member.name[0..5].concat('...') %>
+             <% if member.name.present? and member.name.length > 13  %>
+                  <%= member.name[0..10].concat('...') %>
              <% else %>
                  <%= member.name  %>
              <% end %>
@@ -15,7 +15,7 @@
       <div id="<%= member.id %>_email">
          <a class="focus-rel" rel="tooltip" data-original-title="<%= member.email %>">
              <% if member.email.present? and member.email.length > 18  %>
-                 <%= member.email[0..17].concat('...') %>
+                 <%= member.email[0..16].concat('...') %>
              <% else %>
                  <%= member.email  %>
              <% end %>
@@ -23,9 +23,30 @@
        </div>
     </td>
     <td>
-        <a class="focus-icon member-<%= [1,4,5].include?(member.type_email)  ? 'valid' : ( member.type_email == 6 ? 'warnning' : 'unvalid') %>-icon"></a>
-        <a class="focus-icon pencil-icon"  onclick="edit_member(<%= member.id %>,true)"></a>
-        <%= link_to '', [@list, member], :method => :delete, :confirm => 'Are you sure?', :class => 'focus-icon delete-icon'  %>
+
+    
+        <!--member valid status-->
+        <% if [1,4,5].include?(member.type_email) then %>
+            <a class="focus-icon member-<%= [1,4,5].include?(member.type_email)  ? 'valid' : ( member.type_email == 6 ? 'warnning' : 'unvalid') %>-icon" rel="tooltip" data-original-title="<%= [1,4,5].include?(member.type_email)  ? '经FocusMail验证,邮箱有效！' : ( member.type_email == 6 ? '邮箱未验证' : '经FocusMail验证,邮箱无效') %>">
+            </a>
+        <% end %>
+            <!--
+            <div class="btn-group" style="display:inline-block;">
+               <a data-toggle="dropdown" href="#" class="focus-icon member-<%= [1,4,5].include?(member.type_email)  ? 'valid' : ( member.type_email == 6 ? 'warnning' : 'unvalid') %>-icon" >
+
+               </a>
+               <ul class="dropdown-menu" style="left:-100px;min-width: 110px;">
+                  <li><a data-remote="true" href="/members/verify?member_id=<%= member.id %>&type=verify">FocusMail验证</a></li>
+                  <li><a data-remote="true" href="/members/verify?member_id=<%= member.id %>&type=force">强制认可</a></li>
+               </ul>
+            </div>
+            -->
+        
+
+        <!--member edit-->
+        <a class="focus-icon pencil-icon"  onclick="edit_member(<%= member.id %>,true)" rel="tooltip" data-original-title="编辑名单"></a>
+        <!--member delete-->
+        <%= link_to '', [@list, member], :method => :delete, :confirm => 'Are you sure?', :class => 'focus-icon delete-icon', :rel=>"tooltip", "data-original-title"=>"删除名单"  %>
     </td>
  </tr>
  

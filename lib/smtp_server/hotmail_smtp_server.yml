@@ -1,0 +1,25 @@
+--- 
+hotmail.com: 
+  :is_valid: 1
+  :update: 1374472397
+  :strftime: 13-07-22 13:53:17
+  :mx: 
+  - :preference: 5
+    :exchange: mx4.hotmail.com
+  - :preference: 5
+    :exchange: mx1.hotmail.com
+  - :preference: 5
+    :exchange: mx2.hotmail.com
+  - :preference: 5
+    :exchange: mx3.hotmail.com
+hotmail.co.uk: 
+  :is_valid: 1
+  :update: 1374476871
+  :strftime: 13-07-22 15:07:51
+  :mx: 
+  - :preference: 5
+    :exchange: mx4.hotmail.com
+  - :preference: 5
+    :exchange: mx2.hotmail.com
+  - :preference: 5
+    :exchange: mx3.hotmail.com

@@ -1,0 +1,19 @@
+--- 
+126.com: 
+  :is_valid: 1
+  :update: 1374472398
+  :strftime: 13-07-22 13:53:18
+  :mx: 
+  - :preference: 50
+    :exchange: 126mx00.mxmail.netease.com
+  - :preference: 10
+    :exchange: 126mx01.mxmail.netease.com
+  - :preference: 10
+    :exchange: 126mx02.mxmail.netease.com
+vip.126.com: 
+  :is_valid: 1
+  :update: 1374481042
+  :strftime: 13-07-22 16:17:22
+  :mx: 
+  - :preference: 50
+    :exchange: mx.vip.126.com

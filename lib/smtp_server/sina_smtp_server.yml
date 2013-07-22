@@ -1,0 +1,78 @@
+--- 
+sina.com: 
+  :is_valid: 1
+  :update: 1374472396
+  :strftime: 13-07-22 13:53:16
+  :mx: 
+  - :preference: 5
+    :exchange: freemx1.sinamail.sina.com.cn
+  - :preference: 10
+    :exchange: freemx2.sinamail.sina.com.cn
+  - :preference: 10
+    :exchange: freemx3.sinamail.sina.com.cn
+vip.sina.com: 
+  :is_valid: 1
+  :update: 1374472428
+  :strftime: 13-07-22 13:53:48
+  :mx: 
+  - :preference: 20
+    :exchange: sinamx.vip.sina.com
+  - :preference: 5
+    :exchange: mx3.vip.sina.com
+  - :preference: 10
+    :exchange: mx1.vip.sina.com
+  - :preference: 10
+    :exchange: mx2.vip.sina.com
+sina.cn: 
+  :is_valid: 1
+  :update: 1374472759
+  :strftime: 13-07-22 13:59:19
+  :mx: 
+  - :preference: 5
+    :exchange: freemx.sinamail.sina.com.cn
+  - :preference: 10
+    :exchange: freemx1.sinamail.sina.com.cn
+  - :preference: 10
+    :exchange: freemx2.sinamail.sina.com.cn
+  - :preference: 10
+    :exchange: freemx3.sinamail.sina.com.cn
+sina.com.cn: 
+  :is_valid: 1
+  :update: 1374473212
+  :strftime: 13-07-22 14:06:52
+  :mx: 
+  - :preference: 10
+    :exchange: freemx1.sinamail.sina.com.cn
+  - :preference: 10
+    :exchange: freemx2.sinamail.sina.com.cn
+  - :preference: 10
+    :exchange: freemx3.sinamail.sina.com.cn
+  - :preference: 5
+    :exchange: freemx.sinamail.sina.com.cn
+2008.sina.com: 
+  :is_valid: 1
+  :update: 1374475160
+  :strftime: 13-07-22 14:39:20
+  :mx: 
+  - :preference: 10
+    :exchange: mx.2008.sina.com
+"sina.com ": 
+  :is_valid: 0
+  :update: 1374476614
+  :strftime: 13-07-22 15:03:34
+  :mx: []
+
+newhope.sinanet.com: 
+  :is_valid: 1
+  :update: 1374485188
+  :strftime: 13-07-22 17:26:28
+  :mx: 
+  - :preference: 10
+    :exchange: mx.sinanet.com
+263.sina.com: 
+  :is_valid: 1
+  :update: 1374486123
+  :strftime: 13-07-22 17:42:03
+  :mx: 
+  - :preference: 10
+    :exchange: mx.exmail.sina.com

@@ -7,10 +7,12 @@
     </div>
      
    <div id="chart_hour_div" style="margin:0 auto;width:900px;float:none;text-align:center;">
-     <%= high_chart("chart_hour", g_chart_2y(get_hour_data(params[:c_id]))) %>
+    <%= high_chart("chart_hour", g_chart_2y(colina_hour(6))) %>
+     <%#= high_chart("chart_hour", g_chart_2y(get_hour_data(params[:c_id]))) %>
    </div>
    <div id="chart_week_div" style="margin:0 auto;width:900px;display:none;">
-     <%= high_chart("chart_week", g_chart_2y(get_week_data(params[:c_id]))) %>
+     <%= high_chart("chart_week", g_chart_2y(colina_week(6))) %>
+     <%#= high_chart("chart_week", g_chart_2y(get_week_data(params[:c_id]))) %>
    </div>
  
  </body>

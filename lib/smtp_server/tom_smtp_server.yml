@@ -1,0 +1,15 @@
+--- 
+tom.com: 
+  :is_valid: 1
+  :update: 1374472397
+  :strftime: 13-07-22 13:53:17
+  :mx: 
+  - :preference: 10
+    :exchange: tommx.cdn.163.net
+tom.cn: 
+  :is_valid: 1
+  :update: 1374472573
+  :strftime: 13-07-22 13:56:13
+  :mx: 
+  - :preference: 10
+    :exchange: mx.tom.cn

@@ -1,4 +1,6 @@
+#encoding:utf-8
 require 'will_paginate/array'
+require 'focus_agent/smtp_ret'
 class MembersController < ApplicationController
   layout "appmembers"
   def index
@@ -50,41 +52,59 @@ class MembersController < ApplicationController
   def create
     @list = List.find(params[:list_id])
     member = Member.where(["email = :e", { :e =>params[:member][:email] }])
-    @save_state = false
+    @save_state = { 
+       :m_state => -1,   #member -1保存失败; 0已经存在;  1 保存成功
+       :l_state   => -1, #lists_members -1保存失败; 0已经存在;  1 保存成功
+       :chk_res => {        #新名单邮箱验证结果
+         :res_code => -1,
+         :res_str  => ''
+       }}
+    @member = nil
     if member.count <= 0 then
-      @member = @list.members.create(params[:member])
-      respond_to do |format|
-        @member.listid = @list.id
-        if @member.save
-          user_action_log(@member.id,params[:controller],"create")
-          @save_state = true
-          format.html { redirect_to list_members_path(@list.id), notice: 'Member was successfully created.' }
-          format.json { render json: @member, status: :created, location: @member }
-          format.js
+      email = params[:member][:email]
+      email.downcase!
+      email.chomp!
+      if email.split(/@/).size == 2 then
+        res_code = FocusAgent::SMTP.verify(email)
+        if [1,4,5].include?(res_code.to_i)
+          @member = @list.members.create({:name => params[:member][:name],:email => email})
+          @member.listid = @list.id
+          @save_state[:m_state] = (@member.save ? 1 : -1)
         else
-          @save_state = false
-          format.js
-          format.html { render action: "new" }
-          format.json { render json: @member.errors, status: :unprocessable_entity }
+          @save_state[:m_state] = -1
         end
-      end
+        @save_state[:chk_res][:res_code] = res_code
+        @save_state[:chk_res][:res_str]  = 'FocusMail SMTP验证结果'
+      else
+        @save_state[:m_state] = -1
+        @save_state[:chk_res][:res_str] = '手工验证 邮箱格式不正确'
+      end  
     else
-      user_action_log(member.first.id,params[:controller],"create")
-      num = ListsMembers.where(["list_id = :l and member_id = :m", { :l => @list.id, :m => member.first.id }]).count
-      if num <= 0 then
+      @save_state[:m_state] = 0
+      @member = member.first.id
+    end
+    
+    if @member then
+      user_action_log(@member.id,params[:controller],"create")
+      
+      lm_num = ListsMembers.where(["list_id = :l and member_id = :m", { :l => @list.id, :m => @member.id }]).count
+      if lm_num <= 0 then
         ListsMembers.create({
           :list_id => @list.id, 
-          :member_id => member.first.id,
+          :member_id => @member.id,
           :week_number => params[:member][:weeknumber]
         })
+        @list.update_attribute(:member_count,(@list.member_count.to_i+1).to_s)
+        @save_state[:l_state] = 1
+      else
+        @save_state[:l_state] = 0
       end
-      @list.update_attribute(:member_count,(@list.member_count.to_i+1).to_s)
-      respond_to do |format|
-        @save_state = true
-        format.html { redirect_to list_members_path(@list.id), notice: 'Member was successfully created.' }
-        format.json { render json: member, status: :created, location: member }
-        format.js
-      end
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to list_members_path(@list.id), notice: 'Member was successfully created.' }
+      format.json { render json: member, status: :created, location: member }
+      format.js
     end
   end
 
@@ -116,9 +136,30 @@ class MembersController < ApplicationController
         format.js
       end
     end
-    
   end
 
+  def verify
+    member = Member.find(params[:member_id])
+    type   = params[:type]
+    
+    case type
+    when 'verify' then
+      begin 
+      @ret = FocusAgent::ChkMember.verify(member.email)
+      rescue => e
+        @ret = e.backtrace.to_s
+      end
+    when 'force' then
+      @ret = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.match(email)
+    else
+      @ret = "[#{type}] unknown!"
+    end
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   def destroy
     @listsmembers = ListsMembers.where(["list_id = :l and member_id = :m", { :l => params[:list_id], :m => params[:id] }])
     ListsMembers.delete(@listsmembers.first.id)

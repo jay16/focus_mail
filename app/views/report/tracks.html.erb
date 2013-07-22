@@ -14,8 +14,9 @@
       <thead class="focus-thead">
         <tr>
           <th>会员信息</th>
-          <th>最近开信时间</th>
+          <th>最近开信</th>
           <th>开信次数</th>
+          <th>浏览器</th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +25,12 @@
             <td><%= track.member ? "#{track.member.name} <#{track.member.email}>" : "-" %></td>
             <td><%= track.last_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
             <td><%= track.count %></td>
+            <% browser,detail_info = browser_info(track.campaign_id,track.member_id,"track") %>
+            <td>
+                 <a class="focus-rel" rel="tooltip" data-original-title="<%= html_escape(detail_info) %>">
+                    <%= browser %>
+                 </a>
+            </td>
           </tr>
         <% end %>
       </tbody>

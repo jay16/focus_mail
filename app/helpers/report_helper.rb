@@ -44,6 +44,103 @@ module ReportHelper
       }
   end
    
+  def colina_hour(time_at)
+     clicks_num = Colina.select("x,data").where("time_at = #{time_at} and type='click_num'")
+     clicks_peo = Colina.select("x,data").where("time_at = #{time_at} and type='click_peo'")
+     tracks_num = Colina.select("x,data").where("time_at = #{time_at} and type='click_num'")
+     tracks_peo = Colina.select("x,data").where("time_at = #{time_at} and type='track_peo'")
+     
+    #x_label内为数字，x_index内为字符串
+    x_label = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+    x_index = %w(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23)
+    
+    click_num_data = Array.new
+    click_peo_data = Array.new
+    x_index.each_with_index do |data,index|
+      tmp = clicks_num.select { |i| i.x == index }[0]
+      click_num_data.push(tmp==nil ? 0 :tmp.data)
+    end
+    x_index.each_with_index do |data,index|
+      tmp = clicks_peo.select { |i| i.x == index }[0]
+      click_peo_data.push(tmp==nil ? 0 :tmp.data)
+    end
+    
+    #以hour为维度，点击率=click_peo/track_peo
+    track_num_data = Array.new
+    track_peo_data = Array.new
+    click_rate = Array.new
+    x_index.each_with_index do |data,index|
+      tmp = tracks_num.select { |i| i.x == index }[0]
+      track_num_data.push(tmp==nil ? 0 :tmp.data)
+
+    end
+    
+    x_index.each_with_index do |data,index|
+      tmp = tracks_peo.select { |i| i.x == index }[0]
+      track_peo_data.push(tmp==nil ? 0 :tmp.data)
+      
+      if track_peo_data[index] > 0 then
+        rate = (Float(click_peo_data[index])*100/Float(track_peo_data[index])).round(2)
+        click_rate.push(rate==nil ? 0 : rate)
+      else
+        click_rate.push(0)
+      end
+    end
+    
+    return x_index,click_num_data,track_num_data,click_rate,"hour"
+  end
+
+  
+  #以week为维度获取click_num/click_peo/track_num/track_peo
+  def colina_week(time_at)
+     clicks_num = Colina.select("week,data").where("time_at = #{time_at} and type='week'")
+     clicks_peo = Colina.select("week,data").where("time_at = #{time_at} and type='week'")
+     tracks_num = Colina.select("week,data").where("time_at = #{time_at} and type='week_tracks'")
+     tracks_peo = Colina.select("week,data").where("time_at = #{time_at} and type='week_tracks'")
+
+    #x_label内为数字，x_index内为字符串
+    x_label = [0,1,2,3,4,5,6]
+    x_index = %w(0 1 2 3 4 5 6)
+    x_name = %w(Sun Mon Tue Wed Thu Fri Sat)
+
+    click_num_data = Array.new
+    click_peo_data = Array.new
+    x_index.each_with_index do |data,index|
+      tmp = clicks_num.select { |i| i.week.to_i == index }[0]
+      click_num_data.push(tmp==nil ? 0 :tmp.data)
+    end
+    x_index.each_with_index do |data,index|
+      tmp = clicks_peo.select { |i| i.week.to_i == index }[0]
+      click_peo_data.push(tmp==nil ? 0 :tmp.data)
+    end
+    
+    
+    #以week为维度，点击率=click_peo/track_peo
+    track_num_data = Array.new
+    track_peo_data = Array.new
+    click_rate = Array.new
+    x_index.each_with_index do |data,index|
+      tmp = tracks_num.select { |i| i.week.to_i == index }[0]
+      track_num_data.push(tmp==nil ? 0 :tmp.data)
+    end
+    
+    x_index.each_with_index do |data,index|
+      tmp = tracks_peo.select { |i| i.week.to_i == index }[0]
+      track_peo_data.push(tmp==nil ? 0 :tmp.data)
+      
+      if track_peo_data[index] > 0 then
+        rate = (Float(click_peo_data[index])*100/Float(track_peo_data[index])).round(2)
+        click_rate.push(rate==nil ? 0 : rate)
+      else
+        click_rate.push(0)
+      end
+    end
+    
+    
+    
+    return x_name,click_num_data,track_num_data,click_rate,"week"
+  end    
+  
   #以hour为维度获取click_num/click_peo/track_num/track_peo
   def get_hour_data(campaign_id)
     clicks = Click.select("hour(created_at) as hour,count(*) as num,count(distinct member_id) as peo")
@@ -138,15 +235,16 @@ module ReportHelper
     x_label,clicks,tracks,rate,type = datas
     
     @h = LazyHighCharts::HighChart.new('graph') do |f|
-      f.options[:chart][:zoomType] = "xy"
-      f.options[:chart][:height] = "500"
-      f.options[:chart][:width] = "800"
+      f.options[:chart][:zoomType]       = "xy"
+      f.options[:chart][:height]         = "500"
+      f.options[:chart][:width]          = "800"
       
-      f.options[:legend][:align] = "center"
-      f.options[:legend][:layout] = "horizontal"
+      f.options[:legend][:align]         = "center"
+      f.options[:legend][:layout]        = "horizontal"
       f.options[:legend][:verticalAlign] = "bottom"
-      f.options[:title][:text] = (type == "hour" ? "开信、点击、点击率数据小时分布图" : '开信、点击、点击率数据星期分布图')
-
+      f.options[:title][:text]           = (type == "hour" ? "开信、点击、点击率数据小时分布图" : '开信、点击、点击率数据星期分布图')
+      f.options[:subtitle][:text]        = '2013-06-20 pm'
+      
       f.xAxis(:categories=> x_label)
       f.yAxis([{
         :title => {
@@ -491,4 +589,34 @@ module ReportHelper
     end
   end
   
+  #获取开信、点击用户客户端浏览器信息
+  #cid - campaign_id
+  #mid - member_id
+  def browser_info(cid,mid,type)
+    browsers = (type == "track" ?
+    Track.where("campaign_id = :cid and member_id = :mid",:cid => cid,:mid => mid )
+    :
+    Click.where("campaign_id = :cid and member_id = :mid",:cid => cid,:mid => mid )
+    )
+    
+    browser = String.new
+    browsers.each do |info|
+      tmp = info.browser
+      browser = tmp if tmp.length > browser.length
+    end 
+    
+    keywords = ["iphone","ipad","android","firefox","chrome","safari","msie 6.0","msie 7.0","msie 8.0","msie 9.0","msie 10.0","msie","opera","etscape"]
+    keynames = %w(iphone ipad android Firefox Chrome Safari IE6 IE7 IE8 IE9 IE10 IE Opera Netscapt)
+   
+    keyname = String.new
+    keywords.each_with_index do |key,index|
+        if browser.downcase.include?(key) then
+          keyname = keynames[index]
+          break
+        end
+    end
+
+    keyname = (keyname.present? ? keyname : "other")
+    return keyname,browser
+  end
 end

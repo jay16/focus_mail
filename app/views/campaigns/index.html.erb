@@ -29,7 +29,7 @@
     				<div class="js-stream-items stream-items" id="stream-items-id">
     				<% if @campaigns.present? %>
     				<% @campaigns.each do |campaign| %>
-             <%= render campaign, :locals => { :lists => @lists } %>
+             <%= render :partial => campaign, :locals => { :is_admin => is_super }  %>
     		  		<% end %>
     		  <% end %>
     		  		</div>
@@ -87,6 +87,22 @@
 		</div>
 	</div>
 </div>
+
+    <!--发送record-->
+   <div id="campaign_record_modal" class="modal fade" style="min-width:350px;width:450px;max-height:500px;">
+     <div class="modal-header header">
+      <button type="button" class="focus-close" data-dismiss="modal">&times;</button>
+       deliver record
+     </div>
+     <div class="modal-body  body">
+       Data Loading...
+     </div>
+     <div class="focus-center" style="margin:15px;">
+      <%= link_to '发送','', :class => "btn", :remote => true, "data-dismiss"=>"modal",
+          :style => "color: black;" %>
+      <a href="#" class="btn" data-dismiss="modal">取消</a>
+     </div>
+   </div><!--modal-->
 <!--   details pane  end --> 
 <script type="text/javascript">
 	$(function () {
@@ -152,10 +168,19 @@
 
 <script type="text/javascript">
  //发送测试信
-	function mail_test(test){
- 		var emailname = "#mailtest_email_" + test;
- 		emailname = $(emailname).val();
-   if(emailname.indexOf("@")>0){
+	function mail_test(id){
+ 	 	var emailname = "#mailtest_email_" + id;
+ 		 var inputs = $("#mailtest_"+String(id)+" input[type=text][name=test_email]");
+ 		 var emails = new Array();
+    if(inputs.length > 0){
+      inputs.each(function(){
+        $input = $(this);
+        var tt = $.trim($input.val());
+        if(tt.length>0 && tt.indexOf("@")>0){ emails.push(tt); }
+      });
+    }
+
+   if(emails.length > 0){
    		var strhost = window.location.host;
    		var strprotocol = window.location.protocol;
    		var strurl = strprotocol + "//" + strhost + "/campaigns/mailtest";
@@ -163,18 +188,23 @@
    			type: 'POST',
    			url: strurl,
    			data: {
-   				"emailname":emailname,
-   				"id":test
+   				"emails":emails,
+   				"id":id
    			},
    			contentType: 'multipart/form-data',
    			datatype: 'json'
    		});
-   }else if(emailname.length==0){
-    alert("请输入测试邮箱！");
    }else{
     alert("测试邮箱有问题，请重试！");
    }
 	}
+	 function add_test_email(id){
+   var num = $("#mailtest_"+String(id)+" input[type=text][name=test_email]").length;
+   num = num + 1;
+   var $input = $("<label for='test_email'>收件箱"+String(num)+"<input type='text' size='30' placeholder='Test Email' name='test_email'  class='span4'></label>");
+   $input.insertBefore($("#mailtest_"+String(id)+" .add_test_email_tag"));
+   //alert("add_campaign_subject");
+ };
 </script>
 <script type="text/javascript">
  function campaign_report(campaign_id){

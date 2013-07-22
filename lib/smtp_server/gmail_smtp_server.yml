@@ -1,0 +1,16 @@
+--- 
+gmail.com: 
+  :is_valid: 1
+  :update: 1374472397
+  :strftime: 13-07-22 13:53:17
+  :mx: 
+  - :preference: 5
+    :exchange: gmail-smtp-in.l.google.com
+  - :preference: 10
+    :exchange: alt1.gmail-smtp-in.l.google.com
+  - :preference: 20
+    :exchange: alt2.gmail-smtp-in.l.google.com
+  - :preference: 30
+    :exchange: alt3.gmail-smtp-in.l.google.com
+  - :preference: 40
+    :exchange: alt4.gmail-smtp-in.l.google.com

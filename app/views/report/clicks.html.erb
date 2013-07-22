@@ -15,8 +15,9 @@
        <tr>
          <th width="50%">链接名称</th> 
          <th width="20%">会员信息</th>
-         <th width="15%">最近点击时间</th>
+         <th width="15%">最近点击</th>
          <th width="15%">点击次数</th>
+         <th width="15%">浏览器</th>
        </tr>
      </thead>
      <tbody>
@@ -26,8 +27,14 @@
            <td><%= click.member ? "#{click.member.name} <#{click.member.email}>" : "-" %></td>
            <td><%= click.last_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
            <td><%= click.count %></td>
-         </tr>
-       <% end %>
+           <% browser,detail_info = browser_info(click.campaign_id,click.member_id,"click") %>
+           <td>
+              <a class="focus-rel" rel="tooltip" data-original-title="<%= html_escape(detail_info) %>">
+                 <%= browser %>
+              </a>
+           </td>
+          </tr>
+        <% end %>
      </tbody>
    </table>
    
