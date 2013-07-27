@@ -45,6 +45,34 @@ module FocusAgent
         File.open(pid_file,"a+") { |file| file.puts "#{other_file},#{pid}" }
 	FileUtils.rm(tmp_pid)
       end
+
+      def rechk(file_path)
+        base_name = File.basename(file_path)
+        dir_path  = File.dirname(file_path)
+        pid_file  = "#{file_path}.pid"
+	tmp_pid   = File.join(dir_path,"tmp_#{Time.now.to_i}_pid")
+        log_file  = "#{file_path}.log"
+        
+        run_backer = File.join(dir_path,"run_backer.rb")
+        @domains.each do |domain| 
+          domain_file   = "#{base_name}.#{domain}.com"
+          domain_path   = File.join(dir_path,domain_file)
+
+          system("nohup ruby #{run_backer} #{domain_path} #{domain} & echo $! > #{tmp_pid} &")
+          
+          pid = File.readlines(tmp_pid)[0].to_i
+          File.open(pid_file,"a+") { |file| file.puts "#{domain_file},#{pid}" }
+        end
+        
+        other_file = "#{base_name}.other"
+        other_path = File.join(dir_path,other_file)
+
+        system("nohup ruby #{run_backer} #{other_path} other & echo $! > #{tmp_pid} &")
+          
+        pid = File.readlines(tmp_pid)[0].to_i
+        File.open(pid_file,"a+") { |file| file.puts "#{other_file},#{pid}" }
+	FileUtils.rm(tmp_pid)
+      end
       
       def chk_email(domain_path)
         lines  = File.readlines(file_path)

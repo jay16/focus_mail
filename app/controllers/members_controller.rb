@@ -53,11 +53,12 @@ class MembersController < ApplicationController
     @list = List.find(params[:list_id])
     member = Member.where(["email = :e", { :e =>params[:member][:email] }])
     @save_state = { 
-       :m_state => -1,   #member -1保存失败; 0已经存在;  1 保存成功
-       :l_state   => -1, #lists_members -1保存失败; 0已经存在;  1 保存成功
-       :chk_res => {        #新名单邮箱验证结果
-         :res_code => -1,
-         :res_str  => ''
+       :m_state => -1,   #member        -1保存失败; 0已经存在;  1 保存成功
+       :l_state => -1,   #lists_members -1保存失败; 0已经存在;  1 保存成功
+       :chk_res => {     #新名单邮箱SMTP验证结果
+         :focus_code => -1,
+         :smtp_code  => -1,
+         :res_str    => ''
        }}
     @member = nil
     if member.count <= 0 then
@@ -65,15 +66,17 @@ class MembersController < ApplicationController
       email.downcase!
       email.chomp!
       if email.split(/@/).size == 2 then
-        res_code = FocusAgent::SMTP.verify(email)
-        if [1,4,5].include?(res_code.to_i)
+        #smtp_res为数组,[FocusMail对应码,SMTP验证返回码]
+        smtp_res = FocusAgent::SMTP.verify(email)
+        if [1,4,5].include?(smtp_res[0].to_i)
           @member = @list.members.create({:name => params[:member][:name],:email => email})
           @member.listid = @list.id
           @save_state[:m_state] = (@member.save ? 1 : -1)
         else
           @save_state[:m_state] = -1
         end
-        @save_state[:chk_res][:res_code] = res_code
+        @save_state[:chk_res][:focus_code] = smtp_res[0]
+        @save_state[:chk_res][:smtp_code]   = smtp_res[1]
         @save_state[:chk_res][:res_str]  = 'FocusMail SMTP验证结果'
       else
         @save_state[:m_state] = -1
@@ -81,7 +84,7 @@ class MembersController < ApplicationController
       end  
     else
       @save_state[:m_state] = 0
-      @member = member.first.id
+      @member = member.first
     end
     
     if @member then
@@ -111,22 +114,28 @@ class MembersController < ApplicationController
   def update
     @list = List.find(params[:list_id])
     @member = @list.members.find(params[:id])
-    
+    @member.listid = @list.id
     #去除前后空格
     email = params[:member][:email].to_s.strip
-    #正则匹配邮箱格式
-    ret = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.match(email)
-    if ret.to_s == email then
-      @is_valid = true
+    #若未修改邮箱,无需验证
+    @smtp_res = []
+    if @member.email.to_s.strip == email then
+      @member.update_attributes(params[:member])
+      user_action_log(params[:id],params[:controller],"update")
     else
-      @is_valid = false
+      if email.split(/@/).size == 2 then
+        @smtp_res = FocusAgent::SMTP.verify(email)
+        if [1,4,5].include?(@smtp_res[0]) then
+          @member.update_attributes(params[:member])
+          user_action_log(params[:id],params[:controller],"update")
+        end
+      else
+        @smtp_res = [0,-1]
+      end
     end
 
     respond_to do |format|
-      @member.listid = @list.id
-      if @is_valid == true then
-        @member.update_attributes(params[:member])
-        user_action_log(params[:id],params[:controller],"update")
+      if !@smtp_res.empty? and [1,4,5].include?(@smtp_res[0]) then
         format.html { redirect_to list_members_path(@list.id), notice: 'Member was successfully updated.' }
         format.json { head :no_content }
         format.js
@@ -138,27 +147,6 @@ class MembersController < ApplicationController
     end
   end
 
-  def verify
-    member = Member.find(params[:member_id])
-    type   = params[:type]
-    
-    case type
-    when 'verify' then
-      begin 
-      @ret = FocusAgent::ChkMember.verify(member.email)
-      rescue => e
-        @ret = e.backtrace.to_s
-      end
-    when 'force' then
-      @ret = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.match(email)
-    else
-      @ret = "[#{type}] unknown!"
-    end
-    
-    respond_to do |format|
-      format.js
-    end
-  end
   
   def destroy
     @listsmembers = ListsMembers.where(["list_id = :l and member_id = :m", { :l => params[:list_id], :m => params[:id] }])

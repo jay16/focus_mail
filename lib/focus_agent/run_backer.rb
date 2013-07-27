@@ -1,5 +1,6 @@
 #encoding: utf-8
 require './smtp_ret'
+require './telnet_ret'
   
   domain_path = ARGV[0]
   
@@ -24,11 +25,12 @@ require './smtp_ret'
   emails.each_with_index do |email,index|
     email.downcase!
     begin
-      ret = FocusAgent::SMTP.verify(email)
+      #ret = FocusAgent::SMTP.verify(email)
+      ret = FocusAgent::Telnet.verify(email)
     rescue => e
       logger.info("#{Time.now.strftime('%Y-%m-%d %H:%M:%S')},#{email},#{index}")
       e.backtrace.each { |row| logger.info("#{row}") }
     else
-      File.open(result_path,"a") { |file| file.puts "#{email},#{ret}" }
+      File.open(result_path,"a") { |file| file.puts "#{email},#{ret[0]},#{ret[1]}" }
     end
   end

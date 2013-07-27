@@ -4,3 +4,7 @@ domain = "qq"
 
 puts str1 =~ /@(vip.|)#{domain}/i ? str1 : "NO"
 puts str2 =~ /@(vip.|)#{domain}/i ? str2 : "NO"
+
+require './telnet_ret.rb'
+
+puts FocusAgent::Telnet.verify("lzhj223@163.com")

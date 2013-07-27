@@ -67,7 +67,7 @@ class Sendmail_Job
     basepath = readfile["sendmail"].to_s
     #tarpath basepath先后顺序不可错乱
     orgpath  = File.join(basepath,user_org_name)
-    camname  = "#{id}_#{members.size}_#{Time.now.strftime('%y%m%d%H%M%s')}"
+    camname  = "#{id}_#{members.size}_#{Time.now.strftime('%Y%m%d%H%M%S')}"
     campath = File.join(basepath,user_org_name,camname)
 
     focus_server.update_attributes({
@@ -83,6 +83,7 @@ class Sendmail_Job
     for i in 0...1 do
       if members.count > 0 then
          members.each_with_index do |m,index|
+            #轮流使用多主题
             subject  = subjects[index%subject_num]
             to_email = m.email
             #检测邮箱地址

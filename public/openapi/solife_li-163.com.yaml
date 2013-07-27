@@ -1,0 +1,36 @@
+--- 
+"20130727225030": 
+  :time: "20130727225030"
+  :to_email: solife_li@163.com
+  :file_name: solife_li-163.com_20130727225030.eml
+  :tar_name: solife_li-163.com_20130727225030.eml.tar.gz
+  :md5: f9c54ef7ad38d9619e8407eba719d8ca
+  :link_state: 
+  :link_info: 
+"20130727225941": 
+  :time: "20130727225941"
+  :to_email: solife_li@163.com
+  :file_name: solife_li-163.com_20130727225941.eml
+  :tar_name: solife_li-163.com_20130727225941.eml.tar.gz
+  :md5: 92a7768bf5782b134949707771b01956
+"20130727230133": 
+  :time: "20130727230133"
+  :to_email: solife_li@163.com
+  :file_name: solife_li-163.com_20130727230133.eml
+  :tar_name: solife_li-163.com_20130727230133.eml.tar.gz
+  :md5: a1b3c097ae74062cccf1681901d5285f
+  :link_state: 
+  :link_info: 
+"20130727230434": 
+  :time: "20130727230434"
+  :to_email: solife_li@163.com
+  :file_name: solife_li-163.com_20130727230434.eml
+  :tar_name: solife_li-163.com_20130727230434.eml.tar.gz
+  :md5: 19687317cf7cbd0e25123bdec6c471d3
+  :link_state: 
+  :link_info: 
+  :mq: "126"
+  :port: "2"
+  :log: |
+    [2013/07/27 23:04:58] [17475-solife_li-163.com_20130727230434.eml] Mail.RR <solife_li_146_0@online-edm.com> -> <solife_li@163.com> (SendMail For DingShi/904)[OK][MGHAM--0][MGTAGLOG ][utf-8](BIND_REMOTE_DELIVER_IP/)
+

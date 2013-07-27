@@ -41,3 +41,9 @@ qq.cm:
   :mx: 
   - :preference: 10
     :exchange: mail.qq.cm
+qqq.com: 
+  :is_valid: 0
+  :update: 1374492550
+  :strftime: 13-07-22 19:29:10
+  :mx: []
+

@@ -1,7 +1,5 @@
 $("#add_btn").trigger("click");
 
-alert("<%= @save_state.to_s %>");
-
 <% if @save_state[:m_state] == 1 %>
 $('#list_member').attr("src","/lists/" + "<%= @list.id %>" + "/members");
 var org_mc = parseInt($("#list_<%= @list.id %>_mc").html());
@@ -16,7 +14,7 @@ $("#list_<%= @list.id %>_mc").html(org_mc+1);
     alert("名单存在,list创建失败");
   <% end %>
 <% else %>
-alert("名单创建失败..")
+alert("名单创建失败..\nSMTP验证错误码:<%= @save_state[:chk_res][:smtp_code] %>\nFocusMail对应码:<%= @save_state[:chk_res][:focus_code] %>");
 <% end %>
 
 

@@ -23,3 +23,61 @@ hotmail.co.uk:
     :exchange: mx2.hotmail.com
   - :preference: 5
     :exchange: mx3.hotmail.com
+hotmail.co.jp: 
+  :is_valid: 1
+  :update: 1374490561
+  :strftime: 13-07-22 18:56:01
+  :mx: 
+  - :preference: 5
+    :exchange: mx3.hotmail.com
+  - :preference: 5
+    :exchange: mx4.hotmail.com
+  - :preference: 5
+    :exchange: mx1.hotmail.com
+  - :preference: 5
+    :exchange: mx2.hotmail.com
+hotmail.cm: 
+  :is_valid: 0
+  :update: 1374495313
+  :strftime: 13-07-22 20:15:13
+  :mx: []
+
+hotmail.com.tw: 
+  :is_valid: 1
+  :update: 1374501172
+  :strftime: 13-07-22 21:52:52
+  :mx: 
+  - :preference: 5
+    :exchange: mx2.hotmail.com
+  - :preference: 5
+    :exchange: mx3.hotmail.com
+  - :preference: 5
+    :exchange: mx4.hotmail.com
+  - :preference: 5
+    :exchange: mx1.hotmail.com
+hotmail.fr: 
+  :is_valid: 1
+  :update: 1374517720
+  :strftime: 13-07-23 02:28:40
+  :mx: 
+  - :preference: 5
+    :exchange: mx4.hotmail.com
+  - :preference: 5
+    :exchange: mx1.hotmail.com
+  - :preference: 5
+    :exchange: mx2.hotmail.com
+  - :preference: 5
+    :exchange: mx3.hotmail.com
+hotmail.it: 
+  :is_valid: 1
+  :update: 1374529112
+  :strftime: 13-07-23 05:38:32
+  :mx: 
+  - :preference: 5
+    :exchange: mx2.hotmail.com
+  - :preference: 5
+    :exchange: mx3.hotmail.com
+  - :preference: 5
+    :exchange: mx4.hotmail.com
+  - :preference: 5
+    :exchange: mx1.hotmail.com

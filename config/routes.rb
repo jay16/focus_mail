@@ -7,7 +7,8 @@ FocusMail::Application.routes.draw do
   devise_for :users
 
   root :to => 'home#index'
-
+  match 'open/getstate' => 'open#getstate'
+  match 'open/sendmail' => 'open#sendmail'
   match 'track.gif' => 'respond#track'
   match 'click' => 'respond#click'
   match 'testcode' => 'testcode#index'

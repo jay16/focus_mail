@@ -76,3 +76,60 @@ newhope.sinanet.com:
   :mx: 
   - :preference: 10
     :exchange: mx.exmail.sina.com
+sina100.com: 
+  :is_valid: 1
+  :update: 1374495277
+  :strftime: 13-07-22 20:14:37
+  :mx: 
+  - :preference: 10
+    :exchange: sinamx.sina100.com
+staff.sina.com.cn: 
+  :is_valid: 1
+  :update: 1374508884
+  :strftime: 13-07-23 00:01:24
+  :mx: 
+  - :preference: 10
+    :exchange: staffmx1.sina.com.cn
+  - :preference: 10
+    :exchange: staffmx.sina.com.cn
+sina.com.tw: 
+  :is_valid: 1
+  :update: 1374511265
+  :strftime: 13-07-23 00:41:05
+  :mx: 
+  - :preference: 20
+    :exchange: mp.sina.com.tw
+vip.sina.com.cn: 
+  :is_valid: 1
+  :update: 1374528466
+  :strftime: 13-07-23 05:27:46
+  :mx: 
+  - :preference: 20
+    :exchange: sinamx.vip.sina.com.cn
+  - :preference: 5
+    :exchange: mx3.vip.sina.com.cn
+  - :preference: 10
+    :exchange: mx1.vip.sina.com.cn
+  - :preference: 10
+    :exchange: mx2.vip.sina.com.cn
+sina.net: 
+  :is_valid: 1
+  :update: 1374528701
+  :strftime: 13-07-23 05:31:41
+  :mx: 
+  - :preference: 10
+    :exchange: mx.sina.net
+wv.sina.net: 
+  :is_valid: 1
+  :update: 1374531152
+  :strftime: 13-07-23 06:12:32
+  :mx: 
+  - :preference: 10
+    :exchange: mx.sina.net
+leju.sina.com.cn: 
+  :is_valid: 1
+  :update: 1374536461
+  :strftime: 13-07-23 07:41:01
+  :mx: 
+  - :preference: 10
+    :exchange: mx.sina.net

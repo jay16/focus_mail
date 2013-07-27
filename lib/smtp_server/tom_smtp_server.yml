@@ -13,3 +13,10 @@ tom.cn:
   :mx: 
   - :preference: 10
     :exchange: mx.tom.cn
+customs.gov.cn: 
+  :is_valid: 1
+  :update: 1374540816
+  :strftime: 13-07-23 08:53:36
+  :mx: 
+  - :preference: 5
+    :exchange: mail.customs.gov.cn

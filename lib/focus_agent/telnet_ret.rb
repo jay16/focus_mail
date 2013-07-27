@@ -1,12 +1,13 @@
 require 'resolv'
 require 'net/smtp'
+require 'net/telnet'
 require 'yaml/store'
 require 'yaml'
 require 'logger'
 require 'fileutils'
 
 module FocusAgent
-  class SMTP
+  class Telnet
     @domains = %w(qq sina tom sohu yahoo gmail hotmail 126 163)
     @from = "solife_li@126.com"
     if Object.const_defined?("Rails") then
@@ -15,7 +16,7 @@ module FocusAgent
       @cwd  = Dir.pwd
     end
     @smtp_server_path = File.join(File.dirname(@cwd),"smtp_server")
-    @smtp_log_path    = File.join(File.dirname(@cwd),"smtp_log")
+    @telnet_log_path    = File.join(File.dirname(@cwd),"telnet_log")
     
     class << self
       
@@ -29,7 +30,7 @@ module FocusAgent
         domain  = get_domain(email_domain)
 
         @yaml_path  = File.join(@smtp_server_path,"#{domain}_smtp_server.yml")
-        @logger = Logger.new(File.join(@smtp_log_path,"#{domain}_smtp.log"))
+        @logger = Logger.new(File.join(@telnet_log_path,"#{domain}_smtp.log"))
         @logger.formatter = proc do |severity, datetime, progname, msg|
          "#{datetime}: #{msg}\n"
         end
@@ -43,11 +44,15 @@ module FocusAgent
         end
         
         begin
-          smtp = Net::SMTP.start(mail_server)
-          smtp.mailfrom(@from)
-          ret      = smtp.rcptto(email).message
-          ret_code = ret[0..2].to_i
-          smtp.finish
+          telnet = Net::Telnet.new("Host" => mail_server,
+             "Port" => 25,
+             "Telnetmode" => false,
+             "Telnetmode" => false,
+             "Timeout" => 60)
+          strcmd = "HELO openfind.com \nmail from:<> \nrcpt to:#{email} \n. \nquit \n"
+          ret = telnet.cmd(strcmd)
+          telnet.close
+          ret_code = ret.split("\n")[3].split(" ")[0]
           #网络异常报什么错
         rescue Net::SMTPAuthenticationError, 
           Net::SMTPServerBusy, 
@@ -63,9 +68,21 @@ module FocusAgent
       
           ret_code = -1
         end
-        focus_code = get_statu(ret_code)
+        if ret_code == "0" then
+          focus_code = 0
+        elsif ret_code == "250" then
+          focus_code = 1
+        elsif ret_code == "550" then
+          focus_code = 2
+        elsif ret_code == "553" then
+          focus_code = 3
+        elsif (ret_code =~/^45\d/) == 0 then
+          focus_code = 4
+        else
+          focus_code = 5
+        end 
         #statu = ret
-        @logger.info("#{email},#{ret_code},#{domain},#{mail_server}")
+        @logger.info("#{email},#{ret_code},#{focus_code},#{domain},#{mail_server}")
 
         return [focus_code,ret_code]
       end
@@ -105,7 +122,7 @@ module FocusAgent
             #该邮箱域名可测试得通
             if yaml_load[email_domain][:is_valid] then 
               hash = get_min_preference(yaml_load[email_domain][:mx])
-              puts "use smtp:#{hash.to_s}"
+              puts "MX:#{hash.to_s}"
               return hash[:exchange]
             else
               return nil

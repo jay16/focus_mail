@@ -37,3 +37,87 @@ yahoo.com.au:
     :exchange: mta5.am0.yahoodns.net
   - :preference: 10
     :exchange: mta6.am0.yahoodns.net
+yahoo.de: 
+  :is_valid: 1
+  :update: 1374491618
+  :strftime: 13-07-22 19:13:38
+  :mx: 
+  - :preference: 10
+    :exchange: mx-eu.mail.am0.yahoodns.net
+yahoo.ca: 
+  :is_valid: 1
+  :update: 1374492189
+  :strftime: 13-07-22 19:23:09
+  :mx: 
+  - :preference: 10
+    :exchange: mta6.am0.yahoodns.net
+  - :preference: 10
+    :exchange: mta7.am0.yahoodns.net
+  - :preference: 10
+    :exchange: mta5.am0.yahoodns.net
+yahoo.com.tw: 
+  :is_valid: 1
+  :update: 1374492417
+  :strftime: 13-07-22 19:26:57
+  :mx: 
+  - :preference: 10
+    :exchange: mx-tw.mail.gm0.yahoodns.net
+yahoo.com.n: 
+  :is_valid: 0
+  :update: 1374493523
+  :strftime: 13-07-22 19:45:23
+  :mx: []
+
+yahoo.co.jp: 
+  :is_valid: 1
+  :update: 1374495168
+  :strftime: 13-07-22 20:12:48
+  :mx: 
+  - :preference: 10
+    :exchange: mx3.mail.yahoo.co.jp
+  - :preference: 10
+    :exchange: mx5.mail.yahoo.co.jp
+  - :preference: 10
+    :exchange: mx1.mail.yahoo.co.jp
+  - :preference: 10
+    :exchange: mx2.mail.yahoo.co.jp
+yahooo.com.cn: 
+  :is_valid: 1
+  :update: 1374499994
+  :strftime: 13-07-22 21:33:14
+  :mx: 
+  - :preference: 10
+    :exchange: mxdomain.qq.com
+yahoo.cm.cn: 
+  :is_valid: 0
+  :update: 1374512941
+  :strftime: 13-07-23 01:09:01
+  :mx: []
+
+"yahoo.com.cn ": 
+  :is_valid: 0
+  :update: 1374515614
+  :strftime: 13-07-23 01:53:34
+  :mx: []
+
+yahoo.com.hk: 
+  :is_valid: 1
+  :update: 1374522163
+  :strftime: 13-07-23 03:42:43
+  :mx: 
+  - :preference: 1
+    :exchange: mx-apac.mail.gm0.yahoodns.net
+yahoo.com.sg: 
+  :is_valid: 1
+  :update: 1374522549
+  :strftime: 13-07-23 03:49:09
+  :mx: 
+  - :preference: 1
+    :exchange: mx-apac.mail.gm0.yahoodns.net
+yahoo.co.uk: 
+  :is_valid: 1
+  :update: 1374534537
+  :strftime: 13-07-23 07:08:57
+  :mx: 
+  - :preference: 10
+    :exchange: mx-eu.mail.am0.yahoodns.net
